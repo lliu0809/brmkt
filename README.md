@@ -1,7 +1,7 @@
 ## Group Members
 
-Jason Lai 
-jasonlaiusa@yahoo.com
+- Jason Lai 
+- jasonlaiusa@yahoo.com
 
 ![MyPhoto](https://user-images.githubusercontent.com/35756886/95634831-a86f0e80-0a3f-11eb-97ce-71b401eec507.jpg)
 
