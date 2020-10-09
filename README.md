@@ -8,7 +8,7 @@
 - Kaisha Maimaitiyimingjiang 005179648
 - kaisha311@gmail.com
 
-![MyPhoto](https://user-images.githubusercontent.com/46539227/95636779-e28edf00-0a44-11eb-858c-baf78141f2a7.JPG0
+![MyPhoto](https://user-images.githubusercontent.com/46539227/95636779-e28edf00-0a44-11eb-858c-baf78141f2a7.JPG)
 
 # bespin
 
