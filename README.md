@@ -10,7 +10,10 @@
 
 ![MyPhoto](https://user-images.githubusercontent.com/46539227/95637195-fdae1e80-0a45-11eb-973c-05da7e40c3b1.JPG)
 
+- Yichen Lyu 004940413
+- ylyu99@ucla.edu
 
+<img width="360" src="https://user-images.githubusercontent.com/56143170/95641466-11549600-0ad5-11eb-940b-cac1ff60ba6b.jpg">
 
 # bespin
 
