@@ -5,6 +5,12 @@
 
 ![MyPhoto](https://user-images.githubusercontent.com/35756886/95634831-a86f0e80-0a3f-11eb-97ce-71b401eec507.jpg)
 
+- Yichen Lyu 004940413
+- ylyu99@ucla.edu
+
+<img src="https://user-images.githubusercontent.com/56143170/95641466-11549600-0ad5-11eb-940b-cac1ff60ba6b.jpg" width="400">
+
+
 # bespin
 
 Welcome to Cloud City!
