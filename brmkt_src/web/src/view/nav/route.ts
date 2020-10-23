@@ -12,9 +12,11 @@ export enum Route {
   PLAYGROUND_APP = 'app/playground/:app',
 }
 
+
 export enum PlaygroundApp {
   SURVEYS = 'surveys',
   LOGIN = 'login',
+  PROFILE = "profile"
 }
 
 export function getSurveyPath(surveyId?: number) {
@@ -28,6 +30,10 @@ export function getLoginPath() {
 
 export function getPlaygroundPath() {
   return getPath(Route.PLAYGROUND)
+}
+
+export function getProfilePath() {
+  return getPath(Route.PLAYGROUND_APP, { app: PlaygroundApp.PROFILE })
 }
 
 /**

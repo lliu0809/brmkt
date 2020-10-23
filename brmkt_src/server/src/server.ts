@@ -51,6 +51,22 @@ server.express.get('/app/*', (req, res) => {
   renderApp(req, res)
 })
 
+server.express.get('/listing', async (req, res) => {
+  //show my listings
+  //onst listings = await Listing.find()
+  res.status(200).type('json').send('{}')
+})
+
+server.express.get('/bids', (req, res) => {
+  //show my bids
+})
+
+server.express.get('/orders', (req, res) => {
+  //show my orders/purchase history
+})
+
+
+
 server.express.post(
   '/auth/login',
   asyncRoute(async (req, res) => {
