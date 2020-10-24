@@ -1,5 +1,9 @@
 import { createPool, PoolConnection, QueryOptions } from 'mysql2'
 import { createConnection } from 'typeorm'
+import { Auction } from '../entities/Auction'
+import { LoginUser } from '../entities/LoginUser'
+import { Order } from '../entities/Order'
+import { Selling } from '../entities/Selling'
 import { Session } from '../entities/Session'
 import { Survey } from '../entities/Survey'
 import { SurveyAnswer } from '../entities/SurveyAnswer'
@@ -20,7 +24,7 @@ export async function initORM() {
     username: process.env.MYSQL_USER || 'root',
     synchronize: true,
     logging: false,
-    entities: [User, Session, Survey, SurveyQuestion, SurveyAnswer],
+    entities: [User, Session, Survey, SurveyQuestion, SurveyAnswer, LoginUser, Auction, Selling, Order],
     extra: {
       connectionLimit: 5,
     },

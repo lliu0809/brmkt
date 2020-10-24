@@ -1,32 +1,42 @@
+import { useQuery } from '@apollo/client'
 import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
-import { ColorName, Colors } from '../../../../common/src/colors'
-import { Button } from '../../style/button'
+import { FetchUserContext } from '../../graphql/query.gen'
 import { H2 } from '../../style/header'
-import { Spacer } from '../../style/spacer'
-import { style } from '../../style/styled'
-import { BodyText, IntroText } from '../../style/text'
-import { Link } from '../nav/Link'
+import { fetchUser } from '../auth/fetchUser'
 import { AppRouteParams } from '../nav/route'
-import { Page } from '../page/Page'
-import { toastErr } from '../toast/toast'
 //const [listings, setListings] = React.useState([])
 
 interface ProfilePageProps extends RouteComponentProps, AppRouteParams {}
 
-function list() {
+/*function list() {
   toastErr('invalid email/password')
   return
-}
+}*/
 export function Profile(props: ProfilePageProps){
-  fetch('/listing')
+
+  const { loading, data, } = useQuery<FetchUserContext>(fetchUser, {
+    variables: {name: 'name'},
+  })
+  if (loading || data == null) {
+    return null
+  }
+  if(data.self == null) { return <H2>I'm Profile</H2>}
+  return (
+    <><H2>User Profile</H2>
+      <H2>{data.self.name}</H2></>
+  )
+  /*fetch('/listing')
     .then(response =>
       response.json())
     .then(json => console.log(json))
     .catch(err => {
       console.error(err)
     })
-  return (
+
+
+  return
+  (
     <>
   <Page>
       <Section>
@@ -117,10 +127,10 @@ export function Profile(props: ProfilePageProps){
       </Section>
   </Page>
   </>
-  )
+  )*/
 }
 
-interface Lists {
+/*interface Lists {
   title: string
   href: string
 }
@@ -169,4 +179,4 @@ const Section = style('div', 'mb4 mid-gray ba b--mid-gray br2 pa3 w-100', (p: { 
 
 const TR = style('tr', 'ba b--black')
 
-const TD = style('td', 'mid-gray pa3 v-mid', { minWidth: '7em' })
+const TD = style('td', 'mid-gray pa3 v-mid', { minWidth: '7em' })*/
