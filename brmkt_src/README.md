@@ -17,7 +17,6 @@
 
 - Lihang Liu 604972806
 - lliu0809@ucla.edu
-![MyPhoto](https://user-images.githubusercontent.com/44155608/97261869-fd9b7600-17dc-11eb-93a5-e13388f05459.jpeg)
 
 # bespin
 
