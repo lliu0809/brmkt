@@ -34,14 +34,14 @@ type Subscription {
   surveyUpdates (surveyId: Int!): Survey
 }
 
-type User {
-  id: Int!
-  userType: UserType!
-  email: String!
-  name: String!
-}
+# type User {
+#   id: Int!
+#   userType: UserType!
+#   email: String!
+#   name: String!
+# }
 
-enum UserType { ADMIN, USER }
+# enum UserType { ADMIN, USER }
 
 type Survey {
   id: Int!
@@ -89,3 +89,51 @@ input SurveyInput {
   answer: String!
 }
 
+#####################################################################################
+#                                 Our Query Types                                   #
+#####################################################################################
+
+type User {
+  id: int!
+  name: string!
+  email: string!
+  address: string!
+  username: string!
+  password: string!
+  selling: [Item]!
+  orders: [Item]!
+  watching: [Item]!
+  paymentMethod: string
+  cardNumber: Int
+}
+
+enum ItemType { BUYITNOW, AUCTION }
+
+type Item {
+  id: int!
+  title: string!
+  price: float!
+  shipping: float!
+  description: string
+  category: string!
+  seller: int! #user ID
+  buyer: int #user ID
+  timeAdded: int #in seconds?
+  itemType: ItemType!
+  auctionTime: int #in seconds?
+}
+
+# Use this for timeAdded?
+type Date {
+  month: int!
+  day: int!
+  year: int!
+  hours: int!
+  minutes: int!
+  seconds: int!
+}
+
+type Order {
+  id: int! #item ID
+  soldItem: Item!
+}
