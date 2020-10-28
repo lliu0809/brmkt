@@ -89,3 +89,41 @@ input SurveyInput {
   answer: String!
 }
 
+#####################################################################################
+#                                 Our Query Types                                   #
+#####################################################################################
+
+type User {
+  id: int!
+  name: string!
+  email: string!
+  address: string!
+  username: string!
+  password: string!
+  selling: [Item]!
+  orders: [Item]!
+  watching: [Item]!
+  paymentMethod: string
+  cardNumber: Int
+}
+
+enum ItemType { BUYITNOW, AUCTION }
+
+type Item {
+  id: int!
+  title: string!
+  price: float!
+  shipping: float!
+  description: string
+  category: string!
+  seller: int! #user ID
+  buyer: int #user ID
+  timeAdded: int #use SQL date & time
+  itemType: ItemType!
+  auctionTime: int #in seconds?
+}
+
+type Order {
+  id: int! #item ID
+  soldItem: Item!
+}
