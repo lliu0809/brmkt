@@ -4,7 +4,7 @@ import { Order as GraphqlOrder } from '../graphql/schema.types'
 @Entity()
 export class Order extends BaseEntity implements GraphqlOrder{
   @PrimaryGeneratedColumn()
-  id: number
+  prodId: number
 
   @CreateDateColumn()
   timeCreated: Date
@@ -13,29 +13,11 @@ export class Order extends BaseEntity implements GraphqlOrder{
   timeUpdated: Date
 
   @Column({
-    nullable: true,
-  })
-  prodId: number
-
-  @Column({
   })
   sellerId: number
 
   @Column({
   })
   buyerId: number
-
-  @Column({
-    length: 100,
-    nullable: true,
-    default: "0",
-  })
-  price: string
-
-  @Column({
-    length: 100,
-    nullable: true,
-  })
-  payment: string
 
 }

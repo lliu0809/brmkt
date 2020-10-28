@@ -15,7 +15,12 @@ export class Selling extends BaseEntity implements GraphqlSelling{
   @Column({
     length: 100,
   })
-  prodName: string
+  title: string
+
+  @Column({
+    default: "",
+  })
+  description: string
 
   @Column({
     type: 'enum',
@@ -29,19 +34,12 @@ export class Selling extends BaseEntity implements GraphqlSelling{
   prodId: number
 
   @Column({
-    length: 100,
-    nullable: true,
-    default: "0",
+    default: 0.0,
   })
-  price: string
+  price: number
 
   @Column('simple-array', { nullable: true })
   comment: string[]
-
-  @Column({
-    nullable: true,
-  })
-  rating: number
 
   @Column({
   })

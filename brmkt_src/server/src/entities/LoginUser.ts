@@ -30,6 +30,11 @@ export class LoginUser extends BaseEntity implements GraphqlLoginUser {
   name: string
 
   @Column({
+    nullable: true,
+  })
+  cardNumber: number
+
+  @Column({
     length: 100,
   })
   password: string

@@ -65,14 +65,21 @@ export interface LoginUser {
   userType: UserType
   email: Scalars['String']
   name: Scalars['String']
+  address: Scalars['String']
   password: Scalars['String']
+  cardNumber: Scalars['Int']
 }
 
 export interface Auction {
+  title: Scalars['String']
+  description: Scalars['String']
   sellerId: Scalars['Int']
   prodId: Scalars['Int']
-  bids: Array<Scalars['String']>
-  base: Scalars['String']
+  prodType: ProdType
+  bids: Array<Scalars['Float']>
+  price: Scalars['Float']
+  auctionTime: Scalars['Int']
+  currentBuyerId: Scalars['Int']
 }
 
 export interface Order{
@@ -82,9 +89,11 @@ export interface Order{
 }
 
 export interface Selling{
-  prodName: Scalars['String']
+  title: Scalars['String']
+  description: Scalars['String']
   sellerId: Scalars['Int']
   prodId: Scalars['Int']
+  price: Scalars['Float']
   prodType: ProdType
 }
 
