@@ -4,7 +4,7 @@ import { ProdType, Selling as GraphqlSelling } from '../graphql/schema.types'
 @Entity()
 export class Selling extends BaseEntity implements GraphqlSelling{
   @PrimaryGeneratedColumn()
-  id: number
+  prodId: number
 
   @CreateDateColumn()
   timeCreated: Date
@@ -30,16 +30,9 @@ export class Selling extends BaseEntity implements GraphqlSelling{
   prodType: ProdType
 
   @Column({
-  })
-  prodId: number
-
-  @Column({
     default: 0.0,
   })
   price: number
-
-  @Column('simple-array', { nullable: true })
-  comment: string[]
 
   @Column({
   })

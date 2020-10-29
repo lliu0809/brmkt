@@ -1,0 +1,1 @@
+insert into `selling` (`title`, `prodType`, `price`, `sellerId`, `description`) values ('a jacket', 'FASHION', 10, 2, 'a nice jacket');

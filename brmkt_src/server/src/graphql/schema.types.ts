@@ -60,21 +60,22 @@ export enum UserType {
 }
 
 export interface LoginUser {
-  __typename?: 'User'
+  __typename?: 'LoginUser'
   id: Scalars['Int']
   userType: UserType
   email: Scalars['String']
   name: Scalars['String']
   address: Scalars['String']
   password: Scalars['String']
-  cardNumber: Scalars['Int']
+  cardNumber: Scalars['String']
 }
 
 export interface Auction {
+  __typename?: 'Auction'
+  prodId: Scalars['Int']
   title: Scalars['String']
   description: Scalars['String']
   sellerId: Scalars['Int']
-  prodId: Scalars['Int']
   prodType: ProdType
   bids: Array<Scalars['Float']>
   price: Scalars['Float']
@@ -83,16 +84,25 @@ export interface Auction {
 }
 
 export interface Order{
+  __typename?: 'Order'
+  orderId: Scalars['Int']
+  prodId: Scalars['Int']
   buyerId: Scalars['Int']
   sellerId: Scalars['Int']
-  prodId: Scalars['Int']
+  itemType: ItemType
+}
+
+export enum ItemType {
+  Auction = 'AUCTION',
+  Selling = 'SELLING',
 }
 
 export interface Selling{
+  __typename?: 'Selling'
+  prodId: Scalars['Int']
   title: Scalars['String']
   description: Scalars['String']
   sellerId: Scalars['Int']
-  prodId: Scalars['Int']
   price: Scalars['Float']
   prodType: ProdType
 }
