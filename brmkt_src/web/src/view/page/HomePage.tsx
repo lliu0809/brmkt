@@ -15,18 +15,19 @@ export function HomePage(props: HomePageProps) {
       <Hero>
         <H1>BRMKT.</H1>
         <br/>
+        <div style={{}}></div>
         <H3>UCLA Buy, Sell, Auction</H3>
         <br/>
       </Hero>
       <br/>
-      <br/>
-      <Hero>
+
+      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "none", margin: "10px" }}>
         <Link to={getPath(Route.PROJECTS)}><H3>&nbsp;&nbsp;Latest&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
         <Link to={getPath(Route.PROJECTS)}><H3>&nbsp;&nbsp;Bearwear&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
         <Link to={getPath(Route.PROJECTS)}><H3>&nbsp;&nbsp;Textbooks&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
         <Link to={getPath(Route.PROJECTS)}><H3>&nbsp;&nbsp;Dorm Supply&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
         <Link to={getPath(Route.PROJECTS)}><H3>&nbsp;&nbsp;Electronics&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
-      </Hero>
+      </div>
 
       <br/>
       <br/>
@@ -34,6 +35,9 @@ export function HomePage(props: HomePageProps) {
       <Hero>
         <H2>Most Watched</H2>
       </Hero>
+
+      <br/>
+
 
       <Hero>
         <H2>Just Added</H2>
