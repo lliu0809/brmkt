@@ -17,6 +17,7 @@ export interface Query {
   self?: Maybe<User>
   surveys: Array<Survey>
   survey?: Maybe<Survey>
+  items: Array<Item>
 }
 
 export interface QuerySurveyArgs {
@@ -59,66 +60,6 @@ export enum UserType {
   User = 'USER',
 }
 
-export interface LoginUser {
-  __typename?: 'LoginUser'
-  id: Scalars['Int']
-  userType: UserType
-  email: Scalars['String']
-  name: Scalars['String']
-  address: Scalars['String']
-  password: Scalars['String']
-  cardNumber: Scalars['String']
-}
-
-export interface Auction {
-  __typename?: 'Auction'
-  prodId: Scalars['Int']
-  title: Scalars['String']
-  description: Scalars['String']
-  sellerId: Scalars['Int']
-  prodType: ProdType
-  bids: Array<Scalars['Float']>
-  price: Scalars['Float']
-  auctionTime: Scalars['Int']
-  currentBuyerId: Scalars['Int']
-}
-
-export interface Order{
-  __typename?: 'Order'
-  orderId: Scalars['Int']
-  prodId: Scalars['Int']
-  buyerId: Scalars['Int']
-  sellerId: Scalars['Int']
-  itemType: ItemType
-}
-
-export enum ItemType {
-  Auction = 'AUCTION',
-  Selling = 'SELLING',
-}
-
-export interface Selling{
-  __typename?: 'Selling'
-  prodId: Scalars['Int']
-  title: Scalars['String']
-  description: Scalars['String']
-  sellerId: Scalars['Int']
-  price: Scalars['Float']
-  prodType: ProdType
-}
-
-export enum ProdType {
-  Art = 'ART',
-  Electronics = 'ELECTRONICS',
-  Entertainment = 'ENTERTAINMENT',
-  Sports= 'SPORTS',
-  Fashion = 'FASHION',
-  Home= 'HOME',
-  Moters = 'MOTERS',
-  Toys= 'TOYS',
-  Other = 'OTHER'
-}
-
 export interface Survey {
   __typename?: 'Survey'
   id: Scalars['Int']
@@ -148,6 +89,32 @@ export interface SurveyAnswer {
 export interface SurveyInput {
   questionId: Scalars['Int']
   answer: Scalars['String']
+}
+
+export enum ItemType {
+  Buyitnow = 'BUYITNOW',
+  Auction = 'AUCTION',
+}
+
+export interface Item {
+  __typename?: 'Item'
+  id: Scalars['Int']
+  title: Scalars['String']
+  price: Scalars['Float']
+  shipping: Scalars['Float']
+  description?: Maybe<Scalars['String']>
+  category: Scalars['String']
+  seller: Scalars['Int']
+  buyer?: Maybe<Scalars['Int']>
+  timeAdded?: Maybe<Scalars['Int']>
+  itemType: ItemType
+  auctionTime?: Maybe<Scalars['Int']>
+}
+
+export interface Order {
+  __typename?: 'Order'
+  id: Scalars['Int']
+  soldItem: Item
 }
 
 export type ResolverTypeWrapper<T> = Promise<T> | T
@@ -239,6 +206,10 @@ export type ResolversTypes = {
   SurveyQuestion: ResolverTypeWrapper<SurveyQuestion>
   SurveyAnswer: ResolverTypeWrapper<SurveyAnswer>
   SurveyInput: SurveyInput
+  ItemType: ItemType
+  Item: ResolverTypeWrapper<Item>
+  Float: ResolverTypeWrapper<Scalars['Float']>
+  Order: ResolverTypeWrapper<Order>
 }
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -254,6 +225,9 @@ export type ResolversParentTypes = {
   SurveyQuestion: SurveyQuestion
   SurveyAnswer: SurveyAnswer
   SurveyInput: SurveyInput
+  Item: Item
+  Float: Scalars['Float']
+  Order: Order
 }
 
 export type QueryResolvers<
@@ -268,6 +242,7 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QuerySurveyArgs, 'surveyId'>
   >
+  items?: Resolver<Array<ResolversTypes['Item']>, ParentType, ContextType>
 }
 
 export type MutationResolvers<
@@ -347,6 +322,33 @@ export type SurveyAnswerResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
+export type ItemResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Item'] = ResolversParentTypes['Item']
+> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  price?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
+  shipping?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  category?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  seller?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  buyer?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
+  timeAdded?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
+  itemType?: Resolver<ResolversTypes['ItemType'], ParentType, ContextType>
+  auctionTime?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type OrderResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Order'] = ResolversParentTypes['Order']
+> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  soldItem?: Resolver<ResolversTypes['Item'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
 export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>
@@ -355,6 +357,8 @@ export type Resolvers<ContextType = any> = {
   Survey?: SurveyResolvers<ContextType>
   SurveyQuestion?: SurveyQuestionResolvers<ContextType>
   SurveyAnswer?: SurveyAnswerResolvers<ContextType>
+  Item?: ItemResolvers<ContextType>
+  Order?: OrderResolvers<ContextType>
 }
 
 /**

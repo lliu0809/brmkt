@@ -20,6 +20,8 @@ type Query {
 
   surveys: [Survey!]!
   survey (surveyId: Int!): Survey
+  items: [Item!]!
+  #item (prodId: Int!, prodType: ProdType): Selling
 }
 
 type Mutation {

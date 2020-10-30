@@ -24,6 +24,34 @@ export interface FetchUserContext {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: fetchItems
+// ====================================================
+
+export interface fetchItems_items {
+  __typename: "Item";
+  id: number;
+  title: string;
+  price: number;
+  shipping: number;
+  description: string | null;
+  category: string;
+  seller: number;
+  buyer: number | null;
+  timeAdded: number | null;
+  itemType: ItemType;
+  auctionTime: number | null;
+}
+
+export interface fetchItems {
+  items: fetchItems_items[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchSurveys
 // ====================================================
 
@@ -193,6 +221,47 @@ export interface NextSurveyQuestionVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: User
+// ====================================================
+
+export interface User {
+  __typename: "User";
+  id: number;
+  name: string;
+  email: string;
+  userType: UserType;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Selling
+// ====================================================
+
+export interface Selling {
+  __typename: "Item";
+  id: number;
+  title: string;
+  price: number;
+  shipping: number;
+  description: string | null;
+  category: string;
+  seller: number;
+  buyer: number | null;
+  timeAdded: number | null;
+  itemType: ItemType;
+  auctionTime: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: Survey
 // ====================================================
 
@@ -248,6 +317,11 @@ export interface SurveyQuestion {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export enum ItemType {
+  AUCTION = "AUCTION",
+  BUYITNOW = "BUYITNOW",
+}
 
 export enum UserType {
   ADMIN = "ADMIN",

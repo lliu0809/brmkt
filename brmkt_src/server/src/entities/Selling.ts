@@ -25,7 +25,7 @@ export class Selling extends BaseEntity implements GraphqlSelling{
   @Column({
     type: 'enum',
     enum: ProdType,
-    default: ProdType.Other,
+    default: ProdType.OTHER,
   })
   prodType: ProdType
 

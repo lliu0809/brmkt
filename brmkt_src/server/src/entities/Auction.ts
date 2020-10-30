@@ -20,7 +20,7 @@ export class Auction extends BaseEntity implements GraphqlAuction{
   @Column({
     type: 'enum',
     enum: ProdType,
-    default: ProdType.Other,
+    default: ProdType.OTHER,
   })
   prodType: ProdType
 
