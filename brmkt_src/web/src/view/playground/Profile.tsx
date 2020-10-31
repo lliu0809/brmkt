@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client'
 import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
-import { FetchBuyItNows } from '../../graphql/query.gen'
+import { FetchAuctions } from '../../graphql/query.gen'
 import { Spacer } from '../../style/spacer'
 import { AppRouteParams } from '../nav/route'
-import { fetchBuyItNows } from '../page/fetchBuyItNow'
+import { fetchAuctions } from '../page/fetchAuctions'
 //const [listings, setListings] = React.useState([])
 
 interface ProfilePageProps extends RouteComponentProps, AppRouteParams {}
@@ -30,25 +30,25 @@ resolver:
 */
 export function Profile(props: ProfilePageProps){
   //const [userQuery, setUserQuery] = useState('')
-  const { loading, data } = useQuery<FetchBuyItNows>(fetchBuyItNows)
+  const { loading, data } = useQuery<FetchAuctions>(fetchAuctions)
 
   if (loading || data == null) {
     return <div>loading...</div>
   }
 
-  else if (!data || data.buyItNows.length === 0) {
-    return <div>no buyItNows</div>
+  else if (!data || data.auctions.length === 0) {
+    return <div>no auctions</div>
   }
   else{
   return (
     <div className="mw6">
       <Spacer $h4 />
-      {data.buyItNows
+      {data.auctions
 
-        .map((buyItNow, i) => (
+        .map((auction, i) => (
           <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
             <Spacer $w4 />
-            {buyItNow.title} · {buyItNow.price}
+            {auction.title} · {auction.price}
           </div>
         ))}
     </div>

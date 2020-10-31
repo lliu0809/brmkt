@@ -24,6 +24,32 @@ export interface FetchUserContext {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchAuctions
+// ====================================================
+
+export interface FetchAuctions_auctions {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  seller: number;
+  currentHighest: number | null;
+  bids: number[] | null;
+  auctionTime: number;
+}
+
+export interface FetchAuctions {
+  auctions: FetchAuctions_auctions[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchBuyItNows
 // ====================================================
 
@@ -217,15 +243,20 @@ export interface NextSurveyQuestionVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: User
+// GraphQL fragment: Auction
 // ====================================================
 
-export interface User {
-  __typename: "User";
+export interface Auction {
+  __typename: "Auction";
   id: number;
-  name: string;
-  email: string;
-  userType: UserType;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  seller: number;
+  currentHighest: number | null;
+  bids: number[] | null;
+  auctionTime: number;
 }
 
 /* tslint:disable */

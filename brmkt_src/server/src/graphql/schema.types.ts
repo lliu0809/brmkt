@@ -19,7 +19,7 @@ export interface Query {
   survey?: Maybe<Survey>
   user: User
   buyItNows: Array<BuyItNow>
-  auctions?: Maybe<Array<Auction>>
+  auctions: Array<Auction>
 }
 
 export interface QuerySurveyArgs {
@@ -113,7 +113,7 @@ export interface Auction {
   prodType: ProdType
   seller: Scalars['Int']
   currentHighest?: Maybe<Scalars['Int']>
-  bids: Array<Scalars['Float']>
+  bids?: Maybe<Array<Scalars['Float']>>
   auctionTime: Scalars['Int']
 }
 
@@ -265,7 +265,7 @@ export type QueryResolvers<
   >
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>
   buyItNows?: Resolver<Array<ResolversTypes['BuyItNow']>, ParentType, ContextType>
-  auctions?: Resolver<Maybe<Array<ResolversTypes['Auction']>>, ParentType, ContextType>
+  auctions?: Resolver<Array<ResolversTypes['Auction']>, ParentType, ContextType>
 }
 
 export type MutationResolvers<
@@ -359,7 +359,7 @@ export type AuctionResolvers<
   prodType?: Resolver<ResolversTypes['ProdType'], ParentType, ContextType>
   seller?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   currentHighest?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
-  bids?: Resolver<Array<ResolversTypes['Float']>, ParentType, ContextType>
+  bids?: Resolver<Maybe<Array<ResolversTypes['Float']>>, ParentType, ContextType>
   auctionTime?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
