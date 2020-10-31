@@ -20,7 +20,9 @@ type Query {
 
   surveys: [Survey!]!
   survey (surveyId: Int!): Survey
-  # items: [Item!]!
+  user: User!
+  buyItNows: [BuyItNow!]!
+  auctions: [Auction!]
   # item (prodId: Int!, prodType: ProdType): Selling
 }
 

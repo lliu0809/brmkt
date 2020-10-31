@@ -2,6 +2,7 @@ import { readFileSync } from 'fs'
 import { PubSub } from 'graphql-yoga'
 import path from 'path'
 import { check } from '../../../common/src/util'
+import { BuyItNow } from '../entities/BuyItNow'
 import { Survey } from '../entities/Survey'
 import { SurveyAnswer } from '../entities/SurveyAnswer'
 import { SurveyQuestion } from '../entities/SurveyQuestion'
@@ -27,6 +28,10 @@ export const graphqlRoot: Resolvers<Context> = {
     self: (_, args, ctx) => ctx.user,
     survey: async (_, { surveyId }) => (await Survey.findOne({ where: { id: surveyId } })) || null,
     surveys: () => Survey.find(),
+    buyItNows: async () => {
+      const buyItNows = await BuyItNow.find()
+      return buyItNows
+    },
   },
   Mutation: {
     answerSurvey: async (_, { input }, ctx) => {

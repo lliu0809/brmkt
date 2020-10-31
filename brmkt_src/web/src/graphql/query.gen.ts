@@ -24,6 +24,30 @@ export interface FetchUserContext {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchBuyItNows
+// ====================================================
+
+export interface FetchBuyItNows_buyItNows {
+  __typename: "BuyItNow";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  seller: number;
+  buyer: number | null;
+}
+
+export interface FetchBuyItNows {
+  buyItNows: FetchBuyItNows_buyItNows[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchSurveys
 // ====================================================
 
@@ -193,6 +217,43 @@ export interface NextSurveyQuestionVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: User
+// ====================================================
+
+export interface User {
+  __typename: "User";
+  id: number;
+  name: string;
+  email: string;
+  userType: UserType;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: BuyItNow
+// ====================================================
+
+export interface BuyItNow {
+  __typename: "BuyItNow";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  seller: number;
+  buyer: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: Survey
 // ====================================================
 
@@ -248,6 +309,14 @@ export interface SurveyQuestion {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export enum ProdType {
+  BEARWEAR = "BEARWEAR",
+  DORMSUPPLY = "DORMSUPPLY",
+  ELECTRONICS = "ELECTRONICS",
+  OTHER = "OTHER",
+  TEXTBOOKS = "TEXTBOOKS",
+}
 
 export enum UserType {
   ADMIN = "ADMIN",
