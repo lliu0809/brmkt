@@ -2,9 +2,9 @@ import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, U
 import { Auction as GraphqlAuction, ProdType } from '../graphql/schema.types'
 
 @Entity()
-export class Auction extends BaseEntity implements GraphqlAuction{
+export class Auction extends BaseEntity implements GraphqlAuction {
   @PrimaryGeneratedColumn()
-  prodId: number
+  id: number
 
   @CreateDateColumn()
   timeCreated: Date
@@ -18,36 +18,38 @@ export class Auction extends BaseEntity implements GraphqlAuction{
   title: string
 
   @Column({
-    type: 'enum',
-    enum: ProdType,
-    default: ProdType.OTHER,
-  })
-  prodType: ProdType
-
-  @Column('simple-array', { nullable: true })
-  bids: number[]
-
-  @Column({
     default: 0.0,
   })
   price: number
 
   @Column({
-    nullable: true,
-  })
-  auctionTime: number
-
-  @Column({
-  })
-  sellerId: number
-
-  @Column({
-    nullable: true,
-  })
-  currentBuyerId: number
-
-  @Column({
     default: ""
   })
   description: string
+
+  @Column({
+    type: 'enum',
+    enum: ProdType,
+    default: ProdType.Other,
+  })
+  prodType: ProdType
+
+  @Column({
+  })
+  seller: number
+
+  @Column({
+    nullable: true,
+  })
+  currentHighest: number
+
+  @Column('simple-array', {
+    nullable: true
+  })
+  bids: number[]
+
+  @Column({
+    default: 86400
+  })
+  auctionTime: number
 }

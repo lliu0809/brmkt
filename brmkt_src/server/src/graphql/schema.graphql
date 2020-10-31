@@ -20,8 +20,8 @@ type Query {
 
   surveys: [Survey!]!
   survey (surveyId: Int!): Survey
-  items: [Item!]!
-  #item (prodId: Int!, prodType: ProdType): Selling
+  # items: [Item!]!
+  # item (prodId: Int!, prodType: ProdType): Selling
 }
 
 type Mutation {
@@ -36,12 +36,12 @@ type Subscription {
   surveyUpdates (surveyId: Int!): Survey
 }
 
-type User {
-  id: Int!
-  userType: UserType!
-  email: String!
-  name: String!
-}
+# type User {
+#   id: Int!
+#   userType: UserType!
+#   email: String!
+#   name: String!
+# }
 
 enum UserType { ADMIN, USER }
 
@@ -92,8 +92,49 @@ input SurveyInput {
 }
 
 #####################################################################################
-#                                 Our Query Types                                   #
+#                              Start Of Our Query Types                             #
 #####################################################################################
+
+type User {
+  id: Int!
+  userType: UserType!
+  name: String!
+  address: String!
+  email: String!
+  password: String!
+  cardNumber: String!
+}
+
+enum ProdType { BEARWEAR, TEXTBOOKS, DORMSUPPLY, ELECTRONICS, OTHER }
+
+type Auction {
+  id: Int!
+  title: String!
+  price: Float!
+  description: String!
+  prodType: ProdType!
+  seller: Int!
+  currentHighest: Int # Highest Bidder's ID
+  bids: [Float!]!
+  auctionTime: Int!
+}
+
+type BuyItNow {
+  id: Int!
+  title: String!
+  price: Float!
+  description: String!
+  prodType: ProdType!
+  seller: Int!
+  buyer: Int
+}
+
+type Order {
+  id: Int!
+  prodId: Int!
+  sellerId: Int!
+  buyerId: Int!
+}
 
 # type User {
 #   id: Int!
@@ -109,23 +150,27 @@ input SurveyInput {
 #   cardNumber: Int
 # }
 
-enum ItemType { BUYITNOW, AUCTION }
+# enum ItemType { BUYITNOW, AUCTION }
 
-type Item {
-  id: Int!
-  title: String!
-  price: Float!
-  shipping: Float!
-  description: String
-  category: String!
-  seller: Int! #user ID
-  buyer: Int #user ID
-  timeAdded: Int #use SQL date & time
-  itemType: ItemType!
-  auctionTime: Int #in seconds?
-}
+# type Item {
+#   id: Int!
+#   title: String!
+#   price: Float!
+#   shipping: Float!
+#   description: String
+#   category: String!
+#   seller: Int! #user ID
+#   buyer: Int #user ID
+#   timeAdded: Int #use SQL date & time
+#   itemType: ItemType!
+#   auctionTime: Int #in seconds?
+# }
 
-type Order {
-  id: Int! #item ID
-  soldItem: Item!
-}
+# type Order {
+#   id: Int! #item ID
+#   soldItem: Item!
+# }
+
+#####################################################################################
+#                              End Of Our Query Types                               #
+#####################################################################################

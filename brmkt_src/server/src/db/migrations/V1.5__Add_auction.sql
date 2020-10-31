@@ -1,2 +1,2 @@
-insert into `auction` (`title`, `prodType`, `price`, `auctionTime`, `sellerId`, `description`) values ('a chair', 'HOME', 50, 200, 1, 'a fancy chair');
-insert into `auction` (`title`, `prodType`, `price`, `auctionTime`, `sellerId`, `description`,`bids`,`currentBuyerId`) values ('a jacket', 'FASHION', 10,200, 2, 'a nice jacket',"1,2,3",3);
+insert into `auction` (`title`, `price`, `description`, `prodType`, `seller`, `auctionTime`) values ('NEW chair', 10.08, 'a fancy chair', 'DORMSUPPLY', 1, 50000);
+insert into `auction` (`title`, `price`, `description`, `prodType`, `seller`, `auctionTime`, `bids`, `currentHighest`) values ('NEW TV', 78.42, 'a 4k tv', 'ELECTRONICS', 2, 76000, "1,2,3", 3);
