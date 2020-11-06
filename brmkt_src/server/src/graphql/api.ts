@@ -4,6 +4,7 @@ import path from 'path'
 import { check } from '../../../common/src/util'
 import { Auction } from '../entities/Auction'
 import { BuyItNow } from '../entities/BuyItNow'
+import { Order } from '../entities/Order'
 import { Survey } from '../entities/Survey'
 import { SurveyAnswer } from '../entities/SurveyAnswer'
 import { SurveyQuestion } from '../entities/SurveyQuestion'
@@ -36,6 +37,10 @@ export const graphqlRoot: Resolvers<Context> = {
     auctions: async () => {
       const auctions = await Auction.find()
       return auctions
+    },
+    orders: async () => {
+      const orders = await Order.find()
+      return orders
     },
   },
   Mutation: {

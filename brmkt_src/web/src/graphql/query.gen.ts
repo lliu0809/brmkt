@@ -74,6 +74,27 @@ export interface FetchBuyItNows {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchOrders
+// ====================================================
+
+export interface FetchOrders_orders {
+  __typename: "Order";
+  id: number;
+  prodId: number;
+  buyerId: number;
+  sellerId: number;
+}
+
+export interface FetchOrders {
+  orders: FetchOrders_orders[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchSurveys
 // ====================================================
 
@@ -277,6 +298,23 @@ export interface BuyItNow {
   prodType: ProdType;
   seller: number;
   buyer: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Order
+// ====================================================
+
+export interface Order {
+  __typename: "Order";
+  id: number;
+  prodId: number;
+  buyerId: number;
+  sellerId: number;
 }
 
 /* tslint:disable */

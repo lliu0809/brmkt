@@ -20,6 +20,7 @@ export interface Query {
   user: User
   buyItNows: Array<BuyItNow>
   auctions: Array<Auction>
+  orders: Array<Order>
 }
 
 export interface QuerySurveyArgs {
@@ -104,6 +105,11 @@ export enum ProdType {
   Other = 'OTHER',
 }
 
+export enum OrderType {
+  Buyitnow = 'BUYITNOW',
+  Auction = 'AUCTION',
+}
+
 export interface Auction {
   __typename?: 'Auction'
   id: Scalars['Int']
@@ -134,6 +140,7 @@ export interface Order {
   prodId: Scalars['Int']
   sellerId: Scalars['Int']
   buyerId: Scalars['Int']
+  orderType: OrderType
 }
 
 export type ResolverTypeWrapper<T> = Promise<T> | T
@@ -226,6 +233,7 @@ export type ResolversTypes = {
   SurveyInput: SurveyInput
   User: ResolverTypeWrapper<User>
   ProdType: ProdType
+  OrderType: OrderType
   Auction: ResolverTypeWrapper<Auction>
   Float: ResolverTypeWrapper<Scalars['Float']>
   BuyItNow: ResolverTypeWrapper<BuyItNow>
@@ -266,6 +274,7 @@ export type QueryResolvers<
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>
   buyItNows?: Resolver<Array<ResolversTypes['BuyItNow']>, ParentType, ContextType>
   auctions?: Resolver<Array<ResolversTypes['Auction']>, ParentType, ContextType>
+  orders?: Resolver<Array<ResolversTypes['Order']>, ParentType, ContextType>
 }
 
 export type MutationResolvers<
@@ -386,6 +395,7 @@ export type OrderResolvers<
   prodId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   sellerId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   buyerId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  orderType?: Resolver<ResolversTypes['OrderType'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 

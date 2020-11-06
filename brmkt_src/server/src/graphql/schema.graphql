@@ -23,6 +23,7 @@ type Query {
   user: User!
   buyItNows: [BuyItNow!]!
   auctions: [Auction!]!
+  orders: [Order!]!
   # item (prodId: Int!, prodType: ProdType): Selling
 }
 
@@ -108,7 +109,7 @@ type User {
 }
 
 enum ProdType { BEARWEAR, TEXTBOOKS, DORMSUPPLY, ELECTRONICS, OTHER }
-
+enum OrderType { BUYITNOW, AUCTION }
 type Auction {
   id: Int!
   title: String!
@@ -136,6 +137,7 @@ type Order {
   prodId: Int!
   sellerId: Int!
   buyerId: Int!
+  orderType: OrderType!
 }
 
 # type User {

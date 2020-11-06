@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client'
 import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
-import { FetchAuctions } from '../../graphql/query.gen'
+import { FetchOrders } from '../../graphql/query.gen'
 import { Spacer } from '../../style/spacer'
 import { AppRouteParams } from '../nav/route'
-import { fetchAuctions } from '../page/fetchAuctions'
+import { fetchOrders } from '../page/fetchOrder'
 //const [listings, setListings] = React.useState([])
 
 interface ProfilePageProps extends RouteComponentProps, AppRouteParams {}
@@ -13,7 +13,6 @@ interface ProfilePageProps extends RouteComponentProps, AppRouteParams {}
   toastErr('invalid email/password')
   return
 }*/
-
 
 /*
 query type:
@@ -28,32 +27,27 @@ resolver:
   }
 
 */
-export function Profile(props: ProfilePageProps){
+export function Profile(props: ProfilePageProps) {
   //const [userQuery, setUserQuery] = useState('')
-  const { loading, data } = useQuery<FetchAuctions>(fetchAuctions)
+  const { loading, data } = useQuery<FetchOrders>(fetchOrders)
 
   if (loading || data == null) {
     return <div>loading...</div>
-  }
-
-  else if (!data || data.auctions.length === 0) {
-    return <div>no auctions</div>
-  }
-  else{
-  return (
-    <div className="mw6">
-      <Spacer $h4 />
-      {data.auctions
-
-        .map((auction, i) => (
+  } else if (!data || data.orders.length === 0) {
+    return <div>no orders</div>
+  } else {
+    return (
+      <div className="mw6">
+        <Spacer $h4 />
+        {data.orders.map((order, i) => (
           <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
             <Spacer $w4 />
-            {auction.title} · {auction.price}
+            {order.buyerId} · {order.sellerId}
           </div>
         ))}
-    </div>
-  )
-        }
+      </div>
+    )
+  }
   /*fetch('/listing')
     .then(response =>
       response.json())
