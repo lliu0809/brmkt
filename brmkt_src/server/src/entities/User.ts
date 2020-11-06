@@ -13,11 +13,6 @@ export class User extends BaseEntity implements GraphqlUser {
   timeUpdated: Date
 
   @Column({
-    length: 100,
-  })
-  email: string
-
-  @Column({
     type: 'enum',
     enum: UserType,
     default: UserType.User,
@@ -26,7 +21,26 @@ export class User extends BaseEntity implements GraphqlUser {
 
   @Column({
     length: 100,
-    nullable: true,
   })
   name: string
+
+  @Column({
+    length: 100,
+  })
+  address: string
+
+  @Column({
+    length: 100,
+  })
+  email: string
+
+  @Column({
+    length: 100,
+  })
+  password: string
+
+  @Column({
+    length: 100,
+  })
+  cardNumber: string
 }

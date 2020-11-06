@@ -1,10 +1,12 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { ItemType, Order as GraphqlOrder } from '../graphql/schema.types'
+import { Order as GraphqlOrder, OrderType } from '../graphql/schema.types'
 
 @Entity()
-export class Order extends BaseEntity implements GraphqlOrder{
+export class Order extends BaseEntity implements GraphqlOrder {
+  __typename?: 'Order' | undefined
+  ordertype: OrderType
   @PrimaryGeneratedColumn()
-  orderId: number
+  id: number
 
   @CreateDateColumn()
   timeCreated: Date
@@ -12,22 +14,18 @@ export class Order extends BaseEntity implements GraphqlOrder{
   @UpdateDateColumn()
   timeUpdated: Date
 
-  @Column({
-  })
+  @Column({})
+  prodId: number
+
+  @Column({})
   sellerId: number
 
-  @Column({
-  })
+  @Column({})
   buyerId: number
 
   @Column({
-  })
-  prodId: number
-
-  @Column({
     type: 'enum',
-    enum: ItemType,
+    enum: OrderType,
   })
-  itemType: ItemType
-
+  orderType: OrderType
 }

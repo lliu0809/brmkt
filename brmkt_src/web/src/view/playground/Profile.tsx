@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client'
 import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
-import { FetchUserContext } from '../../graphql/query.gen'
-import { H2 } from '../../style/header'
-import { fetchUser } from '../auth/fetchUser'
+import { FetchOrders } from '../../graphql/query.gen'
+import { Spacer } from '../../style/spacer'
 import { AppRouteParams } from '../nav/route'
+import { fetchOrders } from '../page/fetchOrder'
 //const [listings, setListings] = React.useState([])
 
 interface ProfilePageProps extends RouteComponentProps, AppRouteParams {}
@@ -13,19 +13,41 @@ interface ProfilePageProps extends RouteComponentProps, AppRouteParams {}
   toastErr('invalid email/password')
   return
 }*/
-export function Profile(props: ProfilePageProps){
 
-  const { loading, data, } = useQuery<FetchUserContext>(fetchUser, {
-    variables: {name: 'name'},
-  })
-  if (loading || data == null) {
-    return null
+/*
+query type:
+  user: User!
+  buyItNows: [BuyItNow!]!
+  auctions: [Auction!]!
+
+resolver:
+  buyItNows: async () => {
+      const buyItNows = await BuyItNow.find()
+      return buyItNows
   }
-  if(data.self == null) { return <H2>I'm Profile</H2>}
-  return (
-    <><H2>User Profile</H2>
-      <H2>{data.self.name}</H2></>
-  )
+
+*/
+export function Profile(props: ProfilePageProps) {
+  //const [userQuery, setUserQuery] = useState('')
+  const { loading, data } = useQuery<FetchOrders>(fetchOrders)
+
+  if (loading || data == null) {
+    return <div>loading...</div>
+  } else if (!data || data.orders.length === 0) {
+    return <div>no orders</div>
+  } else {
+    return (
+      <div className="mw6">
+        <Spacer $h4 />
+        {data.orders.map((order, i) => (
+          <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
+            <Spacer $w4 />
+            {order.buyerId} · {order.sellerId}
+          </div>
+        ))}
+      </div>
+    )
+  }
   /*fetch('/listing')
     .then(response =>
       response.json())

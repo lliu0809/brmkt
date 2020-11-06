@@ -24,6 +24,77 @@ export interface FetchUserContext {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchAuctions
+// ====================================================
+
+export interface FetchAuctions_auctions {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  seller: number;
+  currentHighest: number | null;
+  bids: number[] | null;
+  auctionTime: number;
+}
+
+export interface FetchAuctions {
+  auctions: FetchAuctions_auctions[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: FetchBuyItNows
+// ====================================================
+
+export interface FetchBuyItNows_buyItNows {
+  __typename: "BuyItNow";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  seller: number;
+  buyer: number | null;
+}
+
+export interface FetchBuyItNows {
+  buyItNows: FetchBuyItNows_buyItNows[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: FetchOrders
+// ====================================================
+
+export interface FetchOrders_orders {
+  __typename: "Order";
+  id: number;
+  prodId: number;
+  buyerId: number;
+  sellerId: number;
+}
+
+export interface FetchOrders {
+  orders: FetchOrders_orders[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchSurveys
 // ====================================================
 
@@ -193,6 +264,65 @@ export interface NextSurveyQuestionVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: Auction
+// ====================================================
+
+export interface Auction {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  seller: number;
+  currentHighest: number | null;
+  bids: number[] | null;
+  auctionTime: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: BuyItNow
+// ====================================================
+
+export interface BuyItNow {
+  __typename: "BuyItNow";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  seller: number;
+  buyer: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Order
+// ====================================================
+
+export interface Order {
+  __typename: "Order";
+  id: number;
+  prodId: number;
+  buyerId: number;
+  sellerId: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: Survey
 // ====================================================
 
@@ -248,6 +378,14 @@ export interface SurveyQuestion {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export enum ProdType {
+  BEARWEAR = "BEARWEAR",
+  DORMSUPPLY = "DORMSUPPLY",
+  ELECTRONICS = "ELECTRONICS",
+  OTHER = "OTHER",
+  TEXTBOOKS = "TEXTBOOKS",
+}
 
 export enum UserType {
   ADMIN = "ADMIN",

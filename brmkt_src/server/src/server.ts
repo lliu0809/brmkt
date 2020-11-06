@@ -20,12 +20,14 @@ import { checkEqual, Unpromise } from '../../common/src/util'
 import { Config } from './config'
 import { migrate } from './db/migrate'
 import { initORM } from './db/sql'
+import { Auction } from './entities/Auction'
 import { Session } from './entities/Session'
 import { User } from './entities/User'
 import { getSchema, graphqlRoot, pubsub } from './graphql/api'
 import { ConnectionManager } from './graphql/ConnectionManager'
 import { expressLambdaProxy } from './lambda/handler'
 import { renderApp } from './render'
+
 
 const server = new GraphQLServer({
   typeDefs: getSchema(),
@@ -65,6 +67,10 @@ server.express.get('/orders', (req, res) => {
   //show my orders/purchase history
 })
 
+server.express.get('/auctions', async (req, res) => {
+  const auctions = await Auction.find()
+  res.status(200).type('json').send(auctions)
+})
 
 
 server.express.post(

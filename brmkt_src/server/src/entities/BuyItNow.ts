@@ -1,10 +1,10 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { ProdType, Selling as GraphqlSelling } from '../graphql/schema.types'
+import { BuyItNow as GraphqlBuyItNow, ProdType } from '../graphql/schema.types'
 
 @Entity()
-export class Selling extends BaseEntity implements GraphqlSelling{
+export class BuyItNow extends BaseEntity implements GraphqlBuyItNow {
   @PrimaryGeneratedColumn()
-  prodId: number
+  id: number
 
   @CreateDateColumn()
   timeCreated: Date
@@ -16,6 +16,11 @@ export class Selling extends BaseEntity implements GraphqlSelling{
     length: 100,
   })
   title: string
+
+  @Column({
+    default: 0.0,
+  })
+  price: number
 
   @Column({
     default: "",
@@ -30,12 +35,11 @@ export class Selling extends BaseEntity implements GraphqlSelling{
   prodType: ProdType
 
   @Column({
-    default: 0.0,
   })
-  price: number
+  seller: number
 
   @Column({
+    nullable: true
   })
-  sellerId: number
-
+  buyerId: number
 }
