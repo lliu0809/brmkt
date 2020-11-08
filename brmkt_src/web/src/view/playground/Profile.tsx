@@ -1,10 +1,13 @@
 import { useQuery } from '@apollo/client'
 import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
+import { Colors } from '../../../../common/src/colors'
 import { FetchOrders } from '../../graphql/query.gen'
 import { Spacer } from '../../style/spacer'
+import { style } from '../../style/styled'
 import { AppRouteParams } from '../nav/route'
 import { fetchOrders } from '../page/fetchOrder'
+
 //const [listings, setListings] = React.useState([])
 
 interface ProfilePageProps extends RouteComponentProps, AppRouteParams {}
@@ -42,7 +45,11 @@ export function Profile(props: ProfilePageProps) {
         {data.orders.map((order, i) => (
           <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
             <Spacer $w4 />
-            {order.buyerId} · {order.sellerId}
+            <Hero></Hero>
+
+            <Test>
+              {order.buyerId} · {order.sellerId}
+            </Test>
           </div>
         ))}
       </div>
@@ -202,3 +209,15 @@ const Section = style('div', 'mb4 mid-gray ba b--mid-gray br2 pa3 w-100', (p: { 
 const TR = style('tr', 'ba b--black')
 
 const TD = style('td', 'mid-gray pa3 v-mid', { minWidth: '7em' })*/
+
+const Hero = style('div', 'mb4 w-100 ba b--mid-gray br2 pa3 tc', {
+  borderLeftColor: Colors.lemon + '!important',
+  borderRightColor: Colors.lemon + '!important',
+  borderLeftWidth: '4px',
+  borderRightWidth: '4px',
+})
+
+const Test = style('div', 'mb4 w-100 ba b--mid-gray br2 pa3 tc', {
+  color: Colors.lemon + '!important',
+  fontSize: 30,
+})
