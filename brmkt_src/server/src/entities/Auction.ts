@@ -1,5 +1,5 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { Auction as GraphqlAuction, ProdType } from '../graphql/schema.types'
+import { Auction as GraphqlAuction, ItemStatus, ProdType } from '../graphql/schema.types'
 
 @Entity()
 export class Auction extends BaseEntity implements GraphqlAuction {
@@ -43,13 +43,15 @@ export class Auction extends BaseEntity implements GraphqlAuction {
   })
   currentHighest: number
 
-  @Column('simple-array', {
-    nullable: true
-  })
-  bids: number[]
-
   @Column({
     default: 86400
   })
   auctionTime: number
+
+  @Column({
+    type: 'enum',
+    enum: ItemStatus,
+    default: ItemStatus.Notsold,
+  })
+  status: ItemStatus
 }

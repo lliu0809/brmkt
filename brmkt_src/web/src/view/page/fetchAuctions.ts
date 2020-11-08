@@ -9,15 +9,36 @@ export const fragmentAuction = gql`
     prodType
     seller
     currentHighest
-    bids
     auctionTime
+    status
   }
 `
-export const fetchAuctions = gql`
-  query FetchAuctions {
-    auctions {
+
+export const fragmentTopBid= gql`
+  fragment AuctionTopBid on AuctionTopBid {
+    topBid
+    auction {
       ...Auction
     }
   }
+`
+
+export const fetchAuctions = gql`
+  query FetchAuctions {
+    auctions {
+      ...AuctionTopBid
+    }
+  }
   ${fragmentAuction}
+  ${fragmentTopBid}
+`
+
+export const fetchAuctionListing= gql`
+  query FetchAuctionListing($auctionId: Int!) {
+    auctionListing(auctionId: $auctionId) {
+      ...AuctionTopBid
+    }
+  }
+  ${fragmentAuction}
+  ${fragmentTopBid}
 `

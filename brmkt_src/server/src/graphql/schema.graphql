@@ -22,12 +22,18 @@ type Query {
   survey (surveyId: Int!): Survey
   user: User!
   buyItNows: [BuyItNow!]!
-  auctions: [Auction!]!
+  auctions: [AuctionTopBid!]!
   orders: [Order!]!
   # item (prodId: Int!, prodType: ProdType): Selling
+
+  auctionListing (auctionId: Int!): AuctionTopBid!
+  binListing (binId: Int!): BuyItNow!
 }
 
 type Mutation {
+  placeBid (id: Int!, bid: Float!): Boolean!
+  purchase (id: Int!): Boolean!
+
   # Records an answer to a survey question presented in class.
   answerSurvey (input: SurveyInput!): Boolean!
 
@@ -110,6 +116,8 @@ type User {
 
 enum ProdType { BEARWEAR, TEXTBOOKS, DORMSUPPLY, ELECTRONICS, OTHER }
 enum OrderType { BUYITNOW, AUCTION }
+enum ItemStatus { NOTSOLD, SOLD }
+
 type Auction {
   id: Int!
   title: String!
@@ -118,8 +126,13 @@ type Auction {
   prodType: ProdType!
   seller: Int!
   currentHighest: Int # Highest Bidder's ID
-  bids: [Float!]
   auctionTime: Int!
+  status: ItemStatus!
+}
+
+type AuctionTopBid {
+  topBid: Float!
+  auction: Auction!
 }
 
 type BuyItNow {
@@ -130,6 +143,7 @@ type BuyItNow {
   prodType: ProdType!
   seller: Int!
   buyer: Int
+  status: ItemStatus!
 }
 
 type Order {

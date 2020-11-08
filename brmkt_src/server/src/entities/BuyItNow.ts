@@ -1,5 +1,5 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { BuyItNow as GraphqlBuyItNow, ProdType } from '../graphql/schema.types'
+import { BuyItNow as GraphqlBuyItNow, ItemStatus, ProdType } from '../graphql/schema.types'
 
 @Entity()
 export class BuyItNow extends BaseEntity implements GraphqlBuyItNow {
@@ -42,4 +42,11 @@ export class BuyItNow extends BaseEntity implements GraphqlBuyItNow {
     nullable: true
   })
   buyerId: number
+
+  @Column({
+    type: 'enum',
+    enum: ItemStatus,
+    default: ItemStatus.Notsold,
+  })
+  status: ItemStatus
 }

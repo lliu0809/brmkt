@@ -11,7 +11,10 @@ export enum Route {
   PLAYGROUND = 'app/playground',
   PLAYGROUND_APP = 'app/playground/:app',
 
-  AUCTIONS = 'auctions',
+  AUCTIONS = 'auction',
+  AUCTION_LISTING = 'auction/listing',
+  BUYITNOWS = 'buyitnow',
+  BUYITNOW_LISTING = 'buyitnow/listing',
 }
 
 
@@ -19,7 +22,16 @@ export enum PlaygroundApp {
   SURVEYS = 'surveys',
   LOGIN = 'login',
   PROFILE = "profile",
-  LISTING = "listing",
+}
+
+export function getAuctionListingPath(auctionId?: number) {
+  const path = getPath(Route.AUCTION_LISTING)
+  return path + (auctionId ? `?auctionId=${auctionId}` : '')
+}
+
+export function getBinListingPath(binId?: number) {
+  const path = getPath(Route.BUYITNOW_LISTING)
+  return path + (binId ? `?binId=${binId}` : '')
 }
 
 export function getSurveyPath(surveyId?: number) {
@@ -37,10 +49,6 @@ export function getPlaygroundPath() {
 
 export function getProfilePath() {
   return getPath(Route.PLAYGROUND_APP, { app: PlaygroundApp.PROFILE })
-}
-
-export function getListingPath() {
-  return getPath(Route.PLAYGROUND_APP, { app: PlaygroundApp.LISTING })
 }
 
 /**

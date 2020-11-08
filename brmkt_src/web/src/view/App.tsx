@@ -11,6 +11,7 @@ import { fetchUser } from './auth/fetchUser'
 import { UserContext, UserCtx } from './auth/user'
 import { Route } from './nav/route'
 import { AuctionsPage } from './page/AuctionsPage'
+import { BuyItNowsPage } from './page/BuyItNowsPage'
 import { HomePage } from './page/HomePage'
 import { LecturesPage } from './page/LecturesPage'
 import { PlaygroundPage } from './page/PlaygroundPage'
@@ -56,6 +57,9 @@ export function AppBody() {
         <HomePage path={Route.HOME} />
         <LecturesPage path={Route.LECTURES} />
         <AuctionsPage path={Route.AUCTIONS} />
+        <AuctionsPage path={Route.AUCTION_LISTING} />
+        <BuyItNowsPage path={Route.BUYITNOWS} />
+        <BuyItNowsPage path={Route.BUYITNOW_LISTING} />
         <ProjectsPage path={Route.PROJECTS} />
         <PlaygroundPage path={Route.PLAYGROUND} />
         <PlaygroundPage path={Route.PLAYGROUND_APP} />

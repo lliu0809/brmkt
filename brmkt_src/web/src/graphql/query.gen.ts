@@ -27,7 +27,7 @@ export interface FetchUserContext {
 // GraphQL query operation: FetchAuctions
 // ====================================================
 
-export interface FetchAuctions_auctions {
+export interface FetchAuctions_auctions_auction {
   __typename: "Auction";
   id: number;
   title: string;
@@ -36,12 +36,54 @@ export interface FetchAuctions_auctions {
   prodType: ProdType;
   seller: number;
   currentHighest: number | null;
-  bids: number[] | null;
   auctionTime: number;
+  status: ItemStatus;
+}
+
+export interface FetchAuctions_auctions {
+  __typename: "AuctionTopBid";
+  topBid: number;
+  auction: FetchAuctions_auctions_auction;
 }
 
 export interface FetchAuctions {
   auctions: FetchAuctions_auctions[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: FetchAuctionListing
+// ====================================================
+
+export interface FetchAuctionListing_auctionListing_auction {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  seller: number;
+  currentHighest: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+}
+
+export interface FetchAuctionListing_auctionListing {
+  __typename: "AuctionTopBid";
+  topBid: number;
+  auction: FetchAuctionListing_auctionListing_auction;
+}
+
+export interface FetchAuctionListing {
+  auctionListing: FetchAuctionListing_auctionListing;
+}
+
+export interface FetchAuctionListingVariables {
+  auctionId: number;
 }
 
 /* tslint:disable */
@@ -62,10 +104,40 @@ export interface FetchBuyItNows_buyItNows {
   prodType: ProdType;
   seller: number;
   buyer: number | null;
+  status: ItemStatus;
 }
 
 export interface FetchBuyItNows {
   buyItNows: FetchBuyItNows_buyItNows[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: FetchBinListing
+// ====================================================
+
+export interface FetchBinListing_binListing {
+  __typename: "BuyItNow";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  seller: number;
+  buyer: number | null;
+  status: ItemStatus;
+}
+
+export interface FetchBinListing {
+  binListing: FetchBinListing_binListing;
+}
+
+export interface FetchBinListingVariables {
+  binId: number;
 }
 
 /* tslint:disable */
@@ -83,10 +155,46 @@ export interface FetchOrders_orders {
   prodId: number;
   buyerId: number;
   sellerId: number;
+  orderType: OrderType;
 }
 
 export interface FetchOrders {
   orders: FetchOrders_orders[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: PlaceBid
+// ====================================================
+
+export interface PlaceBid {
+  placeBid: boolean;
+}
+
+export interface PlaceBidVariables {
+  id: number;
+  bid: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: Purchase
+// ====================================================
+
+export interface Purchase {
+  purchase: boolean;
+}
+
+export interface PurchaseVariables {
+  id: number;
 }
 
 /* tslint:disable */
@@ -276,8 +384,36 @@ export interface Auction {
   prodType: ProdType;
   seller: number;
   currentHighest: number | null;
-  bids: number[] | null;
   auctionTime: number;
+  status: ItemStatus;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: AuctionTopBid
+// ====================================================
+
+export interface AuctionTopBid_auction {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  seller: number;
+  currentHighest: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+}
+
+export interface AuctionTopBid {
+  __typename: "AuctionTopBid";
+  topBid: number;
+  auction: AuctionTopBid_auction;
 }
 
 /* tslint:disable */
@@ -298,6 +434,7 @@ export interface BuyItNow {
   prodType: ProdType;
   seller: number;
   buyer: number | null;
+  status: ItemStatus;
 }
 
 /* tslint:disable */
@@ -315,6 +452,7 @@ export interface Order {
   prodId: number;
   buyerId: number;
   sellerId: number;
+  orderType: OrderType;
 }
 
 /* tslint:disable */
@@ -378,6 +516,16 @@ export interface SurveyQuestion {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export enum ItemStatus {
+  NOTSOLD = "NOTSOLD",
+  SOLD = "SOLD",
+}
+
+export enum OrderType {
+  AUCTION = "AUCTION",
+  BUYITNOW = "BUYITNOW",
+}
 
 export enum ProdType {
   BEARWEAR = "BEARWEAR",

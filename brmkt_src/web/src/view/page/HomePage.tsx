@@ -22,8 +22,8 @@ export function HomePage(props: HomePageProps) {
       <br/>
 
       <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "none", margin: "10px" }}>
-        <Link to={getPath(Route.AUCTIONS)}><H3>&nbsp;&nbsp;Auctions&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
-        <Link to={getPath(Route.PROJECTS)}><H3>&nbsp;&nbsp;Bearwear&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
+        <Link to={getPath(Route.AUCTIONS)}><H3>&nbsp;&nbsp;Auction&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
+        <Link to={getPath(Route.BUYITNOWS)}><H3>&nbsp;&nbsp;BuyItNow&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
         <Link to={getPath(Route.PROJECTS)}><H3>&nbsp;&nbsp;Textbooks&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
         <Link to={getPath(Route.PROJECTS)}><H3>&nbsp;&nbsp;Dorm Supply&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
         <Link to={getPath(Route.PROJECTS)}><H3>&nbsp;&nbsp;Electronics&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
