@@ -83,6 +83,7 @@ export interface FetchOrders_orders {
   prodId: number;
   buyerId: number;
   sellerId: number;
+  orderType: OrderType;
 }
 
 export interface FetchOrders {
@@ -315,6 +316,7 @@ export interface Order {
   prodId: number;
   buyerId: number;
   sellerId: number;
+  orderType: OrderType;
 }
 
 /* tslint:disable */
@@ -378,6 +380,11 @@ export interface SurveyQuestion {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export enum OrderType {
+  AUCTION = "AUCTION",
+  BUYITNOW = "BUYITNOW",
+}
 
 export enum ProdType {
   BEARWEAR = "BEARWEAR",
