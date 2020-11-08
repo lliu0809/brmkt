@@ -1,15 +1,17 @@
 import { readFileSync } from 'fs'
 import { PubSub } from 'graphql-yoga'
 import path from 'path'
+import { getRepository } from 'typeorm'
 import { check } from '../../../common/src/util'
 import { Auction } from '../entities/Auction'
+import { AuctionTopBid } from '../entities/AuctionTopBid'
 import { BuyItNow } from '../entities/BuyItNow'
 import { Order } from '../entities/Order'
 import { Survey } from '../entities/Survey'
 import { SurveyAnswer } from '../entities/SurveyAnswer'
 import { SurveyQuestion } from '../entities/SurveyQuestion'
 import { User } from '../entities/User'
-import { Resolvers } from './schema.types'
+import { ItemStatus, Resolvers } from './schema.types'
 
 export const pubsub = new PubSub()
 
@@ -35,12 +37,31 @@ export const graphqlRoot: Resolvers<Context> = {
       return buyItNows
     },
     auctions: async () => {
+      const auctionTopBids = await AuctionTopBid.find()
+      if(auctionTopBids.length !== 0) {
+        return auctionTopBids
+      }
       const auctions = await Auction.find()
-      return auctions
+      const newAuctionTopBids = auctions.map(auction => {
+        const auctionTopBid = new AuctionTopBid()
+        auctionTopBid.auction = auction
+        auctionTopBid.topBid = auction.price
+        return auctionTopBid.save()
+      })
+
+      return await Promise.all(newAuctionTopBids)
     },
     orders: async () => {
       const orders = await Order.find()
       return orders
+    },
+    auctionListing: async (_, { auctionId }) => {
+      const auctionTopBid = await AuctionTopBid.findOneOrFail({ where: { id: auctionId } })
+      return auctionTopBid
+    },
+    binListing: async (_, { binId }) => {
+      const buyItNow = await BuyItNow.findOneOrFail({ where: { id: binId } })
+      return buyItNow
     },
   },
   Mutation: {
@@ -65,6 +86,33 @@ export const graphqlRoot: Resolvers<Context> = {
       await survey.save()
       ctx.pubsub.publish('SURVEY_UPDATE_' + surveyId, survey)
       return survey
+    },
+    placeBid: async (_, { id, bid }, ctx) => {
+      const currentBid = await getRepository(AuctionTopBid)
+        .createQueryBuilder('currentBid')
+        .leftJoinAndSelect('currentBid.auction', 'auction')
+        .where('auction.id = :id', { id })
+        .getOne()
+      if(!currentBid) {
+        return false
+      }
+
+      if(currentBid.topBid > bid) {
+        return false
+      }
+      currentBid.topBid = bid
+      await currentBid.save()
+      ctx.pubsub.publish('AUCTION_UPDATE', currentBid)
+      return true
+    },
+    purchase: async (_, { id }, ctx) => {
+      const buyItNow = await BuyItNow.findOne({ where: { id } })
+      if(!buyItNow) {
+        return false
+      }
+      buyItNow.status = ItemStatus.Sold
+      await buyItNow.save()
+      return true
     },
   },
   Subscription: {
