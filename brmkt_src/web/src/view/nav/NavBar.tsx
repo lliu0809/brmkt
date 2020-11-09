@@ -9,7 +9,7 @@ import { style } from '../../style/styled'
 import { UserContext } from '../auth/user'
 import { addToastListener, removeToastListener, Toast, ToastType } from '../toast/toast'
 import { link } from './Link'
-import { getLoginPath, getPath, getProfilePath, getSurveyPath, Route } from './route'
+import { getLoginPath, getPath, getProfilePath, getSignupPath, getSurveyPath, Route } from './route'
 
 const title = {
   name: 'BRMKT',
@@ -119,6 +119,7 @@ function SubNav() {
       <NavItem name="surveys" path={getSurveyPath()} />
       <NavItem name={user ? 'logout' : 'login'} path={getLoginPath()} />
       <NavItem name="profile" path={getProfilePath()} />
+      {!user && <NavItem name="signup" path={getSignupPath()} />}
     </Nav>
   )
 }
