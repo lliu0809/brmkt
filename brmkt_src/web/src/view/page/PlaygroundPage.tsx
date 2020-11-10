@@ -1,7 +1,7 @@
 import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
 import { Login } from '../auth/Login'
-import { Signup } from '../auth/SignUp'
+import { Signup } from '../auth/Signup'
 import { AppRouteParams, PlaygroundApp } from '../nav/route'
 import { Profile } from '../playground/Profile'
 import { Surveys } from '../playground/Surveys'

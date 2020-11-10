@@ -9,7 +9,7 @@ import { style } from '../../style/styled'
 import { UserContext } from '../auth/user'
 import { addToastListener, removeToastListener, Toast, ToastType } from '../toast/toast'
 import { link } from './Link'
-import { getLoginPath, getPath, getProfilePath, getSignupPath, getSurveyPath, Route } from './route'
+import { getLoginPath, getPath, getProfilePath, getSignupPath, Route } from './route'
 
 const title = {
   name: 'BRMKT',
@@ -24,18 +24,18 @@ const otherTabs = [
     path: getPath(Route.LECTURES),
   },
   {
-    //name: 'projects',
-    name: 'Help',
-    path: getPath(Route.PROJECTS),
-  },
-  {
     //name: 'playground',
     name: 'Log In',
     path: getPath(Route.PLAYGROUND),
   },
   {
     name: 'Sign Up',
-    path: getPath(Route.PLAYGROUND),
+    path: getPath(Route.SIGNUP),
+  },
+  {
+    //name: 'projects',
+    name: 'Help',
+    path: getPath(Route.PROJECTS),
   },
 ]
 
@@ -116,7 +116,6 @@ function SubNav() {
   }
   return (
     <Nav $isSubNav>
-      <NavItem name="surveys" path={getSurveyPath()} />
       <NavItem name={user ? 'logout' : 'login'} path={getLoginPath()} />
       <NavItem name="profile" path={getProfilePath()} />
       {!user && <NavItem name="signup" path={getSignupPath()} />}
