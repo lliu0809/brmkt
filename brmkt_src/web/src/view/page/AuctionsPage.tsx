@@ -53,7 +53,7 @@ export function AuctionList() {
           .map((auction, i) => (
             <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
               <HeaderLink className="link dim pointer" $color="sky" to={getAuctionListingPath(auction.auction.id)}>
-                {auction.auction.title} · {auction.topBid}
+               {auction.auction.id} · {auction.auction.title} · {auction.topBid} <img src = {"/app/assets/auction/NEW chair.png"}/>
               </HeaderLink>
             <Spacer $w4 />
             </div>

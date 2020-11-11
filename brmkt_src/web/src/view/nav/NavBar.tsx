@@ -30,6 +30,12 @@ const otherTabs = [
   },
 
   {
+    //name: 'projects',
+    name: 'Sell',
+    path: getPath(Route.LECTURES),
+  },
+
+  {
     //name: 'playground',
     name: 'Log In',
     path: getPath(Route.PLAYGROUND),

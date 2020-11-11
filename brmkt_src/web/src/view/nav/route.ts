@@ -16,6 +16,7 @@ export enum Route {
   AUCTION_LISTING = 'app/auction/listing',
   BUYITNOWS = 'app/buyitnow',
   BUYITNOW_LISTING = 'app/buyitnow/listing',
+  SELL = "app/SellProduct",
 }
 
 export enum PlaygroundApp {
