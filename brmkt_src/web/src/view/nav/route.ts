@@ -12,10 +12,10 @@ export enum Route {
   PLAYGROUND_APP = 'app/playground/:app',
   SIGNUP = 'app/signup',
 
-  AUCTIONS = 'auction',
-  AUCTION_LISTING = 'auction/listing',
-  BUYITNOWS = 'buyitnow',
-  BUYITNOW_LISTING = 'buyitnow/listing',
+  AUCTIONS = 'app/auction',
+  AUCTION_LISTING = 'app/auction/listing',
+  BUYITNOWS = 'app/buyitnow',
+  BUYITNOW_LISTING = 'app/buyitnow/listing',
 }
 
 export enum PlaygroundApp {

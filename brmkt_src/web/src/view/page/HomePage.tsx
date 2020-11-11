@@ -14,16 +14,16 @@ export function HomePage(props: HomePageProps) {
     <Page>
       <Hero>
         <H1>BRMKT.</H1>
-        <br/>
         <div style={{}}></div>
-        <H3>UCLA Buy, Sell, Auction</H3>
+        <img src = {"/app/assets/UCLA.png"}/>
+        <H3> UCLA Buy, Sell, Auction</H3>
         <br/>
       </Hero>
       <br/>
 
       <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "none", margin: "10px" }}>
-        <Link to={getPath(Route.AUCTIONS)}><H3>&nbsp;&nbsp;Auction&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
-        <Link to={getPath(Route.BUYITNOWS)}><H3>&nbsp;&nbsp;BuyItNow&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
+        {/* <Link to={getPath(Route.AUCTIONS)}><H3>&nbsp;&nbsp;Auction&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link> */}
+        <Link to={getPath(Route.BUYITNOWS)}><H3>&nbsp;&nbsp;Bearwear&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
         <Link to={getPath(Route.PROJECTS)}><H3>&nbsp;&nbsp;Textbooks&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
         <Link to={getPath(Route.PROJECTS)}><H3>&nbsp;&nbsp;Dorm Supply&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>
         <Link to={getPath(Route.PROJECTS)}><H3>&nbsp;&nbsp;Electronics&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link>

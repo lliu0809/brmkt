@@ -45,6 +45,7 @@ export function AuctionList() {
         <Spacer $h4 />
         {data.auctions
           .filter(auction => auction.auction.status === ItemStatus.NOTSOLD)
+          //.filter(auction => auction.auction.prodType === "ELECTRONICS")
           .filter(auction => auction.auction.title.toLowerCase().includes(auctionQuery.toLowerCase()))
           // Use .filter to do filter the list of auctions
           // Use .sort to sort by date?

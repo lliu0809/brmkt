@@ -20,9 +20,15 @@ const title = {
 const otherTabs = [
   {
     //name: 'lectures',
-    name: 'Sell',
-    path: getPath(Route.LECTURES),
+    name: 'Auction',
+    path: getPath(Route.AUCTIONS),
   },
+  {
+    //name: 'projects',
+    name: 'Buy It Now',
+    path: getPath(Route.BUYITNOWS),
+  },
+
   {
     //name: 'playground',
     name: 'Log In',
@@ -32,11 +38,7 @@ const otherTabs = [
     name: 'Sign Up',
     path: getPath(Route.SIGNUP),
   },
-  {
-    //name: 'projects',
-    name: 'Help',
-    path: getPath(Route.PROJECTS),
-  },
+
 ]
 
 export function NavBar() {
