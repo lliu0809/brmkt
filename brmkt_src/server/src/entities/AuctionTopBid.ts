@@ -11,7 +11,12 @@ export class AuctionTopBid extends BaseEntity {
   auction: Auction
 
   @Column({
-    default: 0.0
+    default: 0.0,
   })
   topBid: number
+
+  @Column({
+    default: '',
+  })
+  auctionStartTime: string
 }

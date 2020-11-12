@@ -132,6 +132,7 @@ type Auction {
 
 type AuctionTopBid {
   topBid: Float!
+  auctionStartTime: String!
   auction: Auction!
 }
 

@@ -152,6 +152,7 @@ export interface Auction {
 export interface AuctionTopBid {
   __typename?: 'AuctionTopBid'
   topBid: Scalars['Float']
+  auctionStartTime: Scalars['String']
   auction: Auction
 }
 
@@ -433,6 +434,7 @@ export type AuctionTopBidResolvers<
   ParentType extends ResolversParentTypes['AuctionTopBid'] = ResolversParentTypes['AuctionTopBid']
 > = {
   topBid?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
+  auctionStartTime?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   auction?: Resolver<ResolversTypes['Auction'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }

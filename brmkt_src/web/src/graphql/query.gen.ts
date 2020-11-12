@@ -43,6 +43,7 @@ export interface FetchAuctions_auctions_auction {
 export interface FetchAuctions_auctions {
   __typename: "AuctionTopBid";
   topBid: number;
+  auctionStartTime: string;
   auction: FetchAuctions_auctions_auction;
 }
 
@@ -75,6 +76,7 @@ export interface FetchAuctionListing_auctionListing_auction {
 export interface FetchAuctionListing_auctionListing {
   __typename: "AuctionTopBid";
   topBid: number;
+  auctionStartTime: string;
   auction: FetchAuctionListing_auctionListing_auction;
 }
 
@@ -413,6 +415,7 @@ export interface AuctionTopBid_auction {
 export interface AuctionTopBid {
   __typename: "AuctionTopBid";
   topBid: number;
+  auctionStartTime: string;
   auction: AuctionTopBid_auction;
 }
 

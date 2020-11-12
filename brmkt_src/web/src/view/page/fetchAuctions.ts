@@ -14,9 +14,10 @@ export const fragmentAuction = gql`
   }
 `
 
-export const fragmentTopBid= gql`
+export const fragmentTopBid = gql`
   fragment AuctionTopBid on AuctionTopBid {
     topBid
+    auctionStartTime
     auction {
       ...Auction
     }
@@ -33,7 +34,7 @@ export const fetchAuctions = gql`
   ${fragmentTopBid}
 `
 
-export const fetchAuctionListing= gql`
+export const fetchAuctionListing = gql`
   query FetchAuctionListing($auctionId: Int!) {
     auctionListing(auctionId: $auctionId) {
       ...AuctionTopBid
