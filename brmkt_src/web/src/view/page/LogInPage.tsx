@@ -3,6 +3,7 @@ import * as React from 'react'
 import { useContext, useEffect, useState } from 'react'
 import { check } from '../../../../common/src/util'
 import { Button } from '../../style/button'
+import { H1 } from '../../style/header'
 import { Input } from '../../style/input'
 import { Spacer } from '../../style/spacer'
 import { UserContext } from '../auth/user'
@@ -47,6 +48,7 @@ export function LogInPage(props: LogInPageProps) {
   }
 
   if (user) {
+
     return <Logout />
   }
 
@@ -74,6 +76,7 @@ export function LogInPage(props: LogInPageProps) {
 }
 
 function Logout() {
+  // const { user } = useContext(UserContext)
   function logout() {
     return fetch('../auth/logout', {
       method: 'POST',
@@ -88,8 +91,23 @@ function Logout() {
 
   return (
     <>
+    <Page>
+      <H1>Your Profile</H1>
+      <br/>
+
+      <h3>Name: {useContext(UserContext).user?.name}</h3>
+      <h3>ID: {useContext(UserContext).user?.id}</h3>
+      <h3>User Type: {useContext(UserContext).user?.userType}</h3>
+      {/* <h3>Address :{useContext(UserContext).user?.address}</h3>
+      <h3>Email: {useContext(UserContext).user?.eamil}</h3>
+      <h3>Password: {useContext(UserContext).user?.password}</h3>
+      <h3>Card Number: {useContext(UserContext).user?.cardNumber}</h3> */}
+
+
       <Spacer $h5 />
       <Button onClick={logout}>Logout</Button>
+
+    </Page>
     </>
   )
 }
