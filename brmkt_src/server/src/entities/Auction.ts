@@ -36,12 +36,12 @@ export class Auction extends BaseEntity implements GraphqlAuction {
 
   @Column({
   })
-  seller: number
+  sellerId: number
 
   @Column({
     nullable: true,
   })
-  currentHighest: number
+  currentHighestId: number
 
   @Column({
     default: 86400

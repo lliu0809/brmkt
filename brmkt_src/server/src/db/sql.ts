@@ -3,7 +3,7 @@ import { createConnection } from 'typeorm'
 import { Auction } from '../entities/Auction'
 import { AuctionTopBid } from '../entities/AuctionTopBid'
 import { BuyItNow } from '../entities/BuyItNow'
-import { Order } from '../entities/Order'
+import { Purchase } from '../entities/Purchase'
 import { Session } from '../entities/Session'
 import { Survey } from '../entities/Survey'
 import { SurveyAnswer } from '../entities/SurveyAnswer'
@@ -24,7 +24,7 @@ export async function initORM() {
     username: process.env.MYSQL_USER || 'root',
     synchronize: true,
     logging: false,
-    entities: [User, Session, Survey, SurveyQuestion, SurveyAnswer, Auction, BuyItNow, Order, AuctionTopBid],
+    entities: [User, Session, Survey, SurveyQuestion, SurveyAnswer, Auction, BuyItNow, Purchase, AuctionTopBid],
     extra: {
       connectionLimit: 5,
     },

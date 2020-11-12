@@ -1000,7 +1000,7 @@
             "deprecationReason": null
           },
           {
-            "name": "orders",
+            "name": "purchases",
             "description": null,
             "args": [],
             "type": {
@@ -1014,7 +1014,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "Order",
+                    "name": "Purchase",
                     "ofType": null
                   }
                 }
@@ -1112,6 +1112,20 @@
             "args": [
               {
                 "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "bidderId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1791,29 +1805,6 @@
       },
       {
         "kind": "ENUM",
-        "name": "OrderType",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "BUYITNOW",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "AUCTION",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
         "name": "ItemStatus",
         "description": null,
         "fields": null,
@@ -1921,7 +1912,7 @@
             "deprecationReason": null
           },
           {
-            "name": "seller",
+            "name": "sellerId",
             "description": null,
             "args": [],
             "type": {
@@ -1937,7 +1928,7 @@
             "deprecationReason": null
           },
           {
-            "name": "currentHighest",
+            "name": "currentHighestId",
             "description": null,
             "args": [],
             "type": {
@@ -2182,7 +2173,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "Order",
+        "name": "Purchase",
         "description": null,
         "fields": [
           {
@@ -2211,54 +2202,6 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "Int",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "sellerId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "buyerId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "orderType",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "OrderType",
                 "ofType": null
               }
             },

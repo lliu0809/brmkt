@@ -6,7 +6,7 @@ import { check } from '../../../common/src/util'
 import { Auction } from '../entities/Auction'
 import { AuctionTopBid } from '../entities/AuctionTopBid'
 import { BuyItNow } from '../entities/BuyItNow'
-import { Order } from '../entities/Order'
+import { Purchase } from '../entities/Purchase'
 import { Survey } from '../entities/Survey'
 import { SurveyAnswer } from '../entities/SurveyAnswer'
 import { SurveyQuestion } from '../entities/SurveyQuestion'
@@ -58,9 +58,9 @@ export const graphqlRoot: Resolvers<Context> = {
 
       return await Promise.all(newAuctionTopBids)
     },
-    orders: async () => {
-      const orders = await Order.find()
-      return orders
+    purchases: async () => {
+      const purchases = await Purchase.find()
+      return purchases
     },
     auctionListing: async (_, { auctionId }) => {
       const auctionTopBid = await AuctionTopBid.findOneOrFail({ where: { id: auctionId } })
@@ -94,22 +94,28 @@ export const graphqlRoot: Resolvers<Context> = {
       ctx.pubsub.publish('SURVEY_UPDATE_' + surveyId, survey)
       return survey
     },
-    placeBid: async (_, { id, bid }, ctx) => {
+    placeBid: async (_, { id, bidderId, bid }, ctx) => {
+      const currentAuction = await Auction.findOne({ where: { id } })
+      if(!currentAuction) {
+        return false
+      }
       const currentBid = await getRepository(AuctionTopBid)
         .createQueryBuilder('currentBid')
         .leftJoinAndSelect('currentBid.auction', 'auction')
         .where('auction.id = :id', { id })
         .getOne()
-      if (!currentBid) {
+      if(!currentBid) {
         return false
       }
 
-      if (currentBid.topBid > bid) {
+      if(currentBid.topBid > bid) {
         return false
       }
+      currentAuction.currentHighestId = bidderId
       currentBid.topBid = bid
+      await currentAuction.save()
       await currentBid.save()
-      ctx.pubsub.publish('AUCTION_UPDATE', currentBid)
+
       return true
     },
     purchase: async (_, { id }, ctx) => {

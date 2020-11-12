@@ -1,19 +1,20 @@
 import { useQuery } from '@apollo/client'
 import { RouteComponentProps, useLocation } from '@reach/router'
 import * as React from 'react'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Colors } from '../../../../common/src/colors'
 import { FetchAuctionListing, FetchAuctionListingVariables, FetchAuctions, ItemStatus } from '../../graphql/query.gen'
 import { H1, H2, H3 } from '../../style/header'
 import { Input } from '../../style/input'
 import { Spacer } from '../../style/spacer'
 import { style } from '../../style/styled'
+import { UserContext } from '../auth/user'
 import { link } from '../nav/Link'
 import { AppRouteParams, getAuctionListingPath } from '../nav/route'
-import { fetchAuctionListing, fetchAuctions } from '../page/fetchAuctions'
 import { handleError } from '../toast/error'
-import { placeBid } from './mutateAuctionBid'
 import { Page } from './Page'
+import { fetchAuctionListing, fetchAuctions } from './queries/fetchAuctions'
+import { placeBid } from './queries/mutateAuctionBid'
 
 interface AuctionsPageProps extends RouteComponentProps, AppRouteParams {}
 
@@ -52,6 +53,8 @@ export function AuctionList() {
           Search for an item: <Input $onChange={setAuctionQuery} />
         </H3>
         {/* does search filter */}
+        {/* does search filter */}
+        <Input $onChange={setAuctionQuery} />
         <Spacer $h4 />
         {data.auctions
           .filter(auction => auction.auction.status === ItemStatus.NOTSOLD)
@@ -132,12 +135,16 @@ const Btn = style('div', 'br2 pa3 tc', {
 })
 
 export function AuctionListing({ auctionId }: { auctionId: number }) {
+  const user = useContext(UserContext)
   const { loading, data } = useQuery<FetchAuctionListing, FetchAuctionListingVariables>(fetchAuctionListing, {
     variables: { auctionId },
   })
 
   function doPlaceBid(val: string) {
-    placeBid(auctionId, Number(val)).catch(handleError)
+    if(user.user) {
+      placeBid(auctionId, user.user.id, Number(val)).catch(handleError)
+    }
+    // NEED TO REDIRECT TO LOGIN PAGE IF USER IS NULL
   }
 
   function calculateCountDown(endTime: Date) {

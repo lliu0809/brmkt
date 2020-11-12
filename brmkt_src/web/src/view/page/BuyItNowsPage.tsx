@@ -12,9 +12,9 @@ import { style } from '../../style/styled'
 import { link } from '../nav/Link'
 import { AppRouteParams, getBinListingPath } from '../nav/route'
 import { handleError } from '../toast/error'
-import { fetchBinListing, fetchBuyItNows } from './fetchBuyItNow'
-import { purchase } from './mutateBuyItNows'
 import { Page } from './Page'
+import { fetchBinListing, fetchBuyItNows } from './queries/fetchBuyItNow'
+import { purchase } from './queries/mutateBuyItNows'
 
 interface BuyItNowsPageProps extends RouteComponentProps, AppRouteParams {}
 

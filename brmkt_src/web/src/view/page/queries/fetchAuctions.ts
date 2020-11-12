@@ -7,8 +7,8 @@ export const fragmentAuction = gql`
     price
     description
     prodType
-    seller
-    currentHighest
+    sellerId
+    currentHighestId
     auctionTime
     status
   }

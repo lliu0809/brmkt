@@ -34,8 +34,8 @@ export interface FetchAuctions_auctions_auction {
   price: number;
   description: string;
   prodType: ProdType;
-  seller: number;
-  currentHighest: number | null;
+  sellerId: number;
+  currentHighestId: number | null;
   auctionTime: number;
   status: ItemStatus;
 }
@@ -67,8 +67,8 @@ export interface FetchAuctionListing_auctionListing_auction {
   price: number;
   description: string;
   prodType: ProdType;
-  seller: number;
-  currentHighest: number | null;
+  sellerId: number;
+  currentHighestId: number | null;
   auctionTime: number;
   status: ItemStatus;
 }
@@ -148,20 +148,17 @@ export interface FetchBinListingVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: FetchOrders
+// GraphQL query operation: FetchPurchases
 // ====================================================
 
-export interface FetchOrders_orders {
-  __typename: "Order";
+export interface FetchPurchases_purchases {
+  __typename: "Purchase";
   id: number;
   prodId: number;
-  buyerId: number;
-  sellerId: number;
-  orderType: OrderType;
 }
 
-export interface FetchOrders {
-  orders: FetchOrders_orders[];
+export interface FetchPurchases {
+  purchases: FetchPurchases_purchases[];
 }
 
 /* tslint:disable */
@@ -179,6 +176,7 @@ export interface PlaceBid {
 
 export interface PlaceBidVariables {
   id: number;
+  bidderId: number;
   bid: number;
 }
 
@@ -384,8 +382,8 @@ export interface Auction {
   price: number;
   description: string;
   prodType: ProdType;
-  seller: number;
-  currentHighest: number | null;
+  sellerId: number;
+  currentHighestId: number | null;
   auctionTime: number;
   status: ItemStatus;
 }
@@ -406,8 +404,8 @@ export interface AuctionTopBid_auction {
   price: number;
   description: string;
   prodType: ProdType;
-  seller: number;
-  currentHighest: number | null;
+  sellerId: number;
+  currentHighestId: number | null;
   auctionTime: number;
   status: ItemStatus;
 }
@@ -446,16 +444,13 @@ export interface BuyItNow {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: Order
+// GraphQL fragment: Purchase
 // ====================================================
 
-export interface Order {
-  __typename: "Order";
+export interface Purchase {
+  __typename: "Purchase";
   id: number;
   prodId: number;
-  buyerId: number;
-  sellerId: number;
-  orderType: OrderType;
 }
 
 /* tslint:disable */
@@ -523,11 +518,6 @@ export interface SurveyQuestion {
 export enum ItemStatus {
   NOTSOLD = "NOTSOLD",
   SOLD = "SOLD",
-}
-
-export enum OrderType {
-  AUCTION = "AUCTION",
-  BUYITNOW = "BUYITNOW",
 }
 
 export enum ProdType {

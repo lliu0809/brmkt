@@ -4,7 +4,7 @@ import * as React from 'react'
 import { FetchAuctions } from '../../graphql/query.gen'
 import { Spacer } from '../../style/spacer'
 import { AppRouteParams } from '../nav/route'
-import { fetchAuctions } from '../page/fetchAuctions'
+import { fetchAuctions } from '../page/queries/fetchAuctions'
 //const [listings, setListings] = React.useState([])
 
 interface ProfilePageProps extends RouteComponentProps, AppRouteParams {}
