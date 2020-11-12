@@ -14,6 +14,7 @@ import { AuctionsPage } from './page/AuctionsPage'
 import { BuyItNowsPage } from './page/BuyItNowsPage'
 import { HomePage } from './page/HomePage'
 import { LecturesPage } from './page/LecturesPage'
+import { LogInPage } from './page/LogInPage'
 import { PlaygroundPage } from './page/PlaygroundPage'
 import { ProjectsPage } from './page/ProjectsPage'
 import { SignUpPage } from './page/SignUpPage'
@@ -65,6 +66,7 @@ export function AppBody() {
         <PlaygroundPage path={Route.PLAYGROUND} />
         <PlaygroundPage path={Route.PLAYGROUND_APP} />
         <SignUpPage path={Route.SIGNUP} />
+        <LogInPage path={Route.LOGIN} />
       </Router>
       <Footer>
         <FooterText>© 2020 John Rothfels</FooterText>

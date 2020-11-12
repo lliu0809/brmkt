@@ -44,17 +44,13 @@ export function AuctionList() {
   } else {
     return (
       <div className="mw6">
-<<<<<<< HEAD
         <Hero>
           <H1>BRMKT.</H1>
           <H3> UCLA Buy, Sell, Auction</H3>
           <br/>
         </Hero>
         <H3>Search for an item: <Input $onChange={setAuctionQuery} /></H3>
-=======
         {/* does search filter */}
-        <Input $onChange={setAuctionQuery} />
->>>>>>> 38d63969dc0b56b0b80767af25425c4d7ced38c6
         <Spacer $h4 />
         {data.auctions
           .filter(auction => auction.auction.status === ItemStatus.NOTSOLD)
@@ -64,7 +60,6 @@ export function AuctionList() {
           .map((auction, i) => (
             <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
               <HeaderLink className="link dim pointer" $color="sky" to={getAuctionListingPath(auction.auction.id)}>
-<<<<<<< HEAD
                 <Product>
                   <Image><img src = {"/app/assets/auction/NEW TV.png"}/></Image>
                   <Description>
@@ -82,10 +77,8 @@ export function AuctionList() {
                     </Btn>
                   </Description>
                 </Product>
-=======
                 {auction.auction.id} · {auction.auction.title} · {auction.topBid}{' '}
                 <img src={'/app/assets/auction/NEW chair.png'} />
->>>>>>> 38d63969dc0b56b0b80767af25425c4d7ced38c6
               </HeaderLink>
               <Spacer $w4 />
             </div>

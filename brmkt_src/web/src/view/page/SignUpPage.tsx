@@ -7,7 +7,9 @@ import { Input } from '../../style/input'
 import { AppRouteParams } from '../nav/route'
 import { toastErr } from '../toast/toast'
 import { Page } from './Page'
+
 interface SignUpPageProps extends RouteComponentProps, AppRouteParams {}
+
 export function SignUpPage(props: SignUpPageProps) {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')

@@ -19,12 +19,10 @@ const title = {
 
 const otherTabs = [
   {
-    //name: 'lectures',
     name: 'Auction',
     path: getPath(Route.AUCTIONS),
   },
   {
-    //name: 'projects',
     name: 'Buy It Now',
     path: getPath(Route.BUYITNOWS),
   },
@@ -36,9 +34,8 @@ const otherTabs = [
   },
 
   {
-    //name: 'playground',
     name: 'Log In',
-    path: getPath(Route.PLAYGROUND),
+    path: getPath(Route.LOGIN),
   },
   {
     name: 'Sign Up',
