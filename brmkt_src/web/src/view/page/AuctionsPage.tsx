@@ -2,16 +2,19 @@ import { useQuery } from '@apollo/client'
 import { RouteComponentProps, useLocation } from '@reach/router'
 import * as React from 'react'
 import { useState } from 'react'
+import { Colors } from '../../../../common/src/colors'
 import { FetchAuctionListing, FetchAuctionListingVariables, FetchAuctions, ItemStatus } from '../../graphql/query.gen'
-import { H1, H2 } from '../../style/header'
+import { H1, H2, H3 } from '../../style/header'
 import { Input } from '../../style/input'
 import { Spacer } from '../../style/spacer'
+import { style } from '../../style/styled'
 import { link } from '../nav/Link'
 import { AppRouteParams, getAuctionListingPath } from '../nav/route'
 import { fetchAuctionListing, fetchAuctions } from '../page/fetchAuctions'
 import { handleError } from '../toast/error'
 import { placeBid } from './mutateAuctionBid'
 import { Page } from './Page'
+
 
 interface AuctionsPageProps extends RouteComponentProps, AppRouteParams {}
 
@@ -40,20 +43,38 @@ export function AuctionList() {
   else  {
     return (
       <div className="mw6">
-          {/* does search filter */}
-        <Input $onChange={setAuctionQuery} />
+        <Hero>
+          <H1>BRMKT.</H1>
+          <H3> UCLA Buy, Sell, Auction</H3>
+          <br/>
+        </Hero>
+        <H3>Search for an item: <Input $onChange={setAuctionQuery} /></H3>
         <Spacer $h4 />
         {data.auctions
           .filter(auction => auction.auction.status === ItemStatus.NOTSOLD)
-          //.filter(auction => auction.auction.prodType === "ELECTRONICS")
           .filter(auction => auction.auction.title.toLowerCase().includes(auctionQuery.toLowerCase()))
-          // Use .filter to do filter the list of auctions
-          // Use .sort to sort by date?
+
 
           .map((auction, i) => (
             <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
               <HeaderLink className="link dim pointer" $color="sky" to={getAuctionListingPath(auction.auction.id)}>
-               {auction.auction.id} · {auction.auction.title} · {auction.topBid} <img src = {"/app/assets/auction/NEW chair.png"}/>
+                <Product>
+                  <Image><img src = {"/app/assets/auction/NEW TV.png"}/></Image>
+                  <Description>
+                    <Item>
+                      <H3>{auction.auction.title}</H3>
+                    </Item>
+                    <PriceTag>
+                      <H3>Item ID: {auction.auction.id}</H3>
+                    </PriceTag>
+                    <PriceTag>
+                      <H3>Current Bid: {auction.topBid}</H3>
+                    </PriceTag>
+                    <Btn>
+                      Place a bid !
+                    </Btn>
+                  </Description>
+                </Product>
               </HeaderLink>
             <Spacer $w4 />
             </div>
@@ -64,6 +85,47 @@ export function AuctionList() {
 }
 
 const HeaderLink = link(H2)
+
+const Hero = style('div', 'mb4 w-100 b--mid-gray br2 pa3 tc')
+
+const Product = style('td', 'w-100  b--mid-gray br2 pa3 tc', {
+  textAlign: 'left',
+  borderBottomColor: Colors.black + '!important',
+  borderLeftColor: Colors.white + '!important',
+  borderRightColor: Colors.white + '!important',
+  borderTopColor: Colors.black + '!important',
+})
+
+const PriceTag = style('div', 'pa3 v-mid', {
+  bottom: '2rem',
+  padding: '0.5rem',
+  fontFamily: 'sans-serif',
+  fontSize: '1.5rem',
+});
+
+const Image = style('td', '  ', {
+  height: '12rem',
+  width: '12rem',
+  float: 'left',
+})
+
+const Item = style('td', '  ', {
+  fontSize: '1.3rem'
+})
+
+const Description = style('td', '  ', {
+  paddingLeft: '50px',
+  float: 'left',
+})
+
+const Btn = style('div', 'br2 pa3 tc', {
+  borderRadius: '5rem',
+  backgroundColor: '#2774AE',
+  fontSize: '0.9rem',
+  borderWidth: '1px',
+  color: 'white',
+  padding: '0.5rem'
+})
 
 export function AuctionListing({ auctionId }: { auctionId: number }) {
   const { loading, data } = useQuery<FetchAuctionListing, FetchAuctionListingVariables>(fetchAuctionListing, {

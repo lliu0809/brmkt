@@ -43,6 +43,11 @@ export function BuyItNowList() {
   else  {
     return (
       <Page>
+        <Hero>
+          <H1>BRMKT.</H1>
+          <H3> UCLA Buy, Sell, Auction</H3>
+          <br/>
+        </Hero>
       <div className="mw6">
         <H3>Search for an item: <Input $onChange={setBuyItNowQuery} /></H3>
 
@@ -85,6 +90,9 @@ export function BuyItNowList() {
 
 const HeaderLink = link(H2)
 
+const Hero = style('div', 'mb4 w-100 b--mid-gray br2 pa3 tc')
+
+
 const Product = style('td', 'w-100  b--mid-gray br2 pa3 tc', {
   textAlign: 'left',
   borderBottomColor: Colors.black + '!important',
@@ -107,7 +115,7 @@ const Image = style('td', '  ', {
 })
 
 const Item = style('td', '  ', {
-  fontSize: '1.3rem'
+  fontStyle: 'italic',
 })
 
 const Description = style('td', '  ', {
