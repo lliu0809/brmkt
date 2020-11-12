@@ -94,6 +94,43 @@ export interface FetchAuctionListingVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchMyListings
+// ====================================================
+
+export interface FetchMyListings_myListings_auction {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+}
+
+export interface FetchMyListings_myListings {
+  __typename: "AuctionTopBid";
+  topBid: number;
+  auctionStartTime: string;
+  auction: FetchMyListings_myListings_auction;
+}
+
+export interface FetchMyListings {
+  myListings: FetchMyListings_myListings[];
+}
+
+export interface FetchMyListingsVariables {
+  sellerId: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchBuyItNows
 // ====================================================
 
@@ -148,17 +185,42 @@ export interface FetchBinListingVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: FetchPurchases
+// GraphQL query operation: FetchMyPurchases
 // ====================================================
 
-export interface FetchPurchases_purchases {
-  __typename: "Purchase";
+export interface FetchMyPurchases_myPurchases_itemSold_auction {
+  __typename: "Auction";
   id: number;
-  prodId: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
 }
 
-export interface FetchPurchases {
-  purchases: FetchPurchases_purchases[];
+export interface FetchMyPurchases_myPurchases_itemSold {
+  __typename: "AuctionTopBid";
+  topBid: number;
+  auctionStartTime: string;
+  auction: FetchMyPurchases_myPurchases_itemSold_auction;
+}
+
+export interface FetchMyPurchases_myPurchases {
+  __typename: "Purchase";
+  id: number;
+  total: number;
+  itemSold: FetchMyPurchases_myPurchases_itemSold;
+}
+
+export interface FetchMyPurchases {
+  myPurchases: FetchMyPurchases_myPurchases[];
+}
+
+export interface FetchMyPurchasesVariables {
+  buyerId: number;
 }
 
 /* tslint:disable */
@@ -447,10 +509,31 @@ export interface BuyItNow {
 // GraphQL fragment: Purchase
 // ====================================================
 
+export interface Purchase_itemSold_auction {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+}
+
+export interface Purchase_itemSold {
+  __typename: "AuctionTopBid";
+  topBid: number;
+  auctionStartTime: string;
+  auction: Purchase_itemSold_auction;
+}
+
 export interface Purchase {
   __typename: "Purchase";
   id: number;
-  prodId: number;
+  total: number;
+  itemSold: Purchase_itemSold;
 }
 
 /* tslint:disable */

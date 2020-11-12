@@ -23,7 +23,10 @@ type Query {
   user: User!
   buyItNows: [BuyItNow!]!
   auctions: [AuctionTopBid!]!
-  purchases: [Purchase!]!
+  myListings (sellerId: Int!): [AuctionTopBid!]!
+  myPurchases (buyerId: Int!): [Purchase!]!
+  myActiveBids (buyerId: Int!): [AuctionTopBid!]!
+  justPurchased: Purchase!
   # item (prodId: Int!, prodType: ProdType): Selling
 
   auctionListing (auctionId: Int!): AuctionTopBid!
@@ -148,7 +151,8 @@ type BuyItNow {
 
 type Purchase {
   id: Int!
-  prodId: Int!
+  total: Float!
+  itemSold: AuctionTopBid!
 }
 
 #####################################################################################

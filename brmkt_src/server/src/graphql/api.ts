@@ -58,9 +58,14 @@ export const graphqlRoot: Resolvers<Context> = {
 
       return await Promise.all(newAuctionTopBids)
     },
-    purchases: async () => {
-      const purchases = await Purchase.find()
-      return purchases
+    myListings: async (_, { sellerId }) => {
+      const allMyListings = await getRepository(AuctionTopBid)
+        .createQueryBuilder('allMyListings')
+        .leftJoinAndSelect('allMyListings.auction', 'auction')
+        .where('auction.sellerId = :sellerId', { sellerId })
+        .getMany()
+
+      return allMyListings
     },
     auctionListing: async (_, { auctionId }) => {
       const auctionTopBid = await AuctionTopBid.findOneOrFail({ where: { id: auctionId } })
@@ -69,6 +74,15 @@ export const graphqlRoot: Resolvers<Context> = {
     binListing: async (_, { binId }) => {
       const buyItNow = await BuyItNow.findOneOrFail({ where: { id: binId } })
       return buyItNow
+    },
+    myPurchases: async (_, { buyerId }) => {
+      const allMyPurchases = await getRepository(Purchase)
+        .createQueryBuilder('allMyPurchases')
+        .leftJoinAndSelect('allMyPurchases.itemSold.auction', 'itemSold.auction')
+        .where('itemSold.auction.currentHighestId = :buyerId', { buyerId })
+        .getMany()
+
+      return allMyPurchases
     },
   },
   Mutation: {

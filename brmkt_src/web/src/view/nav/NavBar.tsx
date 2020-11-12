@@ -24,7 +24,7 @@ const otherTabs = [
   },
   {
     name: 'Buy It Now',
-    path: getPath(Route.BUYITNOWS),
+    path: getPath(Route.USER_LISTINGS),
   },
 
   {
