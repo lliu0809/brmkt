@@ -52,7 +52,7 @@ export function BuyItNowList() {
     return (
       <Page>
         <Hero>
-          <H3> Buy It Now</H3>
+          <H2> Buy It Now</H2>
 
         </Hero>
       <div className="mw6">
@@ -147,7 +147,7 @@ export function AuctionList() {
     return (
       <div className="mw6">
         <Hero>
-          <H3>Auction</H3>
+          <H2>Auction</H2>
         </Hero>
         <H3>
           Search for an item: <Input $onChange={setAuctionQuery} />

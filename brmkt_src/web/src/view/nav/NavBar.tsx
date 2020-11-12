@@ -39,7 +39,7 @@ const otherTabs = [
 ]
 
 export function NavBar() {
-  const location = useLocation()
+  {/* const location = useLocation() */}
   const isSmall = useMediaQuery(breakpoints.small)
   const [showMenu, setShowMenu] = React.useState(false)
   const [toast, setToast] = React.useState<Toast | null>(null)
@@ -62,7 +62,7 @@ export function NavBar() {
     return void 0
   }, [toast])
 
-  const tabs = isSmall ? [otherTabs.find(t => location.pathname.startsWith(t.path)) || otherTabs[0]] : otherTabs
+  {/* const tabs = isSmall ? [otherTabs.find(t => location.pathname.startsWith(t.path)) || otherTabs[0]] : otherTabs */}
 
   return (
     <>
@@ -76,12 +76,13 @@ export function NavBar() {
           {isSmall && <div style={{ flex: 1 }} />}
 
           {/* layout additional tabs (possibly hidden for small screens) */}
-          {tabs.map((tab, i) => (
+          {/*{tabs.map((tab, i) => (
             <NavItem key={i} {...tab} />
-          ))}
+          ))}*/}
 
           {isSmall && <NavMenu show={showMenu} onClick={() => setShowMenu(!showMenu)} />}
         </Nav>
+        <RealNav />
         <SubNav />
       </div>
       {toast && <ToastContainer $isError={toast.type === ToastType.ERROR}>{toast.message}</ToastContainer>}
@@ -103,6 +104,23 @@ function NavMenu(props: { show: boolean; onClick: () => void }) {
         </Modal>
       )}
     </NavMenuButton>
+  )
+}
+
+
+function RealNav() {
+  const { user } = useContext(UserContext)
+  return (
+    <div className="fixed top-0 left-0 w-100 avenir">
+      <div id="nav-modal" />
+      <Nav>
+        <NavItem {...title} />
+        <NavItem name="Auction" path={getPath(Route.AUCTIONS)} />
+        <NavItem name="Buy It Now" path={getPath(Route.BUYITNOWS)} />
+        <NavItem name={user ? 'Profile' : 'Log In'} path={getPath(Route.LOGIN)} />
+        {!user && <NavItem name="Sign Up" path={getPath(Route.SIGNUP)} />}
+      </Nav>
+    </div>
   )
 }
 

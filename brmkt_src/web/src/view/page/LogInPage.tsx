@@ -48,8 +48,7 @@ export function LogInPage(props: LogInPageProps) {
   }
 
   if (user) {
-
-    return <Logout />
+    return  <Logout />
   }
 
   return (
