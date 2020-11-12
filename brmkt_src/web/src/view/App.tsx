@@ -11,13 +11,17 @@ import { fetchUser } from './auth/fetchUser'
 import { UserContext, UserCtx } from './auth/user'
 import { Route } from './nav/route'
 import { AuctionsPage } from './page/AuctionsPage'
+import { BearwearPage } from './page/BearwearPage'
 import { BuyItNowsPage } from './page/BuyItNowsPage'
+import { DormsupplyPage } from './page/DormsupplyPage'
+import { ElectronicPage } from './page/ElectronicPage'
 import { HomePage } from './page/HomePage'
 import { LecturesPage } from './page/LecturesPage'
 import { LogInPage } from './page/LogInPage'
 import { PlaygroundPage } from './page/PlaygroundPage'
 import { ProjectsPage } from './page/ProjectsPage'
 import { SignUpPage } from './page/SignUpPage'
+import { TextbookPage } from './page/TextbookPage'
 
 const Styletron = require('styletron-engine-monolithic')
 
@@ -67,6 +71,11 @@ export function AppBody() {
         <PlaygroundPage path={Route.PLAYGROUND_APP} />
         <SignUpPage path={Route.SIGNUP} />
         <LogInPage path={Route.LOGIN} />
+        <ElectronicPage path={Route.ELECTRONICS} />
+        <BearwearPage path={Route.BEARWEAR} />
+        <DormsupplyPage path={Route.DORMSUPPLY} />
+        <TextbookPage path={Route.TEXTBOOK} />
+
       </Router>
       <Footer>
         <FooterText>© 2020 John Rothfels</FooterText>
