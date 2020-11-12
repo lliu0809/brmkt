@@ -38,16 +38,23 @@ export const graphqlRoot: Resolvers<Context> = {
     },
     auctions: async () => {
       const auctionTopBids = await AuctionTopBid.find()
-      if(auctionTopBids.length !== 0) {
+      if (auctionTopBids.length !== 0) {
         return auctionTopBids
       }
       const auctions = await Auction.find()
       const newAuctionTopBids = auctions.map(auction => {
         const auctionTopBid = new AuctionTopBid()
         auctionTopBid.auction = auction
+        //const auctionEndDate = new Date(auction.timeCreated.getTime() + auction.auctionTime * 1000)
+        const auctionEndDate = new Date(auction.timeCreated.getTime() + auction.auctionTime * 1000)
+        auctionTopBid.auctionStartTime = auctionEndDate.toString()
         auctionTopBid.topBid = auction.price
         return auctionTopBid.save()
       })
+
+      /*const newAuctionTimes = newAuctionTopBids.map(newAuctionTopBids=>{
+        const auctionTime =
+      })*/
 
       return await Promise.all(newAuctionTopBids)
     },
@@ -93,11 +100,11 @@ export const graphqlRoot: Resolvers<Context> = {
         .leftJoinAndSelect('currentBid.auction', 'auction')
         .where('auction.id = :id', { id })
         .getOne()
-      if(!currentBid) {
+      if (!currentBid) {
         return false
       }
 
-      if(currentBid.topBid > bid) {
+      if (currentBid.topBid > bid) {
         return false
       }
       currentBid.topBid = bid
@@ -107,7 +114,7 @@ export const graphqlRoot: Resolvers<Context> = {
     },
     purchase: async (_, { id }, ctx) => {
       const buyItNow = await BuyItNow.findOne({ where: { id } })
-      if(!buyItNow) {
+      if (!buyItNow) {
         return false
       }
       buyItNow.status = ItemStatus.Sold

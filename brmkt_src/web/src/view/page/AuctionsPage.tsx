@@ -19,7 +19,11 @@ import { Page } from './Page'
 interface AuctionsPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function AuctionsPage(props: AuctionsPageProps) {
-  return <Page><Auctions /></Page>
+  return (
+    <Page>
+      <Auctions />
+    </Page>
+  )
 }
 
 export function Auctions() {
@@ -35,20 +39,22 @@ export function AuctionList() {
 
   if (loading) {
     return <div>loading...</div>
-  }
-
-  else if (!data || data.auctions.length === 0) {
+  } else if (!data || data.auctions.length === 0) {
     return <div>no auctions</div>
-  }
-  else  {
+  } else {
     return (
       <div className="mw6">
+<<<<<<< HEAD
         <Hero>
           <H1>BRMKT.</H1>
           <H3> UCLA Buy, Sell, Auction</H3>
           <br/>
         </Hero>
         <H3>Search for an item: <Input $onChange={setAuctionQuery} /></H3>
+=======
+        {/* does search filter */}
+        <Input $onChange={setAuctionQuery} />
+>>>>>>> 38d63969dc0b56b0b80767af25425c4d7ced38c6
         <Spacer $h4 />
         {data.auctions
           .filter(auction => auction.auction.status === ItemStatus.NOTSOLD)
@@ -58,6 +64,7 @@ export function AuctionList() {
           .map((auction, i) => (
             <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
               <HeaderLink className="link dim pointer" $color="sky" to={getAuctionListingPath(auction.auction.id)}>
+<<<<<<< HEAD
                 <Product>
                   <Image><img src = {"/app/assets/auction/NEW TV.png"}/></Image>
                   <Description>
@@ -75,8 +82,12 @@ export function AuctionList() {
                     </Btn>
                   </Description>
                 </Product>
+=======
+                {auction.auction.id} · {auction.auction.title} · {auction.topBid}{' '}
+                <img src={'/app/assets/auction/NEW chair.png'} />
+>>>>>>> 38d63969dc0b56b0b80767af25425c4d7ced38c6
               </HeaderLink>
-            <Spacer $w4 />
+              <Spacer $w4 />
             </div>
           ))}
       </div>
@@ -136,14 +147,16 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
     placeBid(auctionId, Number(val)).catch(handleError)
   }
 
-  if (loading || data == null) {
-    return <div>loading...</div>
+  function calculateCountDown(endTime: Date) {
+    const curTime = new Date()
+    return (endTime.getTime() - curTime.getTime()) / 1000
   }
 
-  else if (!data || !data.auctionListing) {
+  if (loading || data == null) {
+    return <div>loading...</div>
+  } else if (!data || !data.auctionListing) {
     return <div>no such listing</div>
-  }
-  else  {
+  } else {
     return (
       <div className="flex flex-column mw6">
         <div className="flex items-center">
@@ -153,6 +166,21 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
           <Spacer $w4 />
           <Input $onSubmit={doPlaceBid} />
         </div>
+        <div className="flex items-center">
+          <H1>Auction End Time</H1>
+          <Spacer $w4 />
+          <Spacer $w4 />
+          <Spacer $w4 />
+          <H1>{data.auctionListing.auctionStartTime}</H1>
+        </div>
+        <div className="flex items-center">
+          <H1>Count Down</H1>
+          <Spacer $w4 />
+          <Spacer $w4 />
+          <Spacer $w4 />
+          <H1>{calculateCountDown(new Date(data.auctionListing.auctionStartTime))}</H1>
+        </div>
+
         <Spacer $h3 />
       </div>
     )
