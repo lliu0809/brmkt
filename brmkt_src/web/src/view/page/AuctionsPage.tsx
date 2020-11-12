@@ -54,7 +54,6 @@ export function AuctionList() {
         </H3>
         {/* does search filter */}
         {/* does search filter */}
-        <Input $onChange={setAuctionQuery} />
         <Spacer $h4 />
         {data.auctions
           .filter(auction => auction.auction.status === ItemStatus.NOTSOLD)
@@ -80,7 +79,6 @@ export function AuctionList() {
                     <Btn>Place a bid !</Btn>
                   </Description>
                 </Product>
-                {auction.auction.id} · {auction.auction.title} · {auction.topBid}{' '}
                 <img src={'/app/assets/auction/NEW chair.png'} />
               </HeaderLink>
               <Spacer $w4 />
