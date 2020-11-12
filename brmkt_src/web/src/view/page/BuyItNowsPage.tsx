@@ -64,7 +64,7 @@ export function BuyItNowList() {
               <HeaderLink className="link dim pointer" $color="black" to={getBinListingPath(buyItNow.id)}>
                 <Product>
                   <Image>
-                    <img src = {"/app/assets/auction/NEW chair.png"}/>
+                  <img src = {"/app/assets/buyitnow/" + buyItNow.title + ".png"}/>
                   </Image>
                   <Description>
                     <Item>
