@@ -15,7 +15,6 @@ import { handleError } from '../toast/error'
 import { placeBid } from './mutateAuctionBid'
 import { Page } from './Page'
 
-
 interface AuctionsPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function AuctionsPage(props: AuctionsPageProps) {
@@ -47,21 +46,24 @@ export function AuctionList() {
         <Hero>
           <H1>BRMKT.</H1>
           <H3> UCLA Buy, Sell, Auction</H3>
-          <br/>
+          <br />
         </Hero>
-        <H3>Search for an item: <Input $onChange={setAuctionQuery} /></H3>
+        <H3>
+          Search for an item: <Input $onChange={setAuctionQuery} />
+        </H3>
         {/* does search filter */}
         <Spacer $h4 />
         {data.auctions
           .filter(auction => auction.auction.status === ItemStatus.NOTSOLD)
           .filter(auction => auction.auction.title.toLowerCase().includes(auctionQuery.toLowerCase()))
 
-
           .map((auction, i) => (
             <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
               <HeaderLink className="link dim pointer" $color="sky" to={getAuctionListingPath(auction.auction.id)}>
                 <Product>
-                  <Image><img src = {"/app/assets/auction/NEW TV.png"}/></Image>
+                  <Image>
+                    <img src={'/app/assets/auction/NEW TV.png'} />
+                  </Image>
                   <Description>
                     <Item>
                       <H3>{auction.auction.title}</H3>
@@ -72,9 +74,7 @@ export function AuctionList() {
                     <PriceTag>
                       <H3>Current Bid: {auction.topBid}</H3>
                     </PriceTag>
-                    <Btn>
-                      Place a bid !
-                    </Btn>
+                    <Btn>Place a bid !</Btn>
                   </Description>
                 </Product>
                 {auction.auction.id} · {auction.auction.title} · {auction.topBid}{' '}
@@ -105,7 +105,7 @@ const PriceTag = style('div', 'pa3 v-mid', {
   padding: '0.5rem',
   fontFamily: 'sans-serif',
   fontSize: '1.5rem',
-});
+})
 
 const Image = style('td', '  ', {
   height: '12rem',
@@ -114,7 +114,7 @@ const Image = style('td', '  ', {
 })
 
 const Item = style('td', '  ', {
-  fontSize: '1.3rem'
+  fontSize: '1.3rem',
 })
 
 const Description = style('td', '  ', {
@@ -128,7 +128,7 @@ const Btn = style('div', 'br2 pa3 tc', {
   fontSize: '0.9rem',
   borderWidth: '1px',
   color: 'white',
-  padding: '0.5rem'
+  padding: '0.5rem',
 })
 
 export function AuctionListing({ auctionId }: { auctionId: number }) {
@@ -142,7 +142,15 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
 
   function calculateCountDown(endTime: Date) {
     const curTime = new Date()
-    return (endTime.getTime() - curTime.getTime()) / 1000
+    var seconds = (endTime.getTime() - curTime.getTime()) / 1000
+    const days = Math.floor(seconds / (60 * 60 * 24))
+    seconds -= days * 60 * 60 * 24
+    const hours = Math.floor(seconds / (60 * 60))
+    seconds -= hours * 60 * 60
+    const minutes = Math.floor(seconds / 60)
+    seconds -= minutes * 60
+    seconds = Math.trunc(seconds)
+    return { days, hours, minutes, seconds }
   }
 
   if (loading || data == null) {
@@ -171,7 +179,12 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
           <Spacer $w4 />
           <Spacer $w4 />
           <Spacer $w4 />
-          <H1>{calculateCountDown(new Date(data.auctionListing.auctionStartTime))}</H1>
+          <H1>
+            {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).days} days{' '}
+            {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).hours}:
+            {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).minutes}:
+            {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).seconds} left
+          </H1>
         </div>
 
         <Spacer $h3 />
