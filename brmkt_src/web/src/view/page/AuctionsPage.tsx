@@ -141,8 +141,9 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
   })
 
   function doPlaceBid(val: string) {
-    if(user.user) {
+    if (user.user) {
       placeBid(auctionId, user.user.id, Number(val)).catch(handleError)
+      refreshPage()
     }
     // NEED TO REDIRECT TO LOGIN PAGE IF USER IS NULL
   }
@@ -158,6 +159,9 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
     seconds -= minutes * 60
     seconds = Math.trunc(seconds)
     return { days, hours, minutes, seconds }
+  }
+  function refreshPage() {
+    window.location.reload()
   }
 
   if (loading || data == null) {
