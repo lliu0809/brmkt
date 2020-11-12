@@ -18,6 +18,11 @@ export enum Route {
   BUYITNOW_LISTING = 'app/buyitnow/listing',
   SELL = "app/SellProduct",
   LOGIN = 'app/login',
+  ELECTRONICS = 'app/electronics',
+  BEARWEAR = 'app/bearwear',
+  TEXTBOOK = 'app/textbook',
+  DORMSUPPLY = 'app/dormsupply',
+
 }
 
 export enum PlaygroundApp {
