@@ -63,7 +63,7 @@ function RealNav() {
         <NavItem {...title} />
         <NavItem name="Auction" path={getPath(Route.AUCTIONS)} />
         <NavItem name="Buy It Now" path={getPath(Route.BUYITNOWS)} />
-        <NavItem name={user ? 'Profile' : 'Log In'} path={getPath(Route.LOGIN)} />
+        <NavItem name={user ? 'Hi, '+ user.name : 'Log In'} path={getPath(Route.LOGIN)} />
         {!user && <NavItem name="Sign Up" path={getPath(Route.SIGNUP)} />}
       </Nav>
     </div>

@@ -36,6 +36,7 @@ export function Auctions() {
 export function AuctionList() {
   const [auctionQuery, setAuctionQuery] = useState(' ')
   const { loading, data } = useQuery<FetchAuctions>(fetchAuctions)
+  const { user } = useContext(UserContext)
 
   if (loading) {
     return <div>loading...</div>
@@ -61,7 +62,7 @@ export function AuctionList() {
 
           .map((auction, i) => (
             <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
-              <HeaderLink className="link dim pointer" $color="sky" to={getAuctionListingPath(auction.auction.id)}>
+              <HeaderLink className="link dim pointer" $color="sky" to={user? getAuctionListingPath(auction.auction.id):"app/login"}>
                 <Product>
                   <Image>
                   <img src = {"/app/assets/auction/" + auction.auction.title + ".png"}/>
