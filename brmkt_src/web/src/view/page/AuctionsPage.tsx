@@ -62,10 +62,14 @@ export function AuctionList() {
 
           .map((auction, i) => (
             <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
-              <HeaderLink className="link dim pointer" $color="sky" to={user? getAuctionListingPath(auction.auction.id):"app/login"}>
+              <HeaderLink
+                className="link dim pointer"
+                $color="sky"
+                to={user ? getAuctionListingPath(auction.auction.id) : 'app/login'}
+              >
                 <Product>
                   <Image>
-                  <img src = {"/app/assets/auction/" + auction.auction.title + ".png"}/>
+                    <img src={'/app/assets/auction/' + auction.auction.title + '.png'} />
                   </Image>
                   <Description>
                     <Item>
@@ -97,7 +101,6 @@ const Product = style('td', 'w-100  b--mid-gray br2 pa3 tc', {
   borderTopColor: Colors.black + '!important',
 })
 
-
 const Image = style('td', '  ', {
   height: '12rem',
   width: '12rem',
@@ -125,9 +128,9 @@ const Btn = style('div', 'br2 pa3 tc', {
   padding: '0.5rem',
 })
 
-const Italic = style('div', '  ', {
+/*const Italic = style('div', '  ', {
   fontStyle: 'italic',
-})
+})*/
 
 export function AuctionListing({ auctionId }: { auctionId: number }) {
   const user = useContext(UserContext)
@@ -143,7 +146,12 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
     // NEED TO REDIRECT TO LOGIN PAGE IF USER IS NULL
   }
 
-  function calculateCountDown(endTime: Date) {
+  const [days, setDays] = useState(0)
+  const [hrs, setHrs] = useState(0)
+  const [mins, setMins] = useState(0)
+  const [secs, setSecs] = useState(0)
+
+  /*function calculateCountDown(endTime: Date) {
     const curTime = new Date()
     var seconds = (endTime.getTime() - curTime.getTime()) / 1000
     const days = Math.floor(seconds / (60 * 60 * 24))
@@ -154,10 +162,29 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
     seconds -= minutes * 60
     seconds = Math.trunc(seconds)
     return { days, hours, minutes, seconds }
+  }*/
+  function calculateCountDown(endTime: Date) {
+    const curTime = new Date()
+    var seconds = (endTime.getTime() - curTime.getTime()) / 1000
+    const day_tmp = Math.floor(seconds / (60 * 60 * 24))
+    setDays(day_tmp)
+    seconds -= day_tmp * 60 * 60 * 24
+    const hours = Math.floor(seconds / (60 * 60))
+    setHrs(hours)
+    seconds -= hours * 60 * 60
+    const minutes = Math.floor(seconds / 60)
+    setMins(minutes)
+    seconds -= minutes * 60
+    const sec = Math.trunc(seconds)
+    setSecs(sec)
+    //return { days, hours, minutes, seconds }
   }
   function refreshPage() {
     refetch().catch(handleError)
-    window.location.reload()
+    if (typeof window !== 'undefined') window.location.reload()
+  }
+  function pad(d: number) {
+    return d < 10 ? '0' + d.toString() : d.toString()
   }
 
   if (loading || data == null) {
@@ -165,19 +192,30 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
   } else if (!data || !data.auctionListing) {
     return <div>no such listing</div>
   } else {
+    const end = new Date(data.auctionListing.auctionStartTime)
+    setInterval(function () {
+      calculateCountDown(end)
+    }, 1000)
     return (
       <div className="flex flex-column mw6">
         <Hero>
           <H1>{data.auctionListing.auction.title}</H1>
           <br />
         </Hero>
-        <H3><b>Current Bid:</b> <i>  ${data.auctionListing.topBid}</i></H3> <br/>
-        <H3><b>Place a bid:</b> <Input placeholder="Enter your bid and hit return!" $onSubmit={doPlaceBid} /> </H3><br/>
-        <H3><b>Auction End Time:</b> <Italic>{data.auctionListing.auctionStartTime}</Italic></H3> <br/>
-        <H3><b>Count Down:</b> <i>{calculateCountDown(new Date(data.auctionListing.auctionStartTime)).days} days{' '}
-                        {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).hours}:
-                        {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).minutes}:
-                        {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).seconds} left</i></H3>
+        <H3>
+          <b>Current Bid:</b> <i> ${data.auctionListing.topBid}</i>
+        </H3>{' '}
+        <br />
+        <H3>
+          <b>Place a bid:</b> <Input placeholder="Enter your bid and hit return!" $onSubmit={doPlaceBid} />{' '}
+        </H3>
+        <br />
+        <H3>
+          <b>Count Down:</b>{' '}
+          <i>
+            {days} days {pad(hrs)}:{pad(mins)}:{pad(secs)} left
+          </i>
+        </H3>
         <Spacer $h3 />
       </div>
     )
