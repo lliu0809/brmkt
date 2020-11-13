@@ -1082,7 +1082,7 @@
             "description": null,
             "args": [
               {
-                "name": "buyerId",
+                "name": "bidderId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",

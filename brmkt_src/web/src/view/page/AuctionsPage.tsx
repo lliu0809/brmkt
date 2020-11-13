@@ -130,7 +130,7 @@ const Italic = style('div', '  ', {
 
 export function AuctionListing({ auctionId }: { auctionId: number }) {
   const user = useContext(UserContext)
-  const { loading, data } = useQuery<FetchAuctionListing, FetchAuctionListingVariables>(fetchAuctionListing, {
+  const { loading, data, refetch } = useQuery<FetchAuctionListing, FetchAuctionListingVariables>(fetchAuctionListing, {
     variables: { auctionId },
   })
 
@@ -155,6 +155,7 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
     return { days, hours, minutes, seconds }
   }
   function refreshPage() {
+    refetch().catch(handleError)
     window.location.reload()
   }
 

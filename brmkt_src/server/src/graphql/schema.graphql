@@ -25,7 +25,7 @@ type Query {
   auctions: [AuctionTopBid!]!
   myListings (sellerId: Int!): [AuctionTopBid!]!
   myPurchases (buyerId: Int!): [Purchase!]!
-  myActiveBids (buyerId: Int!): [AuctionTopBid!]!
+  myActiveBids (bidderId: Int!): [AuctionTopBid!]!
   justPurchased: Purchase!
   # item (prodId: Int!, prodType: ProdType): Selling
 

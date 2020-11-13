@@ -41,7 +41,7 @@ export interface QueryMyPurchasesArgs {
 }
 
 export interface QueryMyActiveBidsArgs {
-  buyerId: Scalars['Int']
+  bidderId: Scalars['Int']
 }
 
 export interface QueryAuctionListingArgs {
@@ -335,7 +335,7 @@ export type QueryResolvers<
     Array<ResolversTypes['AuctionTopBid']>,
     ParentType,
     ContextType,
-    RequireFields<QueryMyActiveBidsArgs, 'buyerId'>
+    RequireFields<QueryMyActiveBidsArgs, 'bidderId'>
   >
   justPurchased?: Resolver<ResolversTypes['Purchase'], ParentType, ContextType>
   auctionListing?: Resolver<
