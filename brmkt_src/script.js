@@ -2,25 +2,25 @@ import http from 'k6/http'
 import { sleep } from 'k6'
 import { Counter, Rate } from 'k6/metrics'
 
-/*export const options = {
+export const options = {
    scenarios: {
      example_scenario: {
        // name of the executor to use
        executor: 'ramping-arrival-rate',
        // common scenario configuration
-       startRate: '50',
+       startRate: '5',
        timeUnit: '1s',
        // executor-specific configuration
-       preAllocatedVUs: 50,
-       maxVUs: 100,
+       preAllocatedVUs: 5,
+       maxVUs: 10,
        stages: [
-         { target: 200, duration: '30s' },
+         { target: 20, duration: '30s' },
          { target: 0, duration: '30s' },
        ],
      },
    },
  }*/
-
+var count = 95
 export default function () {
   //load test homepage
   http.get('http://localhost:3000')
@@ -41,7 +41,7 @@ export default function () {
   //load test fetchAuctions
   const resp1 = http.post(
     'http://localhost:3000/graphql',
-    '{"operationName":"FetchAuctions","variables":{},"query":"query FetchAuctions {\\n  auctions {\\n    ...AuctionTopBid\\n    __typename\\n  }\\n}\\n\\nfragment Auction on Auction {\\n  id\\n  title\\n  price\\n  description\\n  prodType\\n  seller\\n  currentHighest\\n  auctionTime\\n  status\\n  __typename\\n}\\n\\nfragment AuctionTopBid on AuctionTopBid {\\n  topBid\\n  auction {\\n    ...Auction\\n    __typename\\n  }\\n  __typename\\n}\\n"}',
+    '{"operationName":"FetchAuctionListing","variables":{"auctionId":1},"query":"query FetchAuctionListing($auctionId: Int!) {\\n  auctionListing(auctionId: $auctionId) {\n    ...AuctionTopBid\n    __typename\n  }\n}\n\nfragment Auction on Auction {\n  id\n  title\n  price\n  description\n  prodType\n  sellerId\n  currentHighestId\n  auctionTime\n  status\n  __typename\n}\n\nfragment AuctionTopBid on AuctionTopBid {\\n  topBid\\n  auctionStartTime\\n  auction {\\n    ...Auction\\n    __typename\\n  }\\n  __typename\\n}\\n"}',
     {
       headers: {
         'Content-Type': 'application/json',
@@ -64,6 +64,30 @@ export default function () {
   sleep(1)
 
   //load test logout
+  const resp3 = http.post(
+    'http://localhost:3000/auth/logout',
+
+  )
+  sleep(1)
+  //count++
+  //load test place bids
+  count+=1
+  const resp4 = http.post(
+    'http://localhost:3000/graphql',
+    `{"operationName":"PlaceBid","variables":{"id":2,"bidderId":4,"bid":${count}},"query":"mutation PlaceBid($id: Int!, $bidderId: Int!, $bid: Float!) {\\n  placeBid(id: $id, bidderId: $bidderId, bid: $bid)\\n}\\n"}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+
+  //load test get pages
+  http.get('http://localhost:3000/app/buyitnow')
+
+  sleep(1)
+
+  http.get('http://localhost:3000/app/auction')
 }
 
 const count200 = new Counter('status_code_2xx')
