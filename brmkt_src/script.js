@@ -8,18 +8,18 @@ export const options = {
        // name of the executor to use
        executor: 'ramping-arrival-rate',
        // common scenario configuration
-       startRate: '5',
+       startRate: '50',
        timeUnit: '1s',
        // executor-specific configuration
-       preAllocatedVUs: 5,
-       maxVUs: 10,
+       preAllocatedVUs: 50,
+       maxVUs: 100,
        stages: [
          { target: 20, duration: '30s' },
          { target: 0, duration: '30s' },
        ],
      },
    },
- }*/
+ }
 var count = 95
 export default function () {
   //load test homepage
@@ -36,7 +36,7 @@ export default function () {
       },
     }
   )
-  sleep(1)
+
 
   //load test fetchAuctions
   const resp1 = http.post(
@@ -49,7 +49,7 @@ export default function () {
     }
   )
 
-  sleep(1)
+
 
   //load test login
   const resp2 = http.post(
@@ -61,14 +61,14 @@ export default function () {
       },
     }
   )
-  sleep(1)
+
 
   //load test logout
   const resp3 = http.post(
     'http://localhost:3000/auth/logout',
 
   )
-  sleep(1)
+
   //count++
   //load test place bids
   count+=1
@@ -85,7 +85,7 @@ export default function () {
   //load test get pages
   http.get('http://localhost:3000/app/buyitnow')
 
-  sleep(1)
+
 
   http.get('http://localhost:3000/app/auction')
 }
