@@ -78,7 +78,7 @@ export function AppBody() {
 
       </Router>
       <Footer>
-        <FooterText>© 2020 John Rothfels</FooterText>
+        <FooterText>© 2020 Bruin Market</FooterText>
       </Footer>
     </>
   )

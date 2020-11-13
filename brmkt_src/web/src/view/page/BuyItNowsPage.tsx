@@ -71,7 +71,7 @@ export function BuyItNowList() {
                       <H3>{buyItNow.title}</H3>
                     </Item>
                     <PriceTag>
-                      <H3>Price: {buyItNow.price}</H3>
+                      <H3>Price: ${buyItNow.price}</H3>
                     </PriceTag>
                     <Btn>
                       Buy it now !

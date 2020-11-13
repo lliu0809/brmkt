@@ -1,10 +1,6 @@
 import { useLocation } from '@reach/router'
 import * as React from 'react'
 import { useContext, useEffect } from 'react'
-import ReactDOM from 'react-dom'
-import { useMediaQuery } from 'react-responsive'
-import { breakpoints } from '../../style/breakpoints'
-import { MenuIcon } from '../../style/icons'
 import { style } from '../../style/styled'
 import { UserContext } from '../auth/user'
 import { addToastListener, removeToastListener, Toast, ToastType } from '../toast/toast'
@@ -17,31 +13,9 @@ const title = {
   title: true,
 }
 
-const otherTabs = [
-  {
-    name: 'Auction',
-    path: getPath(Route.AUCTIONS),
-  },
-  {
-    name: 'Buy It Now',
-    path: getPath(Route.BUYITNOWS),
-  },
-
-  {
-    name: 'Log In',
-    path: getPath(Route.LOGIN),
-  },
-  {
-    name: 'Sign Up',
-    path: getPath(Route.SIGNUP),
-  },
-
-]
 
 export function NavBar() {
   {/* const location = useLocation() */}
-  const isSmall = useMediaQuery(breakpoints.small)
-  const [showMenu, setShowMenu] = React.useState(false)
   const [toast, setToast] = React.useState<Toast | null>(null)
 
   function onToast(feedback: Toast) {
@@ -69,19 +43,7 @@ export function NavBar() {
       <div className="fixed top-0 left-0 w-100 avenir">
         {/* mount point for NavMenu */}
         <div id="nav-modal" />
-        <Nav>
-          <NavItem {...title} />
 
-          {/* push tab to the right on small screens */}
-          {isSmall && <div style={{ flex: 1 }} />}
-
-          {/* layout additional tabs (possibly hidden for small screens) */}
-          {/*{tabs.map((tab, i) => (
-            <NavItem key={i} {...tab} />
-          ))}*/}
-
-          {isSmall && <NavMenu show={showMenu} onClick={() => setShowMenu(!showMenu)} />}
-        </Nav>
         <RealNav />
         <SubNav />
       </div>
@@ -90,22 +52,6 @@ export function NavBar() {
   )
 }
 
-function NavMenu(props: { show: boolean; onClick: () => void }) {
-  return (
-    <NavMenuButton onClick={props.onClick}>
-      <MenuIcon />
-      {props.show && (
-        <Modal>
-          <NavMenuModal>
-            {otherTabs.map((tab, i) => (
-              <NavItem key={i} {...tab} />
-            ))}
-          </NavMenuModal>
-        </Modal>
-      )}
-    </NavMenuButton>
-  )
-}
 
 
 function RealNav() {
@@ -171,13 +117,6 @@ const NavAnchor = style(
 )
 const NavLink = link(NavAnchor)
 
-const NavMenuButton = style('div', 'ml3 pa2 hover-bg-black-10 pointer')
-
-const NavMenuModal = style(
-  'div',
-  'avenir f4 fixed flex flex-column items-center top-0 br3 pa3 right-0 bg-black-90 mt5 mr4 mr5-ns',
-  { zIndex: 100 }
-)
 
 const ToastContainer = style<'div', { $isError?: boolean }>(
   'div',
@@ -188,6 +127,3 @@ const ToastContainer = style<'div', { $isError?: boolean }>(
   })
 )
 
-function Modal(props: { children: React.ReactNode }) {
-  return ReactDOM.createPortal(props.children, document.querySelector('#nav-modal')!)
-}

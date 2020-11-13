@@ -69,13 +69,9 @@ export function AuctionList() {
                   <Description>
                     <Item>
                       <H3>{auction.auction.title}</H3>
-                    </Item>
-                    <PriceTag>
                       <H3>Item ID: {auction.auction.id}</H3>
-                    </PriceTag>
-                    <PriceTag>
-                      <H3>Current Bid: {auction.topBid}</H3>
-                    </PriceTag>
+                      <H3>Current Bid: ${auction.topBid}</H3>
+                    </Item>
                     <Btn>Place a bid !</Btn>
                   </Description>
                 </Product>
@@ -100,12 +96,6 @@ const Product = style('td', 'w-100  b--mid-gray br2 pa3 tc', {
   borderTopColor: Colors.black + '!important',
 })
 
-const PriceTag = style('div', 'pa3 v-mid', {
-  bottom: '2rem',
-  padding: '0.5rem',
-  fontFamily: 'sans-serif',
-  fontSize: '1.5rem',
-})
 
 const Image = style('td', '  ', {
   height: '12rem',
@@ -114,7 +104,10 @@ const Image = style('td', '  ', {
 })
 
 const Item = style('td', '  ', {
-  fontSize: '1.3rem',
+  bottom: '2rem',
+  padding: '0.5rem',
+  fontFamily: 'sans-serif',
+  fontSize: '1.5rem',
 })
 
 const Description = style('td', '  ', {
@@ -129,6 +122,10 @@ const Btn = style('div', 'br2 pa3 tc', {
   borderWidth: '1px',
   color: 'white',
   padding: '0.5rem',
+})
+
+const Italic = style('div', '  ', {
+  fontStyle: 'italic',
 })
 
 export function AuctionListing({ auctionId }: { auctionId: number }) {
@@ -168,33 +165,17 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
   } else {
     return (
       <div className="flex flex-column mw6">
-        <div className="flex items-center">
+        <Hero>
           <H1>{data.auctionListing.auction.title}</H1>
-          <Spacer $w4 />
-          <H1>{data.auctionListing.topBid}</H1>
-          <Spacer $w4 />
-          <Input $onSubmit={doPlaceBid} />
-        </div>
-        <div className="flex items-center">
-          <H1>Auction End Time</H1>
-          <Spacer $w4 />
-          <Spacer $w4 />
-          <Spacer $w4 />
-          <H1>{data.auctionListing.auctionStartTime}</H1>
-        </div>
-        <div className="flex items-center">
-          <H1>Count Down</H1>
-          <Spacer $w4 />
-          <Spacer $w4 />
-          <Spacer $w4 />
-          <H1>
-            {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).days} days{' '}
-            {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).hours}:
-            {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).minutes}:
-            {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).seconds} left
-          </H1>
-        </div>
-
+          <br />
+        </Hero>
+        <H3><b>Current Bid:</b> <i>  ${data.auctionListing.topBid}</i></H3> <br/>
+        <H3><b>Place a bid:</b> <Input placeholder="Enter your bid and hit return!" $onSubmit={doPlaceBid} /> </H3><br/>
+        <H3><b>Auction End Time:</b> <Italic>{data.auctionListing.auctionStartTime}</Italic></H3> <br/>
+        <H3><b>Count Down:</b> <i>{calculateCountDown(new Date(data.auctionListing.auctionStartTime)).days} days{' '}
+                        {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).hours}:
+                        {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).minutes}:
+                        {calculateCountDown(new Date(data.auctionListing.auctionStartTime)).seconds} left</i></H3>
         <Spacer $h3 />
       </div>
     )
