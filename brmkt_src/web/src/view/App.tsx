@@ -22,6 +22,8 @@ import { PlaygroundPage } from './page/PlaygroundPage'
 import { ProjectsPage } from './page/ProjectsPage'
 import { SignUpPage } from './page/SignUpPage'
 import { TextbookPage } from './page/TextbookPage'
+import { UserListingsPage } from './page/UserListingsPage'
+import { UserPurchasesPage } from './page/UserPurchasesPage'
 
 const Styletron = require('styletron-engine-monolithic')
 
@@ -64,6 +66,8 @@ export function AppBody() {
         <LecturesPage path={Route.LECTURES} />
         <AuctionsPage path={Route.AUCTIONS} />
         <AuctionsPage path={Route.AUCTION_LISTING} />
+        <UserListingsPage path={Route.USER_LISTINGS} />
+        <UserPurchasesPage path={Route.USER_PURCHASES} />
         <BuyItNowsPage path={Route.BUYITNOWS} />
         <BuyItNowsPage path={Route.BUYITNOW_LISTING} />
         <ProjectsPage path={Route.PROJECTS} />

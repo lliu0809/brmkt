@@ -23,6 +23,8 @@ export enum Route {
   TEXTBOOK = 'app/textbook',
   DORMSUPPLY = 'app/dormsupply',
 
+  USER_LISTINGS = 'app/user/mylistings',
+  USER_PURCHASES = 'app/user/mypurchases',
 }
 
 export enum PlaygroundApp {

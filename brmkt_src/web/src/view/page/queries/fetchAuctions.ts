@@ -43,3 +43,13 @@ export const fetchAuctionListing = gql`
   ${fragmentAuction}
   ${fragmentTopBid}
 `
+
+export const fetchMyListings = gql`
+  query FetchMyListings($sellerId: Int!) {
+    myListings(sellerId: $sellerId) {
+      ...AuctionTopBid
+    }
+  }
+  ${fragmentAuction}
+  ${fragmentTopBid}
+`
