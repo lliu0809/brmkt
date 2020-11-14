@@ -21,7 +21,6 @@ type Query {
   surveys: [Survey!]!
   survey (surveyId: Int!): Survey
   user: User!
-  buyItNows: [BuyItNow!]!
   auctions: [AuctionTopBid!]!
   myListings (sellerId: Int!): [AuctionTopBid!]!
   myPurchases (buyerId: Int!): [Purchase!]!
@@ -30,7 +29,6 @@ type Query {
   # item (prodId: Int!, prodType: ProdType): Selling
 
   auctionListing (auctionId: Int!): AuctionTopBid!
-  binListing (binId: Int!): BuyItNow!
 }
 
 type Mutation {
@@ -136,17 +134,6 @@ type AuctionTopBid {
   topBid: Float!
   auctionStartTime: String!
   auction: Auction!
-}
-
-type BuyItNow {
-  id: Int!
-  title: String!
-  price: Float!
-  description: String!
-  prodType: ProdType!
-  seller: Int!
-  buyer: Int
-  status: ItemStatus!
 }
 
 type Purchase {

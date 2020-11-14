@@ -131,60 +131,6 @@ export interface FetchMyListingsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: FetchBuyItNows
-// ====================================================
-
-export interface FetchBuyItNows_buyItNows {
-  __typename: "BuyItNow";
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  prodType: ProdType;
-  seller: number;
-  buyer: number | null;
-  status: ItemStatus;
-}
-
-export interface FetchBuyItNows {
-  buyItNows: FetchBuyItNows_buyItNows[];
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: FetchBinListing
-// ====================================================
-
-export interface FetchBinListing_binListing {
-  __typename: "BuyItNow";
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  prodType: ProdType;
-  seller: number;
-  buyer: number | null;
-  status: ItemStatus;
-}
-
-export interface FetchBinListing {
-  binListing: FetchBinListing_binListing;
-}
-
-export interface FetchBinListingVariables {
-  binId: number;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: FetchMyPurchases
 // ====================================================
 
@@ -477,27 +423,6 @@ export interface AuctionTopBid {
   topBid: number;
   auctionStartTime: string;
   auction: AuctionTopBid_auction;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: BuyItNow
-// ====================================================
-
-export interface BuyItNow {
-  __typename: "BuyItNow";
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  prodType: ProdType;
-  seller: number;
-  buyer: number | null;
-  status: ItemStatus;
 }
 
 /* tslint:disable */

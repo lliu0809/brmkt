@@ -12,7 +12,6 @@ import { UserContext, UserCtx } from './auth/user'
 import { Route } from './nav/route'
 import { AuctionsPage } from './page/AuctionsPage'
 import { BearwearPage } from './page/BearwearPage'
-import { BuyItNowsPage } from './page/BuyItNowsPage'
 import { DormsupplyPage } from './page/DormsupplyPage'
 import { ElectronicPage } from './page/ElectronicPage'
 import { HomePage } from './page/HomePage'
@@ -68,8 +67,6 @@ export function AppBody() {
         <AuctionsPage path={Route.AUCTION_LISTING} />
         <UserListingsPage path={Route.USER_LISTINGS} />
         <UserPurchasesPage path={Route.USER_PURCHASES} />
-        <BuyItNowsPage path={Route.BUYITNOWS} />
-        <BuyItNowsPage path={Route.BUYITNOW_LISTING} />
         <ProjectsPage path={Route.PROJECTS} />
         <PlaygroundPage path={Route.PLAYGROUND} />
         <PlaygroundPage path={Route.PLAYGROUND_APP} />

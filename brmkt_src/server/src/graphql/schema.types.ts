@@ -18,14 +18,12 @@ export interface Query {
   surveys: Array<Survey>
   survey?: Maybe<Survey>
   user: User
-  buyItNows: Array<BuyItNow>
   auctions: Array<AuctionTopBid>
   myListings: Array<AuctionTopBid>
   myPurchases: Array<Purchase>
   myActiveBids: Array<AuctionTopBid>
   justPurchased: Purchase
   auctionListing: AuctionTopBid
-  binListing: BuyItNow
 }
 
 export interface QuerySurveyArgs {
@@ -46,10 +44,6 @@ export interface QueryMyActiveBidsArgs {
 
 export interface QueryAuctionListingArgs {
   auctionId: Scalars['Int']
-}
-
-export interface QueryBinListingArgs {
-  binId: Scalars['Int']
 }
 
 export interface Mutation {
@@ -167,18 +161,6 @@ export interface AuctionTopBid {
   auction: Auction
 }
 
-export interface BuyItNow {
-  __typename?: 'BuyItNow'
-  id: Scalars['Int']
-  title: Scalars['String']
-  price: Scalars['Float']
-  description: Scalars['String']
-  prodType: ProdType
-  seller: Scalars['Int']
-  buyer?: Maybe<Scalars['Int']>
-  status: ItemStatus
-}
-
 export interface Purchase {
   __typename?: 'Purchase'
   id: Scalars['Int']
@@ -280,7 +262,6 @@ export type ResolversTypes = {
   ItemStatus: ItemStatus
   Auction: ResolverTypeWrapper<Auction>
   AuctionTopBid: ResolverTypeWrapper<AuctionTopBid>
-  BuyItNow: ResolverTypeWrapper<BuyItNow>
   Purchase: ResolverTypeWrapper<Purchase>
 }
 
@@ -300,7 +281,6 @@ export type ResolversParentTypes = {
   User: User
   Auction: Auction
   AuctionTopBid: AuctionTopBid
-  BuyItNow: BuyItNow
   Purchase: Purchase
 }
 
@@ -317,7 +297,6 @@ export type QueryResolvers<
     RequireFields<QuerySurveyArgs, 'surveyId'>
   >
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>
-  buyItNows?: Resolver<Array<ResolversTypes['BuyItNow']>, ParentType, ContextType>
   auctions?: Resolver<Array<ResolversTypes['AuctionTopBid']>, ParentType, ContextType>
   myListings?: Resolver<
     Array<ResolversTypes['AuctionTopBid']>,
@@ -343,12 +322,6 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryAuctionListingArgs, 'auctionId'>
-  >
-  binListing?: Resolver<
-    ResolversTypes['BuyItNow'],
-    ParentType,
-    ContextType,
-    RequireFields<QueryBinListingArgs, 'binId'>
   >
 }
 
@@ -465,21 +438,6 @@ export type AuctionTopBidResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
-export type BuyItNowResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['BuyItNow'] = ResolversParentTypes['BuyItNow']
-> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  price?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
-  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  prodType?: Resolver<ResolversTypes['ProdType'], ParentType, ContextType>
-  seller?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  buyer?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
-  status?: Resolver<ResolversTypes['ItemStatus'], ParentType, ContextType>
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>
-}
-
 export type PurchaseResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Purchase'] = ResolversParentTypes['Purchase']
@@ -500,7 +458,6 @@ export type Resolvers<ContextType = any> = {
   User?: UserResolvers<ContextType>
   Auction?: AuctionResolvers<ContextType>
   AuctionTopBid?: AuctionTopBidResolvers<ContextType>
-  BuyItNow?: BuyItNowResolvers<ContextType>
   Purchase?: PurchaseResolvers<ContextType>
 }
 

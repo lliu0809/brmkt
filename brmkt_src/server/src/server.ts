@@ -21,7 +21,6 @@ import { Config } from './config'
 import { migrate } from './db/migrate'
 import { initORM } from './db/sql'
 import { Auction } from './entities/Auction'
-import { BuyItNow } from './entities/BuyItNow'
 import { Session } from './entities/Session'
 import { User } from './entities/User'
 import { getSchema, graphqlRoot, pubsub } from './graphql/api'
@@ -71,11 +70,6 @@ server.express.get('/orders', (req, res) => {
 server.express.get('/auction', async (req, res) => {
   const auctions = await Auction.find()
   res.status(200).type('json').send(auctions)
-})
-
-server.express.get('/buyitnow', async (req, res) => {
-  const buyitnows = await BuyItNow.find()
-  res.status(200).type('json').send(buyitnows)
 })
 
 const SESSION_DURATION = 30 * 24 * 60 * 60 * 1000 // 30 days

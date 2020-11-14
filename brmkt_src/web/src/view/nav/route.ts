@@ -14,8 +14,6 @@ export enum Route {
 
   AUCTIONS = 'app/auction',
   AUCTION_LISTING = 'app/auction/listing',
-  BUYITNOWS = 'app/buyitnow',
-  BUYITNOW_LISTING = 'app/buyitnow/listing',
   SELL = "app/SellProduct",
   LOGIN = 'app/login',
   ELECTRONICS = 'app/electronics',
@@ -37,11 +35,6 @@ export enum PlaygroundApp {
 export function getAuctionListingPath(auctionId?: number) {
   const path = getPath(Route.AUCTION_LISTING)
   return path + (auctionId ? `?auctionId=${auctionId}` : '')
-}
-
-export function getBinListingPath(binId?: number) {
-  const path = getPath(Route.BUYITNOW_LISTING)
-  return path + (binId ? `?binId=${binId}` : '')
 }
 
 export function getSurveyPath(surveyId?: number) {

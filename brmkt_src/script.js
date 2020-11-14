@@ -82,8 +82,6 @@ export default function () {
     }
   )
 
-  //load test get pages
-  http.get('http://localhost:3000/app/buyitnow')
 
 
 

@@ -14,19 +14,6 @@ interface ProfilePageProps extends RouteComponentProps, AppRouteParams {}
   return
 }*/
 
-/*
-query type:
-  user: User!
-  buyItNows: [BuyItNow!]!
-  auctions: [Auction!]!
-
-resolver:
-  buyItNows: async () => {
-      const buyItNows = await BuyItNow.find()
-      return buyItNows
-  }
-
-*/
 export function Profile(props: ProfilePageProps) {
   //const [userQuery, setUserQuery] = useState('')
   const { loading, data } = useQuery<FetchAuctions>(fetchAuctions)

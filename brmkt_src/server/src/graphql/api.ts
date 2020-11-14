@@ -5,13 +5,12 @@ import { getRepository } from 'typeorm'
 import { check } from '../../../common/src/util'
 import { Auction } from '../entities/Auction'
 import { AuctionTopBid } from '../entities/AuctionTopBid'
-import { BuyItNow } from '../entities/BuyItNow'
 import { Purchase } from '../entities/Purchase'
 import { Survey } from '../entities/Survey'
 import { SurveyAnswer } from '../entities/SurveyAnswer'
 import { SurveyQuestion } from '../entities/SurveyQuestion'
 import { User } from '../entities/User'
-import { ItemStatus, Resolvers } from './schema.types'
+import { Resolvers } from './schema.types'
 
 export const pubsub = new PubSub()
 
@@ -32,10 +31,6 @@ export const graphqlRoot: Resolvers<Context> = {
     self: (_, args, ctx) => ctx.user,
     survey: async (_, { surveyId }) => (await Survey.findOne({ where: { id: surveyId } })) || null,
     surveys: () => Survey.find(),
-    buyItNows: async () => {
-      const buyItNows = await BuyItNow.find()
-      return buyItNows
-    },
     auctions: async () => {
       const auctionTopBids = await AuctionTopBid.find()
       if (auctionTopBids.length !== 0) {
@@ -70,10 +65,6 @@ export const graphqlRoot: Resolvers<Context> = {
     auctionListing: async (_, { auctionId }) => {
       const auctionTopBid = await AuctionTopBid.findOneOrFail({ where: { id: auctionId } })
       return auctionTopBid
-    },
-    binListing: async (_, { binId }) => {
-      const buyItNow = await BuyItNow.findOneOrFail({ where: { id: binId } })
-      return buyItNow
     },
     myPurchases: async (_, { buyerId }) => {
       const allMyPurchases = await getRepository(Purchase)
@@ -130,15 +121,6 @@ export const graphqlRoot: Resolvers<Context> = {
       await currentAuction.save()
       await currentBid.save()
 
-      return true
-    },
-    purchase: async (_, { id }, ctx) => {
-      const buyItNow = await BuyItNow.findOne({ where: { id } })
-      if (!buyItNow) {
-        return false
-      }
-      buyItNow.status = ItemStatus.Sold
-      await buyItNow.save()
       return true
     },
   },

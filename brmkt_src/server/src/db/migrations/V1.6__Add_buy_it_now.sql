@@ -1,2 +1,0 @@
-insert into `buy_it_now` (`title`, `price`, `description`, `prodType`, `seller`) values ('NEW jacket', 25.75, 'a new jacket', 'BEARWEAR', 1);
-insert into `buy_it_now` (`title`, `price`, `description`, `prodType`, `seller`) values ('NEW phone', 699.25, 'a new smartphone', 'ELECTRONICS', 2);
