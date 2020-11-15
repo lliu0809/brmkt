@@ -21,6 +21,7 @@ import { PlaygroundPage } from './page/PlaygroundPage'
 import { ProjectsPage } from './page/ProjectsPage'
 import { SignUpPage } from './page/SignUpPage'
 import { TextbookPage } from './page/TextbookPage'
+import { UserActiveBidsPage } from './page/UserActiveBidsPage'
 import { UserListingsPage } from './page/UserListingsPage'
 import { UserPurchasesPage } from './page/UserPurchasesPage'
 
@@ -67,6 +68,7 @@ export function AppBody() {
         <AuctionsPage path={Route.AUCTION_LISTING} />
         <UserListingsPage path={Route.USER_LISTINGS} />
         <UserPurchasesPage path={Route.USER_PURCHASES} />
+        <UserActiveBidsPage path={Route.USER_ACTIVE_BIDS} />
         <ProjectsPage path={Route.PROJECTS} />
         <PlaygroundPage path={Route.PLAYGROUND} />
         <PlaygroundPage path={Route.PLAYGROUND_APP} />

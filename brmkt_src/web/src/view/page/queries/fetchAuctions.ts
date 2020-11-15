@@ -24,6 +24,16 @@ export const fragmentTopBid = gql`
   }
 `
 
+export const fragmentActiveBid = gql`
+  fragment ActiveBid on ActiveBid {
+    bid
+    bidderId
+    auctionTopBid {
+      ...AuctionTopBid
+    }
+  }
+`
+
 export const fetchAuctions = gql`
   query FetchAuctions {
     auctions {
@@ -52,4 +62,15 @@ export const fetchMyListings = gql`
   }
   ${fragmentAuction}
   ${fragmentTopBid}
+`
+
+export const fetchMyActiveBids = gql`
+  query FetchMyActiveBids($bidderId: Int!) {
+    myActiveBids(bidderId: $bidderId) {
+      ...ActiveBid
+    }
+  }
+  ${fragmentAuction}
+  ${fragmentTopBid}
+  ${fragmentActiveBid}
 `

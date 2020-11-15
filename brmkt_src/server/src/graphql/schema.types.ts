@@ -21,7 +21,7 @@ export interface Query {
   auctions: Array<AuctionTopBid>
   myListings: Array<AuctionTopBid>
   myPurchases: Array<Purchase>
-  myActiveBids: Array<AuctionTopBid>
+  myActiveBids: Array<ActiveBid>
   justPurchased: Purchase
   auctionListing: AuctionTopBid
 }
@@ -161,6 +161,13 @@ export interface AuctionTopBid {
   auction: Auction
 }
 
+export interface ActiveBid {
+  __typename?: 'ActiveBid'
+  bid: Scalars['Float']
+  bidderId: Scalars['Int']
+  auctionTopBid: AuctionTopBid
+}
+
 export interface Purchase {
   __typename?: 'Purchase'
   id: Scalars['Int']
@@ -262,6 +269,7 @@ export type ResolversTypes = {
   ItemStatus: ItemStatus
   Auction: ResolverTypeWrapper<Auction>
   AuctionTopBid: ResolverTypeWrapper<AuctionTopBid>
+  ActiveBid: ResolverTypeWrapper<ActiveBid>
   Purchase: ResolverTypeWrapper<Purchase>
 }
 
@@ -281,6 +289,7 @@ export type ResolversParentTypes = {
   User: User
   Auction: Auction
   AuctionTopBid: AuctionTopBid
+  ActiveBid: ActiveBid
   Purchase: Purchase
 }
 
@@ -311,7 +320,7 @@ export type QueryResolvers<
     RequireFields<QueryMyPurchasesArgs, 'buyerId'>
   >
   myActiveBids?: Resolver<
-    Array<ResolversTypes['AuctionTopBid']>,
+    Array<ResolversTypes['ActiveBid']>,
     ParentType,
     ContextType,
     RequireFields<QueryMyActiveBidsArgs, 'bidderId'>
@@ -438,6 +447,16 @@ export type AuctionTopBidResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
+export type ActiveBidResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ActiveBid'] = ResolversParentTypes['ActiveBid']
+> = {
+  bid?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
+  bidderId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  auctionTopBid?: Resolver<ResolversTypes['AuctionTopBid'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
 export type PurchaseResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Purchase'] = ResolversParentTypes['Purchase']
@@ -458,6 +477,7 @@ export type Resolvers<ContextType = any> = {
   User?: UserResolvers<ContextType>
   Auction?: AuctionResolvers<ContextType>
   AuctionTopBid?: AuctionTopBidResolvers<ContextType>
+  ActiveBid?: ActiveBidResolvers<ContextType>
   Purchase?: PurchaseResolvers<ContextType>
 }
 

@@ -131,6 +131,50 @@ export interface FetchMyListingsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchMyActiveBids
+// ====================================================
+
+export interface FetchMyActiveBids_myActiveBids_auctionTopBid_auction {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+}
+
+export interface FetchMyActiveBids_myActiveBids_auctionTopBid {
+  __typename: "AuctionTopBid";
+  topBid: number;
+  auctionStartTime: string;
+  auction: FetchMyActiveBids_myActiveBids_auctionTopBid_auction;
+}
+
+export interface FetchMyActiveBids_myActiveBids {
+  __typename: "ActiveBid";
+  bid: number;
+  bidderId: number;
+  auctionTopBid: FetchMyActiveBids_myActiveBids_auctionTopBid;
+}
+
+export interface FetchMyActiveBids {
+  myActiveBids: FetchMyActiveBids_myActiveBids[];
+}
+
+export interface FetchMyActiveBidsVariables {
+  bidderId: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchMyPurchases
 // ====================================================
 
@@ -423,6 +467,42 @@ export interface AuctionTopBid {
   topBid: number;
   auctionStartTime: string;
   auction: AuctionTopBid_auction;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ActiveBid
+// ====================================================
+
+export interface ActiveBid_auctionTopBid_auction {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+}
+
+export interface ActiveBid_auctionTopBid {
+  __typename: "AuctionTopBid";
+  topBid: number;
+  auctionStartTime: string;
+  auction: ActiveBid_auctionTopBid_auction;
+}
+
+export interface ActiveBid {
+  __typename: "ActiveBid";
+  bid: number;
+  bidderId: number;
+  auctionTopBid: ActiveBid_auctionTopBid;
 }
 
 /* tslint:disable */

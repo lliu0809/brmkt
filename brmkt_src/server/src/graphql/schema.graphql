@@ -24,7 +24,7 @@ type Query {
   auctions: [AuctionTopBid!]!
   myListings (sellerId: Int!): [AuctionTopBid!]!
   myPurchases (buyerId: Int!): [Purchase!]!
-  myActiveBids (bidderId: Int!): [AuctionTopBid!]!
+  myActiveBids (bidderId: Int!): [ActiveBid!]!
   justPurchased: Purchase!
   # item (prodId: Int!, prodType: ProdType): Selling
 
@@ -134,6 +134,12 @@ type AuctionTopBid {
   topBid: Float!
   auctionStartTime: String!
   auction: Auction!
+}
+
+type ActiveBid {
+  bid: Float!
+  bidderId: Int!
+  auctionTopBid: AuctionTopBid!
 }
 
 type Purchase {

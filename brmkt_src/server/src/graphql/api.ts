@@ -3,6 +3,7 @@ import { PubSub } from 'graphql-yoga'
 import path from 'path'
 import { getRepository } from 'typeorm'
 import { check } from '../../../common/src/util'
+import { ActiveBid } from '../entities/ActiveBid'
 import { Auction } from '../entities/Auction'
 import { AuctionTopBid } from '../entities/AuctionTopBid'
 import { Purchase } from '../entities/Purchase'
@@ -53,6 +54,10 @@ export const graphqlRoot: Resolvers<Context> = {
 
       return await Promise.all(newAuctionTopBids)
     },
+    auctionListing: async (_, { auctionId }) => {
+      const auctionTopBid = await AuctionTopBid.findOneOrFail({ where: { id: auctionId } })
+      return auctionTopBid
+    },
     myListings: async (_, { sellerId }) => {
       const allMyListings = await getRepository(AuctionTopBid)
         .createQueryBuilder('allMyListings')
@@ -62,9 +67,9 @@ export const graphqlRoot: Resolvers<Context> = {
 
       return allMyListings
     },
-    auctionListing: async (_, { auctionId }) => {
-      const auctionTopBid = await AuctionTopBid.findOneOrFail({ where: { id: auctionId } })
-      return auctionTopBid
+    myActiveBids: async (_, { bidderId }) => {
+      const allMyActiveBids = await ActiveBid.find({ where: { bidderId: bidderId } })
+      return allMyActiveBids
     },
     myPurchases: async (_, { buyerId }) => {
       const allMyPurchases = await getRepository(Purchase)
@@ -120,6 +125,12 @@ export const graphqlRoot: Resolvers<Context> = {
       currentBid.topBid = bid
       await currentAuction.save()
       await currentBid.save()
+
+      const activeBid = new ActiveBid()
+      activeBid.bid = bid
+      activeBid.bidderId = bidderId
+      activeBid.auctionTopBid = currentBid
+      activeBid.save()
 
       return true
     },
