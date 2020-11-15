@@ -4,6 +4,7 @@ import * as React from 'react'
 import { useContext, useState } from 'react'
 import { Colors } from '../../../../common/src/colors'
 import { FetchAuctionListing, FetchAuctionListingVariables, FetchAuctions, ItemStatus } from '../../graphql/query.gen'
+import { Button } from '../../style/button'
 import { H1, H2, H3 } from '../../style/header'
 import { Input } from '../../style/input'
 import { Spacer } from '../../style/spacer'
@@ -150,22 +151,37 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
   const [hrs, setHrs] = useState(0)
   const [mins, setMins] = useState(0)
   const [secs, setSecs] = useState(0)
+  const [aucState, setAucState] = useState('Active')
+  const [confirmAuc, setConfirmAuc] = useState(false)
+  function showConfirmButton(bidder_id: number, cur_user_id: number) {
+    if (confirmAuc && bidder_id == cur_user_id) {
+      return <Button>Confirm Order</Button>
+    } else {
+      return null
+    }
+  }
 
-  /*function calculateCountDown(endTime: Date) {
-    const curTime = new Date()
-    var seconds = (endTime.getTime() - curTime.getTime()) / 1000
-    const days = Math.floor(seconds / (60 * 60 * 24))
-    seconds -= days * 60 * 60 * 24
-    const hours = Math.floor(seconds / (60 * 60))
-    seconds -= hours * 60 * 60
-    const minutes = Math.floor(seconds / 60)
-    seconds -= minutes * 60
-    seconds = Math.trunc(seconds)
-    return { days, hours, minutes, seconds }
-  }*/
+  function fetchUserId() {
+    if (user.user) {
+      return user.user.id
+    } else {
+      return -100
+    }
+  }
+
   function calculateCountDown(endTime: Date) {
     const curTime = new Date()
     var seconds = (endTime.getTime() - curTime.getTime()) / 1000
+    if (seconds <= 0) {
+      setAucState('Ended')
+      setConfirmAuc(true)
+      //check user context, if the highest bid, return confirmation button
+      setDays(0)
+      setHrs(0)
+      setMins(0)
+      setSecs(0)
+      return
+    }
     const day_tmp = Math.floor(seconds / (60 * 60 * 24))
     setDays(day_tmp)
     seconds -= day_tmp * 60 * 60 * 24
@@ -196,6 +212,11 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
     setInterval(function () {
       calculateCountDown(end)
     }, 1000)
+
+    const bidder_id =
+      data.auctionListing.auction.currentHighestId == null ? -1 : data.auctionListing.auction.currentHighestId
+
+    const cur_user_id = fetchUserId()
     return (
       <div className="flex flex-column mw6">
         <Hero>
@@ -213,9 +234,11 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
         <H3>
           <b>Count Down:</b>{' '}
           <i>
-            {days} days {pad(hrs)}:{pad(mins)}:{pad(secs)} left
+            {days} days {pad(hrs)}:{pad(mins)}:{pad(secs)} left {aucState}
           </i>
         </H3>
+        <br />
+        <H3 className="center">{showConfirmButton(bidder_id, cur_user_id)}</H3>
         <Spacer $h3 />
       </div>
     )
