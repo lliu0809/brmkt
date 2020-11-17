@@ -11,7 +11,7 @@ import { Survey } from '../entities/Survey'
 import { SurveyAnswer } from '../entities/SurveyAnswer'
 import { SurveyQuestion } from '../entities/SurveyQuestion'
 import { User } from '../entities/User'
-import { Resolvers } from './schema.types'
+import { ItemStatus, Resolvers } from './schema.types'
 
 export const pubsub = new PubSub()
 
@@ -142,6 +142,7 @@ export const graphqlRoot: Resolvers<Context> = {
       const curAuctionTopBid = await AuctionTopBid.findOne({ where: { id } })
       if (curAuctionTopBid) {
         newPurchase.itemSold = curAuctionTopBid
+        curAuctionTopBid.auction.status = ItemStatus.Sold
       } else {
         return false
       }
