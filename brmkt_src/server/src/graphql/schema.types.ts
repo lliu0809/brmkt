@@ -50,6 +50,7 @@ export interface Mutation {
   __typename?: 'Mutation'
   placeBid: Scalars['Boolean']
   purchase: Scalars['Boolean']
+  createNewPurchase: Scalars['Boolean']
   answerSurvey: Scalars['Boolean']
   nextSurveyQuestion?: Maybe<Survey>
 }
@@ -62,6 +63,11 @@ export interface MutationPlaceBidArgs {
 
 export interface MutationPurchaseArgs {
   id: Scalars['Int']
+}
+
+export interface MutationCreateNewPurchaseArgs {
+  total: Scalars['Float']
+  auctionTopBidId: Scalars['Int']
 }
 
 export interface MutationAnswerSurveyArgs {
@@ -345,6 +351,12 @@ export type MutationResolvers<
     RequireFields<MutationPlaceBidArgs, 'id' | 'bidderId' | 'bid'>
   >
   purchase?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationPurchaseArgs, 'id'>>
+  createNewPurchase?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateNewPurchaseArgs, 'total' | 'auctionTopBidId'>
+  >
   answerSurvey?: Resolver<
     ResolversTypes['Boolean'],
     ParentType,

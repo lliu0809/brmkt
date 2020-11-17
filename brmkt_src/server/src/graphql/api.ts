@@ -106,7 +106,7 @@ export const graphqlRoot: Resolvers<Context> = {
     },
     placeBid: async (_, { id, bidderId, bid }, ctx) => {
       const currentAuction = await Auction.findOne({ where: { id } })
-      if(!currentAuction) {
+      if (!currentAuction) {
         return false
       }
       const currentBid = await getRepository(AuctionTopBid)
@@ -114,11 +114,11 @@ export const graphqlRoot: Resolvers<Context> = {
         .leftJoinAndSelect('currentBid.auction', 'auction')
         .where('auction.id = :id', { id })
         .getOne()
-      if(!currentBid) {
+      if (!currentBid) {
         return false
       }
 
-      if(currentBid.topBid > bid) {
+      if (currentBid.topBid > bid) {
         return false
       }
       currentAuction.currentHighestId = bidderId
@@ -134,7 +134,23 @@ export const graphqlRoot: Resolvers<Context> = {
 
       return true
     },
+
+    createNewPurchase: async (_, { total, auctionTopBidId }, ctx) => {
+      const newPurchase = new Purchase()
+      newPurchase.total = total
+      const id = auctionTopBidId
+      const curAuctionTopBid = await AuctionTopBid.findOne({ where: { id } })
+      if (curAuctionTopBid) {
+        newPurchase.itemSold = curAuctionTopBid
+      } else {
+        return false
+      }
+
+      newPurchase.save()
+      return true
+    },
   },
+
   Subscription: {
     surveyUpdates: {
       subscribe: (_, { surveyId }, context) => context.pubsub.asyncIterator('SURVEY_UPDATE_' + surveyId),

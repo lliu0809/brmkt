@@ -1,4 +1,13 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm'
 import { AuctionTopBid } from './AuctionTopBid'
 
 @Entity()
@@ -12,8 +21,7 @@ export class Purchase extends BaseEntity {
   @UpdateDateColumn()
   timeUpdated: Date
 
-  @Column({
-  })
+  @Column({})
   total: number
 
   @OneToOne(() => AuctionTopBid, { eager: true })

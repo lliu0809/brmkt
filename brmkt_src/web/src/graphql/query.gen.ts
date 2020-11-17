@@ -255,6 +255,24 @@ export interface PurchaseVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreateNewPurchase
+// ====================================================
+
+export interface CreateNewPurchase {
+  createNewPurchase: boolean;
+}
+
+export interface CreateNewPurchaseVariables {
+  total: number;
+  auctionTopBidId: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchSurveys
 // ====================================================
 

@@ -34,6 +34,7 @@ type Query {
 type Mutation {
   placeBid (id: Int!, bidderId: Int!, bid: Float!): Boolean!
   purchase (id: Int!): Boolean!
+  createNewPurchase (total: Float!, auctionTopBidId: Int! ): Boolean!
 
   # Records an answer to a survey question presented in class.
   answerSurvey (input: SurveyInput!): Boolean!
@@ -100,6 +101,11 @@ input SurveyInput {
   questionId: Int!
   answer: String!
 }
+
+#input AuctionTopBidInput {
+#  questionId: Int!
+#  answer: String!
+#}
 
 #####################################################################################
 #                              Start Of Our Query Types                             #

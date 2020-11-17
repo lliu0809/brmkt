@@ -16,6 +16,7 @@ import { handleError } from '../toast/error'
 import { Page } from './Page'
 import { fetchAuctionListing, fetchAuctions } from './queries/fetchAuctions'
 import { placeBid } from './queries/mutateAuctionBid'
+import { createNewPurchase } from './queries/mutatePurchase'
 
 interface AuctionsPageProps extends RouteComponentProps, AppRouteParams {}
 
@@ -147,15 +148,26 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
     // NEED TO REDIRECT TO LOGIN PAGE IF USER IS NULL
   }
 
+  function doCreateNewPurchase() {
+    if (data) {
+      if (data.auctionListing) {
+        alert('Congratulations! You order has been created.')
+        createNewPurchase(data.auctionListing.topBid, auctionId)
+        setPurchased(true)
+      }
+    }
+  }
+
   const [days, setDays] = useState(0)
   const [hrs, setHrs] = useState(0)
   const [mins, setMins] = useState(0)
   const [secs, setSecs] = useState(0)
   const [aucState, setAucState] = useState('Active')
   const [confirmAuc, setConfirmAuc] = useState(false)
+  const [puchased, setPurchased] = useState(false)
   function showConfirmButton(bidder_id: number, cur_user_id: number) {
     if (confirmAuc && bidder_id == cur_user_id) {
-      return <Button>Confirm Order</Button>
+      return <Button onClick={doCreateNewPurchase}>Confirm Order</Button>
     } else {
       return null
     }
@@ -217,6 +229,14 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
       data.auctionListing.auction.currentHighestId == null ? -1 : data.auctionListing.auction.currentHighestId
 
     const cur_user_id = fetchUserId()
+
+    if (puchased) {
+      return (
+        <div className="flex flex-column mw6">
+          <H3>This item has been purchased!</H3>
+        </div>
+      )
+    }
     return (
       <div className="flex flex-column mw6">
         <Hero>
