@@ -34,6 +34,8 @@ type Query {
 type Mutation {
   placeBid (id: Int!, bidderId: Int!, bid: Float!): Boolean!
   purchase (id: Int!): Boolean!
+  createNewListing (title: String!, price: Float!, description: String!, prodType: ProdType!, sellerId: Int!, auctionTime: Int!): Boolean!
+  deleteListing (id: Int!): Boolean!
   createNewPurchase (total: Float!, auctionTopBidId: Int! ): Boolean!
 
   # Records an answer to a survey question presented in class.

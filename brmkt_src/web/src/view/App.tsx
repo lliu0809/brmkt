@@ -17,6 +17,7 @@ import { ElectronicPage } from './page/ElectronicPage'
 import { HomePage } from './page/HomePage'
 import { LecturesPage } from './page/LecturesPage'
 import { LogInPage } from './page/LogInPage'
+import { NewListingPage } from './page/NewListingPage'
 import { PlaygroundPage } from './page/PlaygroundPage'
 import { ProjectsPage } from './page/ProjectsPage'
 import { SignUpPage } from './page/SignUpPage'
@@ -69,6 +70,7 @@ export function AppBody() {
         <UserListingsPage path={Route.USER_LISTINGS} />
         <UserPurchasesPage path={Route.USER_PURCHASES} />
         <UserActiveBidsPage path={Route.USER_ACTIVE_BIDS} />
+        <NewListingPage path={Route.USER_CREATE_LISTING} />
         <ProjectsPage path={Route.PROJECTS} />
         <PlaygroundPage path={Route.PLAYGROUND} />
         <PlaygroundPage path={Route.PLAYGROUND_APP} />

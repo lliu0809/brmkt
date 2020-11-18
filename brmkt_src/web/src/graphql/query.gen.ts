@@ -238,6 +238,45 @@ export interface PlaceBidVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreateNewListing
+// ====================================================
+
+export interface CreateNewListing {
+  createNewListing: boolean;
+}
+
+export interface CreateNewListingVariables {
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  auctionTime: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: DeleteListing
+// ====================================================
+
+export interface DeleteListing {
+  deleteListing: boolean;
+}
+
+export interface DeleteListingVariables {
+  id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: Purchase
 // ====================================================
 

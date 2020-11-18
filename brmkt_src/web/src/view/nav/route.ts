@@ -23,7 +23,8 @@ export enum Route {
 
   USER_LISTINGS = 'app/user/mylistings',
   USER_PURCHASES = 'app/user/mypurchases',
-  USER_ACTIVE_BIDS = 'app/user/myactivebids'
+  USER_ACTIVE_BIDS = 'app/user/myactivebids',
+  USER_CREATE_LISTING = 'app/user/createlisting',
 }
 
 export enum PlaygroundApp {

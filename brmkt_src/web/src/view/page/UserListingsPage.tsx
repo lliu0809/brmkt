@@ -3,11 +3,13 @@ import { RouteComponentProps } from '@reach/router';
 import * as React from 'react';
 import { Colors } from '../../../../common/src/colors';
 import { FetchMyListings, FetchMyListingsVariables } from '../../graphql/query.gen';
+import { Button } from '../../style/button';
 import { H1, H3 } from '../../style/header';
 import { Spacer } from '../../style/spacer';
 import { style } from '../../style/styled';
 import { AppRouteParams } from '../nav/route';
 import { fetchMyListings } from './queries/fetchAuctions';
+import { deleteListing } from './queries/mutateAuctionBid';
 
 interface UserListingsPageProps extends RouteComponentProps, AppRouteParams {}
 
@@ -27,6 +29,10 @@ function MyListings({ sellerId }: { sellerId: number }) {
   const { loading, data } = useQuery<FetchMyListings, FetchMyListingsVariables>(fetchMyListings, {
     variables: { sellerId },
   })
+
+  function doDeleteListing(auctionId: number) {
+    deleteListing(auctionId)
+  }
 
   if (loading) {
     return <div>loading...</div>
@@ -59,6 +65,7 @@ function MyListings({ sellerId }: { sellerId: number }) {
                   <PriceTag>
                     <H3>Current Bid: {myListing.topBid}</H3>
                   </PriceTag>
+                  <Button onClick={() => doDeleteListing(myListing.auction.id)}>Delete Listing</Button>
                 </Description>
               </Product>
                 {myListing.auction.id} · {myListing.auction.title} · {myListing.topBid}{' '}

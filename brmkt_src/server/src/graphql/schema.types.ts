@@ -50,6 +50,8 @@ export interface Mutation {
   __typename?: 'Mutation'
   placeBid: Scalars['Boolean']
   purchase: Scalars['Boolean']
+  createNewListing: Scalars['Boolean']
+  deleteListing: Scalars['Boolean']
   createNewPurchase: Scalars['Boolean']
   answerSurvey: Scalars['Boolean']
   nextSurveyQuestion?: Maybe<Survey>
@@ -62,6 +64,19 @@ export interface MutationPlaceBidArgs {
 }
 
 export interface MutationPurchaseArgs {
+  id: Scalars['Int']
+}
+
+export interface MutationCreateNewListingArgs {
+  title: Scalars['String']
+  price: Scalars['Float']
+  description: Scalars['String']
+  prodType: ProdType
+  sellerId: Scalars['Int']
+  auctionTime: Scalars['Int']
+}
+
+export interface MutationDeleteListingArgs {
   id: Scalars['Int']
 }
 
@@ -263,10 +278,10 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
   Float: ResolverTypeWrapper<Scalars['Float']>
+  String: ResolverTypeWrapper<Scalars['String']>
   Subscription: ResolverTypeWrapper<{}>
   UserType: UserType
   Survey: ResolverTypeWrapper<Survey>
-  String: ResolverTypeWrapper<Scalars['String']>
   SurveyQuestion: ResolverTypeWrapper<SurveyQuestion>
   SurveyAnswer: ResolverTypeWrapper<SurveyAnswer>
   SurveyInput: SurveyInput
@@ -286,9 +301,9 @@ export type ResolversParentTypes = {
   Mutation: {}
   Boolean: Scalars['Boolean']
   Float: Scalars['Float']
+  String: Scalars['String']
   Subscription: {}
   Survey: Survey
-  String: Scalars['String']
   SurveyQuestion: SurveyQuestion
   SurveyAnswer: SurveyAnswer
   SurveyInput: SurveyInput
@@ -351,6 +366,21 @@ export type MutationResolvers<
     RequireFields<MutationPlaceBidArgs, 'id' | 'bidderId' | 'bid'>
   >
   purchase?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationPurchaseArgs, 'id'>>
+  createNewListing?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationCreateNewListingArgs,
+      'title' | 'price' | 'description' | 'prodType' | 'sellerId' | 'auctionTime'
+    >
+  >
+  deleteListing?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteListingArgs, 'id'>
+  >
   createNewPurchase?: Resolver<
     ResolversTypes['Boolean'],
     ParentType,

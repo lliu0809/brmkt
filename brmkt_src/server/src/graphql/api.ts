@@ -74,8 +74,9 @@ export const graphqlRoot: Resolvers<Context> = {
     myPurchases: async (_, { buyerId }) => {
       const allMyPurchases = await getRepository(Purchase)
         .createQueryBuilder('allMyPurchases')
-        .leftJoinAndSelect('allMyPurchases.itemSold.auction', 'itemSold.auction')
-        .where('itemSold.auction.currentHighestId = :buyerId', { buyerId })
+        .leftJoinAndSelect('allMyPurchases.itemSold', 'itemSold')
+        .leftJoinAndSelect('itemSold.auction', 'auction')
+        .where('auction.currentHighestId = :buyerId', { buyerId })
         .getMany()
 
       return allMyPurchases
@@ -130,11 +131,57 @@ export const graphqlRoot: Resolvers<Context> = {
       activeBid.bid = bid
       activeBid.bidderId = bidderId
       activeBid.auctionTopBid = currentBid
-      activeBid.save()
+      await activeBid.save()
 
       return true
     },
+    createNewListing: async (_, { title, price, description, prodType, sellerId, auctionTime }, ctx) => {
+      const newListing = new Auction()
+      newListing.title = title
+      newListing.price = price
+      newListing.description = description
+      newListing.prodType = prodType
+      newListing.sellerId = sellerId
+      newListing.auctionTime = auctionTime
+      await newListing.save()
 
+      const auctionTopBid = new AuctionTopBid()
+      auctionTopBid.auction = newListing
+      const auctionEndDate = new Date(newListing.timeCreated.getTime() + newListing.auctionTime * 1000)
+      auctionTopBid.auctionStartTime = auctionEndDate.toString()
+      auctionTopBid.topBid = newListing.price
+      await auctionTopBid.save()
+
+      return true
+    },
+    deleteListing: async (_, { id }, ctx) => {
+      const currentAuction = await Auction.findOne({ where: { id } })
+      if (!currentAuction) {
+        return false
+      }
+      const currentBid = await getRepository(AuctionTopBid)
+        .createQueryBuilder('currentBid')
+        .leftJoinAndSelect('currentBid.auction', 'auction')
+        .where('auction.id = :id', { id })
+        .getOne()
+      if (!currentBid) {
+        return false
+      }
+      const allActiveBidders = await getRepository(ActiveBid)
+        .createQueryBuilder('allActiveBids')
+        .leftJoinAndSelect('allActiveBids.auctionTopBid', 'auctionTopBid')
+        .leftJoinAndSelect('auctionTopBid.auction', 'auction')
+        .where('auction.id = :id', { id })
+        .getMany()
+
+      for(const bidder of allActiveBidders) {
+        await bidder.remove()
+      }
+      await currentBid.remove()
+      await currentAuction.remove()
+
+      return true;
+    },
     createNewPurchase: async (_, { total, auctionTopBidId }, ctx) => {
       const newPurchase = new Purchase()
       newPurchase.total = total
@@ -147,7 +194,7 @@ export const graphqlRoot: Resolvers<Context> = {
         return false
       }
 
-      newPurchase.save()
+      await newPurchase.save()
       return true
     },
   },
