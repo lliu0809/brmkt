@@ -6,7 +6,9 @@ import { FetchMyPurchases, FetchMyPurchasesVariables } from '../../graphql/query
 import { H1, H3, H4 } from '../../style/header';
 import { Spacer } from '../../style/spacer';
 import { style } from '../../style/styled';
+import { UserContext } from '../auth/user';
 import { AppRouteParams } from '../nav/route';
+import { LogInPage } from './LogInPage';
 import { Page } from './Page';
 import { fetchMyPurchases } from './queries/fetchPurchase';
 
@@ -14,19 +16,17 @@ import { fetchMyPurchases } from './queries/fetchPurchase';
 interface UserPurchasesPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function UserPurchasesPage(props: UserPurchasesPageProps) {
-  // const user = React.useContext(UserContext)
+  const user = React.useContext(UserContext)
 
-  return (
-    <Page>
-      <MyPurchases buyerId={Number(1)}/>
-    </Page>
-  )
-
-  // if(!user.user) {
-  //   // NEED REDIRECT TO LOGIN
-  // } else {
-  //   return <MyPurchases buyerId={Number(user.user.id)}/>
-  // }
+  if(!user.user) {
+    return <LogInPage/>
+  } else {
+    return (
+      <Page>
+        <MyPurchases buyerId={user.user.id}/>
+      </Page>
+    )
+  }
 }
 
 function MyPurchases({ buyerId }: { buyerId: number }) {
