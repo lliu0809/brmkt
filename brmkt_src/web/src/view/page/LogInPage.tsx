@@ -12,7 +12,6 @@ import { handleError } from '../toast/error'
 import { toastErr } from '../toast/toast'
 import { Page } from './Page'
 
-
 interface LogInPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function LogInPage(props: LogInPageProps) {
@@ -95,14 +94,14 @@ function Logout() {
       <br/>
 
       <h3>Name: {useContext(UserContext).user?.name}</h3>
-      <h3>ID: {useContext(UserContext).user?.id}</h3>
-      <h3>User Type: {useContext(UserContext).user?.userType}</h3>
-      {/* <h3>Address :{useContext(UserContext).user?.address}</h3>
-      <h3>Email: {useContext(UserContext).user?.eamil}</h3>
+      <h3>Email: {useContext(UserContext).user?.email}</h3>
       <h3>Password: {useContext(UserContext).user?.password}</h3>
-      <h3>Card Number: {useContext(UserContext).user?.cardNumber}</h3> */}
+      <h3>Card Number: {useContext(UserContext).user?.cardNumber}</h3>
+      {/* <h3>ID: {useContext(UserContext).user?.id}</h3>
+      <h3>User Type: {useContext(UserContext).user?.userType}</h3> */}
 
-
+      <Spacer $h5 />
+      {/* <Button onClick={goProfile}>Edit profile</Button> */}
       <Spacer $h5 />
       <Button onClick={logout}>Logout</Button>
 
@@ -127,3 +126,4 @@ function validate(
   setError({ email: !validEmail, password: !validPassword })
   return validEmail && validPassword
 }
+

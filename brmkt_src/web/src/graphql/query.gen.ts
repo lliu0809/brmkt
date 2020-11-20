@@ -12,6 +12,9 @@ export interface FetchUserContext_self {
   id: number;
   name: string;
   userType: UserType;
+  email: string;
+  password: string;
+  cardNumber: string;
 }
 
 export interface FetchUserContext {
