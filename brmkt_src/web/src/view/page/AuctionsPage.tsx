@@ -141,11 +141,12 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
   })
 
   function doPlaceBid(val: string) {
-    if (user.user) {
+    if (user.user && aucState !== 'Ended') {
       placeBid(auctionId, user.user.id, Number(val)).catch(handleError)
       refreshPage()
+    } else if (aucState == 'Ended') {
+      alert("The auction has ended. You can't place more bids.")
     }
-    // NEED TO REDIRECT TO LOGIN PAGE IF USER IS NULL
   }
 
   function doCreateNewPurchase() {
@@ -165,11 +166,12 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
   const [aucState, setAucState] = useState('Active')
   const [confirmAuc, setConfirmAuc] = useState(false)
   const [puchased, setPurchased] = useState(false)
+
   function showConfirmButton(bidder_id: number, cur_user_id: number) {
     if (confirmAuc && bidder_id == cur_user_id) {
       return <Button onClick={doCreateNewPurchase}>Confirm Order</Button>
     } else {
-      return null
+      return confirmAuc
     }
   }
 
@@ -205,7 +207,6 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
     seconds -= minutes * 60
     const sec = Math.trunc(seconds)
     setSecs(sec)
-    //return { days, hours, minutes, seconds }
   }
   function refreshPage() {
     refetch().catch(handleError)
@@ -215,15 +216,25 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
     return d < 10 ? '0' + d.toString() : d.toString()
   }
 
+  function displayTime() {
+    if (aucState == 'Ended') {
+      return 'The auction has ended!'
+    } else {
+      return days + ' days ' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs) + ' left'
+    }
+  }
+
   if (loading || data == null) {
     return <div>loading...</div>
   } else if (!data || !data.auctionListing) {
     return <div>no such listing</div>
   } else {
     const end = new Date(data.auctionListing.auctionStartTime)
+    //calculateCountDown(end)
+    //setAuc()
     setInterval(function () {
       calculateCountDown(end)
-    }, 1000)
+    }, 10)
 
     const bidder_id =
       data.auctionListing.auction.currentHighestId == null ? -1 : data.auctionListing.auction.currentHighestId
@@ -252,10 +263,7 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
         </H3>
         <br />
         <H3>
-          <b>Count Down:</b>{' '}
-          <i>
-            {days} days {pad(hrs)}:{pad(mins)}:{pad(secs)} left {aucState}
-          </i>
+          <b>Count Down:</b> <i>{displayTime()}</i>
         </H3>
         <br />
         <H3 className="center">{showConfirmButton(bidder_id, cur_user_id)}</H3>
