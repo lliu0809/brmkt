@@ -55,25 +55,22 @@ function MyListings({ sellerId }: { sellerId: number }) {
         <H3>My Listings</H3>
         {data.myListings
           .map((myListing, i) => (
-            <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
+            <div key={i} className="pa3 br2 bg-black-10 flex items-center">
               <Product>
+                <br/><br/>
                 <Image>
                   <img src={'/app/assets/auction/NEW TV.png'} />
                 </Image>
                 <Description>
                   <Item>
                     <H3>{myListing.auction.title}</H3>
-                  </Item>
-                  <PriceTag>
                     <H3>Item ID: {myListing.auction.id}</H3>
-                  </PriceTag>
-                  <PriceTag>
                     <H3>Current Bid: {myListing.topBid}</H3>
-                  </PriceTag>
+                  </Item>
+                  <br/>
                   <Button onClick={() => doDeleteListing(myListing.auction.id)}>Delete Listing</Button>
                 </Description>
               </Product>
-                {myListing.auction.id} · {myListing.auction.title} · {myListing.topBid}{' '}
               <Spacer $w4 />
             </div>
           ))}
@@ -84,20 +81,15 @@ function MyListings({ sellerId }: { sellerId: number }) {
 
 const Hero = style('div', 'mb4 w-100 b--mid-gray br2 pa3 tc')
 
-const Product = style('td', 'w-100  b--mid-gray br2 pa3 tc', {
+const Product = style('td', 'w-100  b--mid-gray br2 tc', {
   textAlign: 'left',
   borderBottomColor: Colors.black + '!important',
   borderLeftColor: Colors.white + '!important',
   borderRightColor: Colors.white + '!important',
   borderTopColor: Colors.black + '!important',
+  paddingBottom: '5px',
 })
 
-const PriceTag = style('div', 'pa3 v-mid', {
-  bottom: '2rem',
-  padding: '0.5rem',
-  fontFamily: 'sans-serif',
-  fontSize: '1.5rem',
-})
 
 const Image = style('td', '  ', {
   height: '12rem',

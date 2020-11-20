@@ -50,7 +50,8 @@ function MyPurchases({ buyerId }: { buyerId: number }) {
         <H3>My Purchases</H3>
         {data.myPurchases
           .map((myPurchase, i) => (
-            <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
+            <div key={i} className="pa3 br2 bg-black-10 flex items-center">
+              <br/>
               <Product>
                 <H4>Order #: {myPurchase.id}</H4>
                 <H4>Total: $</H4>
@@ -60,16 +61,11 @@ function MyPurchases({ buyerId }: { buyerId: number }) {
                 <Description>
                   <Item>
                     <H3>{myPurchase.itemSold.auction.title}</H3>
-                  </Item>
-                  <PriceTag>
                     <H3>Item ID: {myPurchase.itemSold.auction.id}</H3>
-                  </PriceTag>
-                  <PriceTag>
                     <H3>Current Bid: {myPurchase.itemSold.topBid}</H3>
-                  </PriceTag>
+                  </Item>
                 </Description>
               </Product>
-                {myPurchase.itemSold.auction.id} · {myPurchase.itemSold.auction.title} · {myPurchase.itemSold.topBid}{' '}
               <Spacer $w4 />
             </div>
           ))}
@@ -88,12 +84,6 @@ const Product = style('td', 'w-100  b--mid-gray br2 pa3 tc', {
   borderTopColor: Colors.black + '!important',
 })
 
-const PriceTag = style('div', 'pa3 v-mid', {
-  bottom: '2rem',
-  padding: '0.5rem',
-  fontFamily: 'sans-serif',
-  fontSize: '1.5rem',
-})
 
 const Image = style('td', '  ', {
   height: '12rem',

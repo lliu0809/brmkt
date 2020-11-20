@@ -49,7 +49,7 @@ function MyActiveBids({ bidderId }: { bidderId: number }) {
         <H3>My Active Bids</H3>
         {data.myActiveBids
           .map((myActiveBid, i) => (
-            <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
+            <div key={i} className="pa3 br2 bg-black-10 flex items-center">
               <Product>
                 <Image>
                   <img src={'/app/assets/auction/NEW TV.png'} />
@@ -57,17 +57,12 @@ function MyActiveBids({ bidderId }: { bidderId: number }) {
                 <Description>
                   <Item>
                     <H3>{myActiveBid.auctionTopBid.auction.title}</H3>
-                  </Item>
-                  <PriceTag>
                     <H3>Item ID: {myActiveBid.auctionTopBid.auction.id}</H3>
-                  </PriceTag>
-                  <PriceTag>
                     <H3>Current Bid: {myActiveBid.auctionTopBid.topBid}</H3>
                     <H3>Your Bid: {myActiveBid.bid}</H3>
-                  </PriceTag>
+                  </Item>
                 </Description>
               </Product>
-                {myActiveBid.auctionTopBid.auction.id} · {myActiveBid.auctionTopBid.auction.title} · {myActiveBid.auctionTopBid.topBid}{' '}
               <Spacer $w4 />
             </div>
           ))}
@@ -86,12 +81,6 @@ const Product = style('td', 'w-100  b--mid-gray br2 pa3 tc', {
   borderTopColor: Colors.black + '!important',
 })
 
-const PriceTag = style('div', 'pa3 v-mid', {
-  bottom: '2rem',
-  padding: '0.5rem',
-  fontFamily: 'sans-serif',
-  fontSize: '1.5rem',
-})
 
 const Image = style('td', '  ', {
   height: '12rem',
