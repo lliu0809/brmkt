@@ -7,14 +7,20 @@ import { H1, H3, H4 } from '../../style/header';
 import { Spacer } from '../../style/spacer';
 import { style } from '../../style/styled';
 import { AppRouteParams } from '../nav/route';
+import { Page } from './Page';
 import { fetchMyPurchases } from './queries/fetchPurchase';
+
 
 interface UserPurchasesPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function UserPurchasesPage(props: UserPurchasesPageProps) {
   // const user = React.useContext(UserContext)
 
-  return <MyPurchases buyerId={Number(1)}/>
+  return (
+    <Page>
+      <MyPurchases buyerId={Number(1)}/>
+    </Page>
+  )
 
   // if(!user.user) {
   //   // NEED REDIRECT TO LOGIN
@@ -64,7 +70,6 @@ function MyPurchases({ buyerId }: { buyerId: number }) {
                 </Description>
               </Product>
                 {myPurchase.itemSold.auction.id} · {myPurchase.itemSold.auction.title} · {myPurchase.itemSold.topBid}{' '}
-                <img src={'/app/assets/auction/NEW chair.png'} />
               <Spacer $w4 />
             </div>
           ))}

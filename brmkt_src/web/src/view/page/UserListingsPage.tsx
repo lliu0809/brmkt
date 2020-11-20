@@ -8,6 +8,7 @@ import { H1, H3 } from '../../style/header';
 import { Spacer } from '../../style/spacer';
 import { style } from '../../style/styled';
 import { AppRouteParams } from '../nav/route';
+import { Page } from './Page';
 import { fetchMyListings } from './queries/fetchAuctions';
 import { deleteListing } from './queries/mutateAuctionBid';
 
@@ -16,7 +17,12 @@ interface UserListingsPageProps extends RouteComponentProps, AppRouteParams {}
 export function UserListingsPage(props: UserListingsPageProps) {
   // const user = React.useContext(UserContext)
 
-  return <MyListings sellerId={Number(1)}/>
+  return (
+    <Page>
+      <MyListings sellerId={Number(1)}/>
+    </Page>
+  )
+
 
   // if(!user.user) {
   //   // NEED REDIRECT TO LOGIN
@@ -69,7 +75,6 @@ function MyListings({ sellerId }: { sellerId: number }) {
                 </Description>
               </Product>
                 {myListing.auction.id} · {myListing.auction.title} · {myListing.topBid}{' '}
-                <img src={'/app/assets/auction/NEW chair.png'} />
               <Spacer $w4 />
             </div>
           ))}
