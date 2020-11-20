@@ -6,26 +6,21 @@ import { FetchMyActiveBids, FetchMyActiveBidsVariables } from '../../graphql/que
 import { H1, H3 } from '../../style/header';
 import { Spacer } from '../../style/spacer';
 import { style } from '../../style/styled';
-import { UserContext } from '../auth/user';
 import { AppRouteParams } from '../nav/route';
-import { LogInPage } from './LogInPage';
-import { Page } from './Page';
 import { fetchMyActiveBids } from './queries/fetchAuctions';
 
 interface UserActiveBidsPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function UserActiveBidsPage(props: UserActiveBidsPageProps) {
-  const user = React.useContext(UserContext)
+  // const user = React.useContext(UserContext)
 
-  if(!user.user) {
-    return <LogInPage/>
-  } else {
-    return (
-      <Page>
-        <MyActiveBids bidderId={user.user.id}/>
-      </Page>
-    )
-  }
+  return <MyActiveBids bidderId={Number(2)}/>
+
+  // if(!user.user) {
+  //   // NEED REDIRECT TO LOGIN
+  // } else {
+  //   return <MyListings sellerId={Number(user.user.id)}/>
+  // }
 }
 
 function MyActiveBids({ bidderId }: { bidderId: number }) {
@@ -68,6 +63,7 @@ function MyActiveBids({ bidderId }: { bidderId: number }) {
                 </Description>
               </Product>
                 {myActiveBid.auctionTopBid.auction.id} · {myActiveBid.auctionTopBid.auction.title} · {myActiveBid.auctionTopBid.topBid}{' '}
+                <img src={'/app/assets/auction/NEW chair.png'} />
               <Spacer $w4 />
             </div>
           ))}

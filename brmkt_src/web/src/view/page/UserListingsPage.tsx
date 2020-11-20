@@ -7,27 +7,22 @@ import { Button } from '../../style/button';
 import { H1, H3 } from '../../style/header';
 import { Spacer } from '../../style/spacer';
 import { style } from '../../style/styled';
-import { UserContext } from '../auth/user';
 import { AppRouteParams } from '../nav/route';
-import { LogInPage } from './LogInPage';
-import { Page } from './Page';
 import { fetchMyListings } from './queries/fetchAuctions';
 import { deleteListing } from './queries/mutateAuctionBid';
 
 interface UserListingsPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function UserListingsPage(props: UserListingsPageProps) {
-  const user = React.useContext(UserContext)
+  // const user = React.useContext(UserContext)
 
-  if(!user.user) {
-    return <LogInPage/>
-  } else {
-    return (
-      <Page>
-        <MyListings sellerId={user.user.id}/>
-      </Page>
-    )
-  }
+  return <MyListings sellerId={Number(1)}/>
+
+  // if(!user.user) {
+  //   // NEED REDIRECT TO LOGIN
+  // } else {
+  //   return <MyListings sellerId={Number(user.user.id)}/>
+  // }
 }
 
 function MyListings({ sellerId }: { sellerId: number }) {
@@ -74,6 +69,7 @@ function MyListings({ sellerId }: { sellerId: number }) {
                 </Description>
               </Product>
                 {myListing.auction.id} · {myListing.auction.title} · {myListing.topBid}{' '}
+                <img src={'/app/assets/auction/NEW chair.png'} />
               <Spacer $w4 />
             </div>
           ))}
