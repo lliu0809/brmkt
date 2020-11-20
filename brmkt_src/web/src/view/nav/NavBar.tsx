@@ -13,10 +13,9 @@ const title = {
   title: true,
 }
 
+
 export function NavBar() {
-  {
-    /* const location = useLocation() */
-  }
+  {/* const location = useLocation() */}
   const [toast, setToast] = React.useState<Toast | null>(null)
 
   function onToast(feedback: Toast) {
@@ -37,9 +36,7 @@ export function NavBar() {
     return void 0
   }, [toast])
 
-  {
-    /* const tabs = isSmall ? [otherTabs.find(t => location.pathname.startsWith(t.path)) || otherTabs[0]] : otherTabs */
-  }
+  {/* const tabs = isSmall ? [otherTabs.find(t => location.pathname.startsWith(t.path)) || otherTabs[0]] : otherTabs */}
 
   return (
     <>
@@ -55,6 +52,8 @@ export function NavBar() {
   )
 }
 
+
+
 function RealNav() {
   const { user } = useContext(UserContext)
   return (
@@ -64,7 +63,7 @@ function RealNav() {
         <NavItem {...title} />
         <NavItem name="Auction" path={getPath(Route.AUCTIONS)} />
         <NavItem name="Make A Listing" path={user ? getPath(Route.USER_CREATE_LISTING) : getPath(Route.LOGIN)} />
-        <NavItem name={user ? 'Hi, ' + user.name : 'Log In'} path={getPath(Route.LOGIN)} />
+        <NavItem name={user ? 'Hi, '+ user.name : 'Log In'} path={getPath(Route.LOGIN)} />
         {!user && <NavItem name="Sign Up" path={getPath(Route.SIGNUP)} />}
       </Nav>
     </div>
@@ -118,6 +117,7 @@ const NavAnchor = style(
 )
 const NavLink = link(NavAnchor)
 
+
 const ToastContainer = style<'div', { $isError?: boolean }>(
   'div',
   'avenir f5 fixed bottom-0 white right-0 br3 pa3 bg-black-90 mb3 mr4 mr5-ns mr7-l',
@@ -126,3 +126,4 @@ const ToastContainer = style<'div', { $isError?: boolean }>(
     zIndex: 100,
   })
 )
+
