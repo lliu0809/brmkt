@@ -1,10 +1,9 @@
 import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { Button } from '../../style/button'
 import { Spacer } from '../../style/spacer'
 import { style } from '../../style/styled'
-import { UserContext } from '../auth/user'
 import { AppRouteParams } from '../nav/route'
 import { Page } from './Page'
 import { btn, input } from './style'
@@ -27,7 +26,6 @@ export function Profile(props: ProfileProps) {
   return (
     <Home>
       <Page>
-        <h3>Name: {useContext(UserContext).user?.name}</h3>
         <input
           className="input"
           type="text"
@@ -39,7 +37,7 @@ export function Profile(props: ProfileProps) {
           }}
         />
         <Spacer $h4 />
-        <h3>Card Number: {useContext(UserContext).user?.cardNumber}</h3>
+
         <input
           className="input"
           type="text"
@@ -52,7 +50,6 @@ export function Profile(props: ProfileProps) {
         />
         <Spacer $h4 />
 
-        <h3>Email: {useContext(UserContext).user?.email}</h3>
         <input
           className="input"
           type="text"
@@ -65,7 +62,6 @@ export function Profile(props: ProfileProps) {
         />
 
         <Spacer $h4 />
-        <h3>Password: {useContext(UserContext).user?.password}</h3>
         <input
           className="input"
           type="text"

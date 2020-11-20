@@ -25,7 +25,6 @@ export enum Route {
   USER_PURCHASES = 'app/user/mypurchases',
   USER_ACTIVE_BIDS = 'app/user/myactivebids',
   USER_CREATE_LISTING = 'app/user/createlisting',
-  PROFILE = "app/login/profile",
 }
 
 export enum PlaygroundApp {

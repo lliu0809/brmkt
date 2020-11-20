@@ -19,14 +19,12 @@ import { LecturesPage } from './page/LecturesPage'
 import { LogInPage } from './page/LogInPage'
 import { NewListingPage } from './page/NewListingPage'
 import { PlaygroundPage } from './page/PlaygroundPage'
-import { Profile } from './page/Profile'
 import { ProjectsPage } from './page/ProjectsPage'
 import { SignUpPage } from './page/SignUpPage'
 import { TextbookPage } from './page/TextbookPage'
 import { UserActiveBidsPage } from './page/UserActiveBidsPage'
 import { UserListingsPage } from './page/UserListingsPage'
 import { UserPurchasesPage } from './page/UserPurchasesPage'
-
 
 const Styletron = require('styletron-engine-monolithic')
 
@@ -82,8 +80,6 @@ export function AppBody() {
         <BearwearPage path={Route.BEARWEAR} />
         <DormsupplyPage path={Route.DORMSUPPLY} />
         <TextbookPage path={Route.TEXTBOOK} />
-        <Profile path={Route.PROFILE} />
-
 
       </Router>
       <Footer>

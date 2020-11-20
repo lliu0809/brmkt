@@ -6,9 +6,6 @@ export const fetchUser = gql`
       id
       name
       userType
-      email
-      password
-      cardNumber
     }
   }
 `
