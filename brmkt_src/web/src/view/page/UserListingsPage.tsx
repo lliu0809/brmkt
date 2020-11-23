@@ -1,42 +1,50 @@
-import { useQuery } from '@apollo/client';
-import { RouteComponentProps } from '@reach/router';
-import * as React from 'react';
-import { Colors } from '../../../../common/src/colors';
-import { FetchMyListings, FetchMyListingsVariables } from '../../graphql/query.gen';
-import { Button } from '../../style/button';
-import { H1, H3 } from '../../style/header';
-import { Spacer } from '../../style/spacer';
-import { style } from '../../style/styled';
-import { UserContext } from '../auth/user';
-import { AppRouteParams } from '../nav/route';
-import { LogInPage } from './LogInPage';
-import { Page } from './Page';
-import { fetchMyListings } from './queries/fetchAuctions';
-import { deleteListing } from './queries/mutateAuctionBid';
+import { useQuery } from '@apollo/client'
+import { RouteComponentProps } from '@reach/router'
+import * as React from 'react'
+import { Colors } from '../../../../common/src/colors'
+import { FetchMyListings, FetchMyListingsVariables } from '../../graphql/query.gen'
+import { Button } from '../../style/button'
+import { H1, H3 } from '../../style/header'
+import { Spacer } from '../../style/spacer'
+import { style } from '../../style/styled'
+import { UserContext } from '../auth/user'
+import { AppRouteParams } from '../nav/route'
+import { handleError } from '../toast/error'
+import { LogInPage } from './LogInPage'
+import { Page } from './Page'
+import { fetchMyListings } from './queries/fetchAuctions'
+import { deleteListing } from './queries/mutateAuctionBid'
 
 interface UserListingsPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function UserListingsPage(props: UserListingsPageProps) {
   const user = React.useContext(UserContext)
 
-  if(!user.user) {
-    return <LogInPage/>
+  if (!user.user) {
+    return <LogInPage />
   } else {
     return (
       <Page>
-        <MyListings sellerId={user.user.id}/>
+        <MyListings sellerId={user.user.id} />
       </Page>
     )
   }
 }
 
 function MyListings({ sellerId }: { sellerId: number }) {
-  const { loading, data } = useQuery<FetchMyListings, FetchMyListingsVariables>(fetchMyListings, {
+  const { loading, data, refetch } = useQuery<FetchMyListings, FetchMyListingsVariables>(fetchMyListings, {
     variables: { sellerId },
   })
 
+  function refreshPage() {
+    if (typeof window !== 'undefined') window.location.reload()
+  }
+
   function doDeleteListing(auctionId: number) {
     deleteListing(auctionId)
+    refetch().catch(handleError)
+
+    refreshPage()
   }
 
   if (loading) {
@@ -53,27 +61,27 @@ function MyListings({ sellerId }: { sellerId: number }) {
         </Hero>
         <Spacer $h4 />
         <H3>My Listings</H3>
-        {data.myListings
-          .map((myListing, i) => (
-            <div key={i} className="pa3 br2 bg-black-10 flex items-center">
-              <Product>
-                <br/><br/>
-                <Image>
-                  <img src={'/app/assets/auction/NEW TV.png'} />
-                </Image>
-                <Description>
-                  <Item>
-                    <H3>{myListing.auction.title}</H3>
-                    <H3>Item ID: {myListing.auction.id}</H3>
-                    <H3>Current Bid: {myListing.topBid}</H3>
-                  </Item>
-                  <br/>
-                  <Button onClick={() => doDeleteListing(myListing.auction.id)}>Delete Listing</Button>
-                </Description>
-              </Product>
-              <Spacer $w4 />
-            </div>
-          ))}
+        {data.myListings.map((myListing, i) => (
+          <div key={i} className="pa3 br2 bg-black-10 flex items-center">
+            <Product>
+              <br />
+              <br />
+              <Image>
+                <img src={'/app/assets/auction/NEW TV.png'} />
+              </Image>
+              <Description>
+                <Item>
+                  <H3>{myListing.auction.title}</H3>
+                  <H3>Item ID: {myListing.auction.id}</H3>
+                  <H3>Current Bid: {myListing.topBid}</H3>
+                </Item>
+                <br />
+                <Button onClick={() => doDeleteListing(myListing.auction.id)}>Delete Listing</Button>
+              </Description>
+            </Product>
+            <Spacer $w4 />
+          </div>
+        ))}
       </div>
     )
   }
@@ -89,7 +97,6 @@ const Product = style('td', 'w-100  b--mid-gray br2 tc', {
   borderTopColor: Colors.black + '!important',
   paddingBottom: '5px',
 })
-
 
 const Image = style('td', '  ', {
   height: '12rem',
