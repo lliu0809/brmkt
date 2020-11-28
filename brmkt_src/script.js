@@ -86,6 +86,9 @@ export default function () {
 
 
   http.get('http://localhost:3000/app/auction')
+
+
+  sleep(Math.random()*3)
 }
 
 const count200 = new Counter('status_code_2xx')
