@@ -2,7 +2,7 @@ import http from 'k6/http'
 import { sleep } from 'k6'
 import { Counter, Rate } from 'k6/metrics'
 
-export const options = {
+/*export const options = {
    scenarios: {
      example_scenario: {
        // name of the executor to use
@@ -19,12 +19,15 @@ export const options = {
        ],
      },
    },
- }
+ }*/
 var count = 95
+var idCount = 1
 export default function () {
   //load test homepage
   http.get('http://localhost:3000')
-  sleep(1)
+
+  //load test get auctions
+  http.get('http://localhost:3000/app/auction')
 
   //load test createUser
   const resp = http.post(
@@ -37,19 +40,16 @@ export default function () {
     }
   )
 
-
   //load test fetchAuctions
   const resp1 = http.post(
     'http://localhost:3000/graphql',
-    '{"operationName":"FetchAuctionListing","variables":{"auctionId":1},"query":"query FetchAuctionListing($auctionId: Int!) {\\n  auctionListing(auctionId: $auctionId) {\n    ...AuctionTopBid\n    __typename\n  }\n}\n\nfragment Auction on Auction {\n  id\n  title\n  price\n  description\n  prodType\n  sellerId\n  currentHighestId\n  auctionTime\n  status\n  __typename\n}\n\nfragment AuctionTopBid on AuctionTopBid {\\n  topBid\\n  auctionStartTime\\n  auction {\\n    ...Auction\\n    __typename\\n  }\\n  __typename\\n}\\n"}',
+    '{"operationName":"FetchAuctionListing","variables":{"auctionId":1},"query":"query FetchAuctionListing($auctionId: Int!) {\\n  auctionListing(auctionId: $auctionId) {\\n    ...AuctionTopBid\\n    __typename\\n  }\\n}\\n\\nfragment Auction on Auction {\\n  id\\n  title\\n  price\\n  description\\n  prodType\\n  sellerId\\n  currentHighestId\\n  auctionTime\\n  status\\n  __typename\\n}\\n\\nfragment AuctionTopBid on AuctionTopBid {\\n  topBid\\n  auctionStartTime\\n  auction {\\n    ...Auction\\n    __typename\\n  }\\n  __typename\\n}\\n"}',
     {
       headers: {
         'Content-Type': 'application/json',
       },
     }
   )
-
-
 
   //load test login
   const resp2 = http.post(
@@ -60,13 +60,6 @@ export default function () {
         'Content-Type': 'application/json',
       },
     }
-  )
-
-
-  //load test logout
-  const resp3 = http.post(
-    'http://localhost:3000/auth/logout',
-
   )
 
   //count++
@@ -82,10 +75,32 @@ export default function () {
     }
   )
 
+  //load test createListing
+  const resp5 = http.post(
+    'http://localhost:3000/graphql',
+    '{"operationName":"CreateNewListing","variables":{"title":"USED car","price":10000000,"description":"USED Maserati","prodType":"OTHER","sellerId":2,"auctionTime":36000},"query":"mutation CreateNewListing($title: String!, $price: Float!, $description: String!, $prodType: ProdType!, $sellerId: Int!, $auctionTime: Int!) {\\n  createNewListing(title: $title, price: $price, description: $description, prodType: $prodType, sellerId: $sellerId, auctionTime: $auctionTime)\\n}\\n"}',
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+  const resp6 = http.post(
+    'http://localhost:3000/graphql',
+    `{"operationName":"DeleteListing","variables":{"id":${idCount}},"query":"mutation DeleteListing($id: Int!) {\\n  deleteListing(id: $id)\\n}\\n"}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+  idCount+=1
 
+  //load test logout
+  const resp3 = http.post(
+    'http://localhost:3000/auth/logout',
 
-
-  http.get('http://localhost:3000/app/auction')
+  )
 }
 
 const count200 = new Counter('status_code_2xx')
