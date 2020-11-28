@@ -1,5 +1,5 @@
 variable "app_name" {
-  default = "brmkt"
+  default = "bespin"
 }
 variable "subnet_group" {
   default = "redis-subnet"

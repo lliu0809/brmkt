@@ -6,26 +6,26 @@ import { FetchMyActiveBids, FetchMyActiveBidsVariables } from '../../graphql/que
 import { H1, H3 } from '../../style/header';
 import { Spacer } from '../../style/spacer';
 import { style } from '../../style/styled';
-import { UserContext } from '../auth/user';
 import { AppRouteParams } from '../nav/route';
-import { LogInPage } from './LogInPage';
 import { Page } from './Page';
 import { fetchMyActiveBids } from './queries/fetchAuctions';
 
 interface UserActiveBidsPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function UserActiveBidsPage(props: UserActiveBidsPageProps) {
-  const user = React.useContext(UserContext)
+  // const user = React.useContext(UserContext)
 
-  if(!user.user) {
-    return <LogInPage/>
-  } else {
-    return (
-      <Page>
-        <MyActiveBids bidderId={user.user.id}/>
-      </Page>
-    )
-  }
+  return (
+    <Page>
+      <MyActiveBids bidderId={Number(2)}/>
+    </Page>
+  )
+
+  // if(!user.user) {
+  //   // NEED REDIRECT TO LOGIN
+  // } else {
+  //   return <MyListings sellerId={Number(user.user.id)}/>
+  // }
 }
 
 function MyActiveBids({ bidderId }: { bidderId: number }) {
@@ -49,7 +49,7 @@ function MyActiveBids({ bidderId }: { bidderId: number }) {
         <H3>My Active Bids</H3>
         {data.myActiveBids
           .map((myActiveBid, i) => (
-            <div key={i} className="pa3 br2 bg-black-10 flex items-center">
+            <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
               <Product>
                 <Image>
                   <img src={'/app/assets/auction/NEW TV.png'} />
@@ -57,12 +57,17 @@ function MyActiveBids({ bidderId }: { bidderId: number }) {
                 <Description>
                   <Item>
                     <H3>{myActiveBid.auctionTopBid.auction.title}</H3>
+                  </Item>
+                  <PriceTag>
                     <H3>Item ID: {myActiveBid.auctionTopBid.auction.id}</H3>
+                  </PriceTag>
+                  <PriceTag>
                     <H3>Current Bid: {myActiveBid.auctionTopBid.topBid}</H3>
                     <H3>Your Bid: {myActiveBid.bid}</H3>
-                  </Item>
+                  </PriceTag>
                 </Description>
               </Product>
+                {myActiveBid.auctionTopBid.auction.id} · {myActiveBid.auctionTopBid.auction.title} · {myActiveBid.auctionTopBid.topBid}{' '}
               <Spacer $w4 />
             </div>
           ))}
@@ -81,6 +86,12 @@ const Product = style('td', 'w-100  b--mid-gray br2 pa3 tc', {
   borderTopColor: Colors.black + '!important',
 })
 
+const PriceTag = style('div', 'pa3 v-mid', {
+  bottom: '2rem',
+  padding: '0.5rem',
+  fontFamily: 'sans-serif',
+  fontSize: '1.5rem',
+})
 
 const Image = style('td', '  ', {
   height: '12rem',

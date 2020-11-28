@@ -13,12 +13,12 @@ set -e
 aws ecr get-login-password | docker login --username AWS --password-stdin 101624687637.dkr.ecr.us-west-2.amazonaws.com
 
 echo "Building local docker image"
-docker build --tag 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:local .
-docker tag 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:local 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:latest
+docker build --tag 101624687637.dkr.ecr.us-west-2.amazonaws.com/bespin:local .
+docker tag 101624687637.dkr.ecr.us-west-2.amazonaws.com/bespin:local 101624687637.dkr.ecr.us-west-2.amazonaws.com/bespin:latest
 
 echo "Pushing local/latest docker image"
-docker push 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:local
-docker push 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:latest
+docker push 101624687637.dkr.ecr.us-west-2.amazonaws.com/bespin:local
+docker push 101624687637.dkr.ecr.us-west-2.amazonaws.com/bespin:latest
 
 echo "Updating app-web"
-./script/deploy-ecs.sh brmkt-app-web "local"
+./script/deploy-ecs.sh bespin-app-web "local"
