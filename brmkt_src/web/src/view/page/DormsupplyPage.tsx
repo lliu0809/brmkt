@@ -4,7 +4,7 @@ import * as React from 'react'
 import { useContext, useState } from 'react'
 import { Colors } from '../../../../common/src/colors'
 import { FetchAuctionListing, FetchAuctionListingVariables, FetchAuctions, ItemStatus } from '../../graphql/query.gen'
-import { H1, H2, H3 } from '../../style/header'
+import { H1, H2, H3, H4 } from '../../style/header'
 import { Input } from '../../style/input'
 import { Spacer } from '../../style/spacer'
 import { style } from '../../style/styled'
@@ -23,6 +23,7 @@ export function DormsupplyPage(props: DormsupplyPageProps) {
   return (
     <Page>
       <Auctions />
+      <HomePage />
     </Page>
   )
 }
@@ -45,14 +46,15 @@ export function AuctionList() {
     return <div>no auctions</div>
   } else {
     return (
-      <div className="mw6">
-        <HomePage />
+      <div  style={{marginLeft:'135px' }} className="mw6">
         <Hero>
           <H2>Dorm Supply</H2>
         </Hero>
-        <H3>
-          Search for an item: <Input $onChange={setAuctionQuery} />
-        </H3>
+        <SearchBar>
+          <H4>Search for an item: &nbsp;&nbsp; <Input style={{display:"inline", width:"300px"}} $onChange={setAuctionQuery} /> </H4>
+        </SearchBar>
+        <br/><br/>
+        <br/><br/><br/><br/><br/>
         {/* does search filter */}
         {/* does search filter */}
         <Spacer $h4 />
@@ -95,6 +97,11 @@ export function AuctionList() {
 }
 
 const HeaderLink = link(H2)
+
+const SearchBar = style('td', '  ', {
+  marginBottom: '50px',
+  display: 'inline',
+})
 
 const Hero = style('div', 'mb4 w-100 b--mid-gray br2 pa3 tc')
 
