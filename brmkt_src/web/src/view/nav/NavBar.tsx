@@ -13,6 +13,7 @@ const title = {
   title: true,
 }
 
+
 export function NavBar() {
   {
     /* const location = useLocation() */
@@ -37,9 +38,6 @@ export function NavBar() {
     return void 0
   }, [toast])
 
-  {
-    /* const tabs = isSmall ? [otherTabs.find(t => location.pathname.startsWith(t.path)) || otherTabs[0]] : otherTabs */
-  }
 
   return (
     <>
@@ -57,6 +55,7 @@ export function NavBar() {
 
 function RealNav() {
   const { user } = useContext(UserContext)
+
   return (
     <div className="fixed top-0 left-0 w-100 avenir">
       <div id="nav-modal" />
@@ -64,7 +63,8 @@ function RealNav() {
         <NavItem {...title} />
 
         <NavItem name="Make A Listing" path={user ? getPath(Route.USER_CREATE_LISTING) : getPath(Route.LOGIN)} />
-        <NavItem name={user ? 'Hi, ' + user.name : 'Log In'} path={getPath(Route.LOGIN)} />
+        {user && <NavItem name={'Hi, ' + user.name} path={getPath(Route.LOGIN)} />}
+        {!user && <NavItem name="Log In" path={getPath(Route.LOGIN)} />}
         {user && <NavItem name="Edit Profile" path={getPath(Route.PROFILE)} />}
         {!user && <NavItem name="Sign Up" path={getPath(Route.SIGNUP)} />}
       </Nav>

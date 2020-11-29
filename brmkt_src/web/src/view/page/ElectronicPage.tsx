@@ -22,8 +22,8 @@ interface ElectronicPageProps extends RouteComponentProps, AppRouteParams {}
 export function ElectronicPage(props: ElectronicPageProps) {
   return (
     <Page>
-      <Auctions />
       <HomePage />
+      <Auctions />
     </Page>
   )
 }
@@ -90,6 +90,8 @@ export function AuctionList() {
                 </Product>
               </HeaderLink>
               <Spacer $w4 />
+              <br/><br/><br/><br/>
+
             </div>
           ))}
       </div>

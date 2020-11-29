@@ -22,8 +22,8 @@ interface DormsupplyPageProps extends RouteComponentProps, AppRouteParams {}
 export function DormsupplyPage(props: DormsupplyPageProps) {
   return (
     <Page>
-      <Auctions />
       <HomePage />
+      <Auctions />
     </Page>
   )
 }
@@ -89,6 +89,8 @@ export function AuctionList() {
                 </Product>
               </HeaderLink>
               <Spacer $w4 />
+              <br/><br/><br/><br/>
+
             </div>
           ))}
       </div>
