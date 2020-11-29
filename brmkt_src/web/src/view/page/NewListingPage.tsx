@@ -18,7 +18,13 @@ export function NewListingPage(props: NewListingPageProps) {
   const [description, setDescription] = useState('')
   const [prodType, setProdType] = useState('')
   const [auctionTime, setAuctionTime] = useState('')
-  const [err, setError] = useState({ title: false, price: false, description: false, prodType: false, auctionTime: false })
+  const [err, setError] = useState({
+    title: false,
+    price: false,
+    description: false,
+    prodType: false,
+    auctionTime: false,
+  })
   const { user } = useContext(UserContext)
 
   // reset error when price change
@@ -27,7 +33,7 @@ export function NewListingPage(props: NewListingPageProps) {
   useEffect(() => setError({ ...err, auctionTime: false }), [auctionTime])
 
   function getProdType(prodType: string) {
-    switch(prodType) {
+    switch (prodType) {
       case 'bearwear':
         return ProdType.BEARWEAR
       case 'dormsupply':
@@ -47,10 +53,9 @@ export function NewListingPage(props: NewListingPageProps) {
       return
     }
 
-    if(!user) {
+    if (!user) {
       return
-    }
-    else {
+    } else {
       const sellerId = user.id
       const productType = getProdType(prodType)
       const auctionTimeConverted = Number(auctionTime) * 3600
@@ -77,19 +82,37 @@ export function NewListingPage(props: NewListingPageProps) {
           <label className="db fw4 lh-copy f6" htmlFor="description">
             Description
           </label>
-          <Input $hasError={err.description} $onChange={setDescription} $onSubmit={makeAListing} name="description" type="description" />
+          <Input
+            $hasError={err.description}
+            $onChange={setDescription}
+            $onSubmit={makeAListing}
+            name="description"
+            type="description"
+          />
         </div>
         <div className="mt3">
           <label className="db fw4 lh-copy f6" htmlFor="prodType">
             Product Type (bearwear, dormsupply, textbooks, electronics, other)
           </label>
-          <Input $hasError={err.prodType} $onChange={setProdType} $onSubmit={makeAListing} name="prodType" type="prodType" />
+          <Input
+            $hasError={err.prodType}
+            $onChange={setProdType}
+            $onSubmit={makeAListing}
+            name="prodType"
+            type="prodType"
+          />
         </div>
         <div className="mt3">
           <label className="db fw4 lh-copy f6" htmlFor="auctionTime">
             Auction Time (in hours)
           </label>
-          <Input $hasError={err.auctionTime} $onChange={setAuctionTime} $onSubmit={makeAListing} name="password" type="password" />
+          <Input
+            $hasError={err.auctionTime}
+            $onChange={setAuctionTime}
+            $onSubmit={makeAListing}
+            name="password"
+            type="password"
+          />
         </div>
         <div className="mt3">
           <Button onClick={makeAListing}>Create Listing</Button>
@@ -111,7 +134,13 @@ function validate(
   prodType: string,
   auctionTime: string,
   setError: React.Dispatch<
-    React.SetStateAction<{ title: boolean; price: boolean; description: boolean; prodType: boolean; auctionTime: boolean }>
+    React.SetStateAction<{
+      title: boolean
+      price: boolean
+      description: boolean
+      prodType: boolean
+      auctionTime: boolean
+    }>
   >
 ) {
   const validTitle = Boolean(title)

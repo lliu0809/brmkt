@@ -1,6 +1,12 @@
 import { gql } from '@apollo/client'
 import { getApolloClient } from '../../../graphql/apolloClient'
-import { DeleteListing, DeleteListingVariables, PlaceBid, PlaceBidVariables, ProdType } from '../../../graphql/query.gen'
+import {
+  DeleteListing,
+  DeleteListingVariables,
+  PlaceBid,
+  PlaceBidVariables,
+  ProdType,
+} from '../../../graphql/query.gen'
 
 const placeBidMutation = gql`
   mutation PlaceBid($id: Int!, $bidderId: Int!, $bid: Float!) {
@@ -16,12 +22,33 @@ export function placeBid(id: number, bidderId: number, bid: number) {
 }
 
 const createNewListingMutation = gql`
-  mutation CreateNewListing($title: String!, $price: Float!, $description: String!, $prodType: ProdType!, $sellerId: Int!, $auctionTime: Int!) {
-    createNewListing(title: $title, price: $price, description: $description, prodType: $prodType, sellerId: $sellerId, auctionTime: $auctionTime)
+  mutation CreateNewListing(
+    $title: String!
+    $price: Float!
+    $description: String!
+    $prodType: ProdType!
+    $sellerId: Int!
+    $auctionTime: Int!
+  ) {
+    createNewListing(
+      title: $title
+      price: $price
+      description: $description
+      prodType: $prodType
+      sellerId: $sellerId
+      auctionTime: $auctionTime
+    )
   }
 `
 
-export function createNewListing(title: string, price: number, description: string, prodType: ProdType, sellerId: number, auctionTime: number) {
+export function createNewListing(
+  title: string,
+  price: number,
+  description: string,
+  prodType: ProdType,
+  sellerId: number,
+  auctionTime: number
+) {
   return getApolloClient().mutate<any, any>({
     mutation: createNewListingMutation,
     variables: { title, price, description, prodType, sellerId, auctionTime },

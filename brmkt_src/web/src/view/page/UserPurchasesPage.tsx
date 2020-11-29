@@ -6,7 +6,9 @@ import { FetchMyPurchases, FetchMyPurchasesVariables } from '../../graphql/query
 import { H1, H3, H4 } from '../../style/header';
 import { Spacer } from '../../style/spacer';
 import { style } from '../../style/styled';
+import { UserContext } from '../auth/user';
 import { AppRouteParams } from '../nav/route';
+import { LogInPage } from './LogInPage';
 import { Page } from './Page';
 import { fetchMyPurchases } from './queries/fetchPurchase';
 
@@ -14,19 +16,17 @@ import { fetchMyPurchases } from './queries/fetchPurchase';
 interface UserPurchasesPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function UserPurchasesPage(props: UserPurchasesPageProps) {
-  // const user = React.useContext(UserContext)
+  const user = React.useContext(UserContext)
 
-  return (
-    <Page>
-      <MyPurchases buyerId={Number(1)}/>
-    </Page>
-  )
-
-  // if(!user.user) {
-  //   // NEED REDIRECT TO LOGIN
-  // } else {
-  //   return <MyPurchases buyerId={Number(user.user.id)}/>
-  // }
+  if(!user.user) {
+    return <LogInPage/>
+  } else {
+    return (
+      <Page>
+        <MyPurchases buyerId={user.user.id}/>
+      </Page>
+    )
+  }
 }
 
 function MyPurchases({ buyerId }: { buyerId: number }) {
@@ -50,7 +50,8 @@ function MyPurchases({ buyerId }: { buyerId: number }) {
         <H3>My Purchases</H3>
         {data.myPurchases
           .map((myPurchase, i) => (
-            <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
+            <div key={i} className="pa3 br2 bg-black-10 flex items-center">
+              <br/>
               <Product>
                 <H4>Order #: {myPurchase.id}</H4>
                 <H4>Total: $</H4>
@@ -60,16 +61,11 @@ function MyPurchases({ buyerId }: { buyerId: number }) {
                 <Description>
                   <Item>
                     <H3>{myPurchase.itemSold.auction.title}</H3>
-                  </Item>
-                  <PriceTag>
                     <H3>Item ID: {myPurchase.itemSold.auction.id}</H3>
-                  </PriceTag>
-                  <PriceTag>
                     <H3>Current Bid: {myPurchase.itemSold.topBid}</H3>
-                  </PriceTag>
+                  </Item>
                 </Description>
               </Product>
-                {myPurchase.itemSold.auction.id} · {myPurchase.itemSold.auction.title} · {myPurchase.itemSold.topBid}{' '}
               <Spacer $w4 />
             </div>
           ))}
@@ -88,12 +84,6 @@ const Product = style('td', 'w-100  b--mid-gray br2 pa3 tc', {
   borderTopColor: Colors.black + '!important',
 })
 
-const PriceTag = style('div', 'pa3 v-mid', {
-  bottom: '2rem',
-  padding: '0.5rem',
-  fontFamily: 'sans-serif',
-  fontSize: '1.5rem',
-})
 
 const Image = style('td', '  ', {
   height: '12rem',
