@@ -256,7 +256,7 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
       )
     }
     return (
-      <div className="flex flex-column mw6">
+      <div style={{marginLeft:'135px' }} className="flex flex-column mw6">
         <Hero>
           <H1>{data.auctionListing.auction.title}</H1>
           <br />
@@ -275,6 +275,7 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
         <br />
         <H3 className="center">{showConfirmButton(bidder_id, cur_user_id)}</H3>
         <Spacer $h3 />
+        <br/><br/><br/><br/><br/>
       </div>
     )
   }

@@ -66,11 +66,6 @@ export function AuctionList() {
 
           .map((auction, i) => (
             <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
-              <HeaderLink
-                className="link dim pointer"
-                $color="sky"
-                to={user ? getAuctionListingPath(auction.auction.id) : 'app/login'}
-              >
                 <Product>
                   <Image>
                     <img src={'/app/assets/auction/' + auction.auction.title + '.png'} />
@@ -85,10 +80,15 @@ export function AuctionList() {
                     <PriceTag>
                       <H3>Current Bid: {auction.topBid}</H3>
                     </PriceTag>
+                    <HeaderLink
+                      className="link dim pointer"
+                      $color="sky"
+                      to={user ? getAuctionListingPath(auction.auction.id) : 'app/login'}
+                    >
                     <Btn>Place a bid !</Btn>
+                    </HeaderLink>
                   </Description>
                 </Product>
-              </HeaderLink>
               <Spacer $w4 />
               <br/><br/><br/><br/>
 

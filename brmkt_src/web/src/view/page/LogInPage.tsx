@@ -3,14 +3,18 @@ import * as React from 'react'
 import { useContext, useEffect, useState } from 'react'
 import { check } from '../../../../common/src/util'
 import { Button } from '../../style/button'
-import { H1, H3 } from '../../style/header'
+import { H1, H2, H3 } from '../../style/header'
 import { Input } from '../../style/input'
 import { Spacer } from '../../style/spacer'
+import { style } from '../../style/styled'
 import { UserContext } from '../auth/user'
-import { AppRouteParams } from '../nav/route'
+import { link } from '../nav/Link'
+import { AppRouteParams, getPath, Route } from '../nav/route'
 import { handleError } from '../toast/error'
 import { toastErr } from '../toast/toast'
 import { Page } from './Page'
+
+
 
 
 interface LogInPageProps extends RouteComponentProps, AppRouteParams {}
@@ -74,6 +78,8 @@ export function LogInPage(props: LogInPageProps) {
   )
 }
 
+const HeaderLink = link(H2)
+
 function Logout() {
   // const { user } = useContext(UserContext)
   function logout() {
@@ -89,35 +95,74 @@ function Logout() {
   }
 
 
-
-
   return (
     <>
     <Page>
-      <span>
-        <H3>LOGIN</H3>
-      </span>
-      <span>
-        <H1>Your Profile</H1>
-        <br/>
+      <H1>My Profile</H1>
+      <br/>
 
-        <h3>Name: {useContext(UserContext).user?.name}</h3>
-        <h3>Email: {useContext(UserContext).user?.email}</h3>
-        <h3>Password: {useContext(UserContext).user?.password}</h3>
-        <h3>Card Number: {useContext(UserContext).user?.cardNumber}</h3>
+
+      <div style={{float:"inline-start"}}>
+        <H3>Name: {useContext(UserContext).user?.name}</H3>
+        <H3>Email: {useContext(UserContext).user?.email}</H3>
+        <H3>Password: {useContext(UserContext).user?.password}</H3>
+        <H3>Card Number: {useContext(UserContext).user?.cardNumber}</H3>
         {/* <h3>ID: {useContext(UserContext).user?.id}</h3>
         <h3>User Type: {useContext(UserContext).user?.userType}</h3> */}
 
         <Spacer $h5 />
         {/* <Button onClick={goProfile}>Edit profile</Button> */}
         <Spacer $h5 />
-        <Button onClick={logout}>Logout</Button>
+      </div>
+      <span>
+      <HeaderLink
+          className="link dim pointer"
+          $color="sky"
+          to={getPath(Route.USER_LISTINGS)}
+      >
+        <Btn>My Listings</Btn>
+      </HeaderLink>
+      <br/><br/>
+      <HeaderLink
+          className="link dim pointer"
+          $color="sky"
+          to={getPath(Route.USER_PURCHASES)}
+      >
+        <Btn>My Purchases</Btn>
+      </HeaderLink>
+      <br/><br/>
+      <HeaderLink
+          className="link dim pointer"
+          $color="sky"
+          to={getPath(Route.USER_ACTIVE_BIDS)}
+      >
+        <Btn>My Bids</Btn>
+      </HeaderLink>
+      <br/><br/>
+
+      <Btn style={{backgroundColor:"#FFD100", color:"black"}} onClick={logout}>Logout</Btn>
+
       </span>
 
     </Page>
     </>
+
   )
+
+
 }
+
+const Btn = style('div', 'br2 pa3 tc', {
+  borderRadius: '5rem',
+  backgroundColor: '#2774AE',
+  fontSize: '0.9rem',
+  borderWidth: '1px',
+  color: 'white',
+  padding: '0.5rem',
+  width: '200px',
+  height: '35px',
+})
+
 
 function validateEmail(email: string) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
