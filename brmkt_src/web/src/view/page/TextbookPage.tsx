@@ -12,6 +12,7 @@ import { UserContext } from '../auth/user'
 import { link } from '../nav/Link'
 import { AppRouteParams, getAuctionListingPath } from '../nav/route'
 import { handleError } from '../toast/error'
+import { HomePage } from './HomePage'
 import { Page } from './Page'
 import { fetchAuctionListing, fetchAuctions } from './queries/fetchAuctions'
 import { placeBid } from './queries/mutateAuctionBid'
@@ -45,8 +46,9 @@ export function AuctionList() {
   } else {
     return (
       <div className="mw6">
+        <HomePage />
         <Hero>
-          <H2>Auction</H2>
+          <H2>Textbook</H2>
         </Hero>
         <H3>
           Search for an item: <Input $onChange={setAuctionQuery} />
@@ -56,15 +58,19 @@ export function AuctionList() {
         <Spacer $h4 />
         {data.auctions
           .filter(auction => auction.auction.status === ItemStatus.NOTSOLD)
-          .filter(auction => auction.auction.prodType === "TEXTBOOKS")
+          .filter(auction => auction.auction.prodType === 'TEXTBOOKS')
           .filter(auction => auction.auction.title.toLowerCase().includes(auctionQuery.toLowerCase()))
 
           .map((auction, i) => (
             <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
-              <HeaderLink className="link dim pointer" $color="sky" to={user? getAuctionListingPath(auction.auction.id):"app/login"}>
+              <HeaderLink
+                className="link dim pointer"
+                $color="sky"
+                to={user ? getAuctionListingPath(auction.auction.id) : 'app/login'}
+              >
                 <Product>
                   <Image>
-                  <img src = {"/app/assets/auction/" + auction.auction.title + ".png"}/>
+                    <img src={'/app/assets/auction/' + auction.auction.title + '.png'} />
                   </Image>
                   <Description>
                     <Item>
@@ -138,7 +144,7 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
   })
 
   function doPlaceBid(val: string) {
-    if(user.user) {
+    if (user.user) {
       placeBid(auctionId, user.user.id, Number(val)).catch(handleError)
     }
     // NEED TO REDIRECT TO LOGIN PAGE IF USER IS NULL

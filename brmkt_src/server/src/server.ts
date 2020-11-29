@@ -45,7 +45,7 @@ const asyncRoute = (fn: RequestHandler) => (...args: Parameters<RequestHandler>)
 
 server.express.get('/', (req, res) => {
   console.log('GET /')
-  res.redirect('/app')
+  res.redirect('/app/auction')
 })
 
 server.express.get('/app/*', (req, res) => {

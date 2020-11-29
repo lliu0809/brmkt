@@ -13,6 +13,7 @@ import { UserContext } from '../auth/user'
 import { link } from '../nav/Link'
 import { AppRouteParams, getAuctionListingPath } from '../nav/route'
 import { handleError } from '../toast/error'
+import { HomePage } from './HomePage'
 import { Page } from './Page'
 import { fetchAuctionListing, fetchAuctions } from './queries/fetchAuctions'
 import { placeBid } from './queries/mutateAuctionBid'
@@ -47,11 +48,8 @@ export function AuctionList() {
   } else {
     return (
       <div className="mw6">
-        <Hero>
-          <H1>BRMKT.</H1>
-          <H3> UCLA Buy, Sell, Auction</H3>
-          <br />
-        </Hero>
+        <HomePage />
+
         <H3>
           Search for an item: <Input $onChange={setAuctionQuery} />
         </H3>

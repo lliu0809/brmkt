@@ -9,7 +9,7 @@ import { getLoginPath, getPath, getProfilePath, getSignupPath, Route } from './r
 
 const title = {
   name: 'BRMKT',
-  path: getPath(Route.HOME),
+  path: getPath(Route.AUCTIONS),
   title: true,
 }
 
@@ -62,9 +62,9 @@ function RealNav() {
       <div id="nav-modal" />
       <Nav>
         <NavItem {...title} />
-        <NavItem name="Auction" path={getPath(Route.AUCTIONS)} />
+
         <NavItem name="Make A Listing" path={user ? getPath(Route.USER_CREATE_LISTING) : getPath(Route.LOGIN)} />
-        <NavItem name={user ? 'Hi, '+ user.name : 'Log In'} path={getPath(Route.LOGIN)} />
+        <NavItem name={user ? 'Hi, ' + user.name : 'Log In'} path={getPath(Route.LOGIN)} />
         {user && <NavItem name="Edit Profile" path={getPath(Route.PROFILE)} />}
         {!user && <NavItem name="Sign Up" path={getPath(Route.SIGNUP)} />}
       </Nav>
