@@ -47,6 +47,10 @@ export function NewListingPage(props: NewListingPageProps) {
     }
   }
 
+  function refreshPage() {
+    if (typeof window !== 'undefined') window.location.reload()
+  }
+
   function makeAListing() {
     if (!validate(title, price, description, prodType, auctionTime, setError)) {
       toastErr('invalid field')
@@ -60,6 +64,7 @@ export function NewListingPage(props: NewListingPageProps) {
       const productType = getProdType(prodType)
       const auctionTimeConverted = Number(auctionTime) * 3600
       createNewListing(title, Number(price), description, productType, sellerId, auctionTimeConverted)
+      refreshPage()
     }
   }
 

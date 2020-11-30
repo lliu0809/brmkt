@@ -11,16 +11,7 @@ export const fragmentAuction = gql`
     currentHighestId
     auctionTime
     status
-  }
-`
-
-export const fragmentTopBid = gql`
-  fragment AuctionTopBid on AuctionTopBid {
-    topBid
     auctionStartTime
-    auction {
-      ...Auction
-    }
   }
 `
 
@@ -28,8 +19,8 @@ export const fragmentActiveBid = gql`
   fragment ActiveBid on ActiveBid {
     bid
     bidderId
-    auctionTopBid {
-      ...AuctionTopBid
+    auction {
+      ...Auction
     }
   }
 `
@@ -37,31 +28,28 @@ export const fragmentActiveBid = gql`
 export const fetchAuctions = gql`
   query FetchAuctions {
     auctions {
-      ...AuctionTopBid
+      ...Auction
     }
   }
   ${fragmentAuction}
-  ${fragmentTopBid}
 `
 
 export const fetchAuctionListing = gql`
   query FetchAuctionListing($auctionId: Int!) {
     auctionListing(auctionId: $auctionId) {
-      ...AuctionTopBid
+      ...Auction
     }
   }
   ${fragmentAuction}
-  ${fragmentTopBid}
 `
 
 export const fetchMyListings = gql`
   query FetchMyListings($sellerId: Int!) {
     myListings(sellerId: $sellerId) {
-      ...AuctionTopBid
+      ...Auction
     }
   }
   ${fragmentAuction}
-  ${fragmentTopBid}
 `
 
 export const fetchMyActiveBids = gql`
@@ -71,6 +59,5 @@ export const fetchMyActiveBids = gql`
     }
   }
   ${fragmentAuction}
-  ${fragmentTopBid}
   ${fragmentActiveBid}
 `

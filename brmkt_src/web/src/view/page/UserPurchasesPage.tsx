@@ -60,9 +60,9 @@ function MyPurchases({ buyerId }: { buyerId: number }) {
                 </Image>
                 <Description>
                   <Item>
-                    <H3>{myPurchase.itemSold.auction.title}</H3>
-                    <H3>Item ID: {myPurchase.itemSold.auction.id}</H3>
-                    <H3>Current Bid: {myPurchase.itemSold.topBid}</H3>
+                    <H3>{myPurchase.itemSold.title}</H3>
+                    <H3>Item ID: {myPurchase.itemSold.id}</H3>
+                    <H3>Current Bid: {myPurchase.itemSold.price}</H3>
                   </Item>
                 </Description>
               </Product>

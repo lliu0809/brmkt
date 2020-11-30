@@ -56,9 +56,9 @@ function MyActiveBids({ bidderId }: { bidderId: number }) {
                 </Image>
                 <Description>
                   <Item>
-                    <H3>{myActiveBid.auctionTopBid.auction.title}</H3>
-                    <H3>Item ID: {myActiveBid.auctionTopBid.auction.id}</H3>
-                    <H3>Current Bid: {myActiveBid.auctionTopBid.topBid}</H3>
+                    <H3>{myActiveBid.auction.title}</H3>
+                    <H3>Item ID: {myActiveBid.auction.id}</H3>
+                    <H3>Current Highest Bid: {myActiveBid.auction.price}</H3>
                     <H3>Your Bid: {myActiveBid.bid}</H3>
                   </Item>
                 </Description>

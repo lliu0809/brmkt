@@ -29,7 +29,7 @@ export function Profile(props: ProfilePageProps) {
         {data.auctions.map((auction, i) => (
           <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
             <Spacer $w4 />
-            {auction.auctionStartTime} · {auction.auction.title} · {auction.auction.auctionTime}
+            {auction.auctionStartTime} · {auction.title} · {auction.auctionTime}
           </div>
         ))}
       </div>

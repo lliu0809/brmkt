@@ -966,7 +966,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "AuctionTopBid",
+                    "name": "Auction",
                     "ofType": null
                   }
                 }
@@ -1005,7 +1005,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "AuctionTopBid",
+                    "name": "Auction",
                     "ofType": null
                   }
                 }
@@ -1132,7 +1132,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "AuctionTopBid",
+                "name": "Auction",
                 "ofType": null
               }
             },
@@ -1401,7 +1401,7 @@
                 "defaultValue": null
               },
               {
-                "name": "auctionTopBidId",
+                "name": "auctionId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -2201,33 +2201,6 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "AuctionTopBid",
-        "description": null,
-        "fields": [
-          {
-            "name": "topBid",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
           },
           {
             "name": "auctionStartTime",
@@ -2239,22 +2212,6 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "auction",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Auction",
                 "ofType": null
               }
             },
@@ -2305,7 +2262,7 @@
             "deprecationReason": null
           },
           {
-            "name": "auctionTopBid",
+            "name": "auction",
             "description": null,
             "args": [],
             "type": {
@@ -2313,7 +2270,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "AuctionTopBid",
+                "name": "Auction",
                 "ofType": null
               }
             },
@@ -2372,7 +2329,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "AuctionTopBid",
+                "name": "Auction",
                 "ofType": null
               }
             },
