@@ -20,6 +20,7 @@ export enum Route {
   BEARWEAR = 'app/bearwear',
   TEXTBOOK = 'app/textbook',
   DORMSUPPLY = 'app/dormsupply',
+  OTHER = 'app/other',
 
   USER_LISTINGS = 'app/user/mylistings',
   USER_PURCHASES = 'app/user/mypurchases',

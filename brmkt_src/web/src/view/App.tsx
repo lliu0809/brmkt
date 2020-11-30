@@ -18,6 +18,7 @@ import { HomePage } from './page/HomePage'
 import { LecturesPage } from './page/LecturesPage'
 import { LogInPage } from './page/LogInPage'
 import { NewListingPage } from './page/NewListingPage'
+import { OtherPage } from './page/OtherPage'
 import { PlaygroundPage } from './page/PlaygroundPage'
 import { Profile } from './page/Profile'
 import { ProjectsPage } from './page/ProjectsPage'
@@ -78,6 +79,7 @@ export function AppBody() {
         <PlaygroundPage path={Route.PLAYGROUND_APP} />
         <SignUpPage path={Route.SIGNUP} />
         <LogInPage path={Route.LOGIN} />
+        <OtherPage path={Route.OTHER} />
         <ElectronicPage path={Route.ELECTRONICS} />
         <BearwearPage path={Route.BEARWEAR} />
         <DormsupplyPage path={Route.DORMSUPPLY} />

@@ -20,7 +20,7 @@ export function HomePage(props: HomePageProps) {
         <br/><br/><br/>
       </Hero>
 
-      <div style={{ padding: '20px', fontSize: '30px', border: 'black', borderStyle: 'none', margin: '10px', marginLeft:'85px' }}>
+      <div style={{ padding: '20px', fontSize: '30px', border: 'black', borderStyle: 'none', margin: '10px', marginLeft:'25px' }}>
         {/* <Link to={getPath(Route.AUCTIONS)}><H3>&nbsp;&nbsp;Auction&nbsp;&nbsp;&nbsp;&nbsp;</H3></Link> */}
 
         <Link to={getPath(Route.BEARWEAR)}>
@@ -34,6 +34,9 @@ export function HomePage(props: HomePageProps) {
         </Link>
         <Link to={getPath(Route.ELECTRONICS)}>
           <H2>&nbsp;&nbsp;Electronics&nbsp;&nbsp;&nbsp;&nbsp;</H2>
+        </Link>
+        <Link to={getPath(Route.OTHER)}>
+          <H2>&nbsp;&nbsp;Other&nbsp;&nbsp;&nbsp;&nbsp;</H2>
         </Link>
 
       </div>
