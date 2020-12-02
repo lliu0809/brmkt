@@ -71,12 +71,12 @@ function MyListings({ sellerId }: { sellerId: number }) {
               </Image>
               <Description>
                 <Item>
-                  <H3>{myListing.title}</H3>
-                  <H3>Item ID: {myListing.id}</H3>
-                  <H3>Current Bid: {myListing.price}</H3>
+                  <H3>{myListing.auction.title}</H3>
+                  <H3>Item ID: {myListing.auction.id}</H3>
+                  <H3>Current Bid: {myListing.topBid}</H3>
                 </Item>
                 <br />
-                <Button onClick={() => doDeleteListing(myListing.id)}>Delete Listing</Button>
+                <Button onClick={() => doDeleteListing(myListing.auction.id)}>Delete Listing</Button>
               </Description>
             </Product>
             <Spacer $w4 />

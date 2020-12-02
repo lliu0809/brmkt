@@ -5,6 +5,16 @@ export const fragmentPurchase = gql`
     id
     total
     itemSold {
+      ...AuctionTopBid
+    }
+  }
+`
+
+export const fragmentTopBid = gql`
+  fragment AuctionTopBid on AuctionTopBid {
+    topBid
+    auctionStartTime
+    auction {
       ...Auction
     }
   }
@@ -21,7 +31,6 @@ export const fragmentAuction = gql`
     currentHighestId
     auctionTime
     status
-    auctionStartTime
   }
 `
 
@@ -32,5 +41,6 @@ export const fetchMyPurchases = gql`
     }
   }
   ${fragmentAuction}
+  ${fragmentTopBid}
   ${fragmentPurchase}
 `

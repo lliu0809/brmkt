@@ -1,5 +1,5 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { Auction } from './Auction'
+import { AuctionTopBid } from './AuctionTopBid'
 
 @Entity()
 export class ActiveBid extends BaseEntity {
@@ -14,7 +14,7 @@ export class ActiveBid extends BaseEntity {
   })
   bidderId: number
 
-  @ManyToOne(() => Auction, { eager: true })
+  @ManyToOne(() => AuctionTopBid, { eager: true })
   @JoinColumn()
-  auction: Auction
+  auctionTopBid: AuctionTopBid
 }

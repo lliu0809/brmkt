@@ -2,6 +2,7 @@ import { createPool, PoolConnection, QueryOptions } from 'mysql2'
 import { createConnection } from 'typeorm'
 import { ActiveBid } from '../entities/ActiveBid'
 import { Auction } from '../entities/Auction'
+import { AuctionTopBid } from '../entities/AuctionTopBid'
 import { Purchase } from '../entities/Purchase'
 import { Session } from '../entities/Session'
 import { Survey } from '../entities/Survey'
@@ -23,7 +24,7 @@ export async function initORM() {
     username: process.env.MYSQL_USER || 'root',
     synchronize: true,
     logging: false,
-    entities: [User, Session, Survey, SurveyQuestion, SurveyAnswer, Auction, Purchase, ActiveBid],
+    entities: [User, Session, Survey, SurveyQuestion, SurveyAnswer, Auction, Purchase, AuctionTopBid, ActiveBid],
     extra: {
       connectionLimit: 5,
     },

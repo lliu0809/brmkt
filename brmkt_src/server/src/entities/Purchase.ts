@@ -6,9 +6,9 @@ import {
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from 'typeorm'
-import { Auction } from './Auction'
+import { AuctionTopBid } from './AuctionTopBid'
 
 @Entity()
 export class Purchase extends BaseEntity {
@@ -24,7 +24,7 @@ export class Purchase extends BaseEntity {
   @Column({})
   total: number
 
-  @OneToOne(() => Auction, { eager: true })
+  @OneToOne(() => AuctionTopBid, { eager: true })
   @JoinColumn()
-  itemSold: Auction
+  itemSold: AuctionTopBid
 }

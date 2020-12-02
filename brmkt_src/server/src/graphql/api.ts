@@ -5,6 +5,7 @@ import { getRepository } from 'typeorm'
 import { check } from '../../../common/src/util'
 import { ActiveBid } from '../entities/ActiveBid'
 import { Auction } from '../entities/Auction'
+import { AuctionTopBid } from '../entities/AuctionTopBid'
 import { Purchase } from '../entities/Purchase'
 import { Survey } from '../entities/Survey'
 import { SurveyAnswer } from '../entities/SurveyAnswer'
@@ -32,21 +33,38 @@ export const graphqlRoot: Resolvers<Context> = {
     survey: async (_, { surveyId }) => (await Survey.findOne({ where: { id: surveyId } })) || null,
     surveys: () => Survey.find(),
     auctions: async () => {
-      const auctions = await Auction.find()
-      for(const auction of auctions) {
-        const auctionEndDate = new Date(auction.timeCreated.getTime() + auction.auctionTime * 1000)
-        auction.auctionStartTime = auctionEndDate.toString()
-        await auction.save()
+      const auctionTopBids = await AuctionTopBid.find()
+      if (auctionTopBids.length !== 0) {
+        return auctionTopBids
       }
+      const auctions = await Auction.find()
+      const newAuctionTopBids = auctions.map(auction => {
+        const auctionTopBid = new AuctionTopBid()
+        auctionTopBid.auction = auction
+        //const auctionEndDate = new Date(auction.timeCreated.getTime() + auction.auctionTime * 1000)
+        const auctionEndDate = new Date(auction.timeCreated.getTime() + auction.auctionTime * 1000)
+        auctionTopBid.auctionStartTime = auctionEndDate.toString()
+        auctionTopBid.topBid = auction.price
+        return auctionTopBid.save()
+      })
 
-      return auctions
+      /*const newAuctionTimes = newAuctionTopBids.map(newAuctionTopBids=>{
+        const auctionTime =
+      })*/
+
+      return await Promise.all(newAuctionTopBids)
     },
     auctionListing: async (_, { auctionId }) => {
-      const auction = await Auction.findOneOrFail({ where: { id: auctionId } })
-      return auction
+      const auctionTopBid = await AuctionTopBid.findOneOrFail({ where: { id: auctionId } })
+      return auctionTopBid
     },
     myListings: async (_, { sellerId }) => {
-      const allMyListings = await Auction.find({ where: { sellerId: sellerId } })
+      const allMyListings = await getRepository(AuctionTopBid)
+        .createQueryBuilder('allMyListings')
+        .leftJoinAndSelect('allMyListings.auction', 'auction')
+        .where('auction.sellerId = :sellerId', { sellerId })
+        .getMany()
+
       return allMyListings
     },
     myActiveBids: async (_, { bidderId }) => {
@@ -57,7 +75,8 @@ export const graphqlRoot: Resolvers<Context> = {
       const allMyPurchases = await getRepository(Purchase)
         .createQueryBuilder('allMyPurchases')
         .leftJoinAndSelect('allMyPurchases.itemSold', 'itemSold')
-        .where('itemSold.currentHighestId = :buyerId', { buyerId })
+        .leftJoinAndSelect('itemSold.auction', 'auction')
+        .where('auction.currentHighestId = :buyerId', { buyerId })
         .getMany()
 
       return allMyPurchases
@@ -87,30 +106,32 @@ export const graphqlRoot: Resolvers<Context> = {
       return survey
     },
     placeBid: async (_, { id, bidderId, bid }, ctx) => {
-      const currentAuction = await Auction.findOne({ where: { id: id } })
+      const currentAuction = await Auction.findOne({ where: { id } })
       if (!currentAuction) {
         return false
       }
+      const currentBid = await getRepository(AuctionTopBid)
+        .createQueryBuilder('currentBid')
+        .leftJoinAndSelect('currentBid.auction', 'auction')
+        .where('auction.id = :id', { id })
+        .getOne()
+      if (!currentBid) {
+        return false
+      }
 
-      if (currentAuction.price > bid) {
+      if (currentBid.topBid > bid) {
         return false
       }
       currentAuction.currentHighestId = bidderId
-      currentAuction.price = bid
+      currentBid.topBid = bid
       await currentAuction.save()
+      await currentBid.save()
 
-      const activeBid = await ActiveBid.findOne({ where: { bidderId: bidderId }})
-      if (!activeBid) {
-        const newActiveBid = new ActiveBid()
-        newActiveBid.bid = bid
-        newActiveBid.bidderId = bidderId
-        newActiveBid.auction = currentAuction
-        await newActiveBid.save()
-      }
-      else {
-        activeBid.bid = bid
-        await activeBid.save()
-      }
+      const activeBid = new ActiveBid()
+      activeBid.bid = bid
+      activeBid.bidderId = bidderId
+      activeBid.auctionTopBid = currentBid
+      await activeBid.save()
 
       return true
     },
@@ -123,9 +144,13 @@ export const graphqlRoot: Resolvers<Context> = {
       newListing.sellerId = sellerId
       newListing.auctionTime = auctionTime
       await newListing.save()
+
+      const auctionTopBid = new AuctionTopBid()
+      auctionTopBid.auction = newListing
       const auctionEndDate = new Date(newListing.timeCreated.getTime() + newListing.auctionTime * 1000)
-      newListing.auctionStartTime = auctionEndDate.toString()
-      await newListing.save()
+      auctionTopBid.auctionStartTime = auctionEndDate.toString()
+      auctionTopBid.topBid = newListing.price
+      await auctionTopBid.save()
 
       return true
     },
@@ -134,27 +159,37 @@ export const graphqlRoot: Resolvers<Context> = {
       if (!currentAuction) {
         return false
       }
+      const currentBid = await getRepository(AuctionTopBid)
+        .createQueryBuilder('currentBid')
+        .leftJoinAndSelect('currentBid.auction', 'auction')
+        .where('auction.id = :id', { id })
+        .getOne()
+      if (!currentBid) {
+        return false
+      }
       const allActiveBidders = await getRepository(ActiveBid)
         .createQueryBuilder('allActiveBids')
-        .leftJoinAndSelect('allActiveBids.auction', 'auction')
+        .leftJoinAndSelect('allActiveBids.auctionTopBid', 'auctionTopBid')
+        .leftJoinAndSelect('auctionTopBid.auction', 'auction')
         .where('auction.id = :id', { id })
         .getMany()
 
       for(const bidder of allActiveBidders) {
         await bidder.remove()
       }
+      await currentBid.remove()
       await currentAuction.remove()
 
       return true;
     },
-    createNewPurchase: async (_, { total, auctionId }, ctx) => {
+    createNewPurchase: async (_, { total, auctionTopBidId }, ctx) => {
       const newPurchase = new Purchase()
       newPurchase.total = total
-      const id = auctionId
-      const curAuction = await Auction.findOne({ where: { id } })
-      if (curAuction) {
-        newPurchase.itemSold = curAuction
-        curAuction.status = ItemStatus.Sold
+      const id = auctionTopBidId
+      const curAuctionTopBid = await AuctionTopBid.findOne({ where: { id } })
+      if (curAuctionTopBid) {
+        newPurchase.itemSold = curAuctionTopBid
+        curAuctionTopBid.auction.status = ItemStatus.Sold
       } else {
         return false
       }

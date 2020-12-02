@@ -21,14 +21,14 @@ type Query {
   surveys: [Survey!]!
   survey (surveyId: Int!): Survey
   user: User!
-  auctions: [Auction!]!
-  myListings (sellerId: Int!): [Auction!]!
+  auctions: [AuctionTopBid!]!
+  myListings (sellerId: Int!): [AuctionTopBid!]!
   myPurchases (buyerId: Int!): [Purchase!]!
   myActiveBids (bidderId: Int!): [ActiveBid!]!
   justPurchased: Purchase!
   # item (prodId: Int!, prodType: ProdType): Selling
 
-  auctionListing (auctionId: Int!): Auction!
+  auctionListing (auctionId: Int!): AuctionTopBid!
 }
 
 type Mutation {
@@ -36,7 +36,7 @@ type Mutation {
   purchase (id: Int!): Boolean!
   createNewListing (title: String!, price: Float!, description: String!, prodType: ProdType!, sellerId: Int!, auctionTime: Int!): Boolean!
   deleteListing (id: Int!): Boolean!
-  createNewPurchase (total: Float!, auctionId: Int! ): Boolean!
+  createNewPurchase (total: Float!, auctionTopBidId: Int! ): Boolean!
 
   # Records an answer to a survey question presented in class.
   answerSurvey (input: SurveyInput!): Boolean!
@@ -104,6 +104,11 @@ input SurveyInput {
   answer: String!
 }
 
+#input AuctionTopBidInput {
+#  questionId: Int!
+#  answer: String!
+#}
+
 #####################################################################################
 #                              Start Of Our Query Types                             #
 #####################################################################################
@@ -131,19 +136,24 @@ type Auction {
   currentHighestId: Int # Highest Bidder's ID
   auctionTime: Int!
   status: ItemStatus!
+}
+
+type AuctionTopBid {
+  topBid: Float!
   auctionStartTime: String!
+  auction: Auction!
 }
 
 type ActiveBid {
   bid: Float!
   bidderId: Int!
-  auction: Auction!
+  auctionTopBid: AuctionTopBid!
 }
 
 type Purchase {
   id: Int!
   total: Float!
-  itemSold: Auction!
+  itemSold: AuctionTopBid!
 }
 
 #####################################################################################

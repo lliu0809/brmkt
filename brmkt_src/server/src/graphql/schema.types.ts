@@ -18,12 +18,12 @@ export interface Query {
   surveys: Array<Survey>
   survey?: Maybe<Survey>
   user: User
-  auctions: Array<Auction>
-  myListings: Array<Auction>
+  auctions: Array<AuctionTopBid>
+  myListings: Array<AuctionTopBid>
   myPurchases: Array<Purchase>
   myActiveBids: Array<ActiveBid>
   justPurchased: Purchase
-  auctionListing: Auction
+  auctionListing: AuctionTopBid
 }
 
 export interface QuerySurveyArgs {
@@ -82,7 +82,7 @@ export interface MutationDeleteListingArgs {
 
 export interface MutationCreateNewPurchaseArgs {
   total: Scalars['Float']
-  auctionId: Scalars['Int']
+  auctionTopBidId: Scalars['Int']
 }
 
 export interface MutationAnswerSurveyArgs {
@@ -173,21 +173,27 @@ export interface Auction {
   currentHighestId?: Maybe<Scalars['Int']>
   auctionTime: Scalars['Int']
   status: ItemStatus
+}
+
+export interface AuctionTopBid {
+  __typename?: 'AuctionTopBid'
+  topBid: Scalars['Float']
   auctionStartTime: Scalars['String']
+  auction: Auction
 }
 
 export interface ActiveBid {
   __typename?: 'ActiveBid'
   bid: Scalars['Float']
   bidderId: Scalars['Int']
-  auction: Auction
+  auctionTopBid: AuctionTopBid
 }
 
 export interface Purchase {
   __typename?: 'Purchase'
   id: Scalars['Int']
   total: Scalars['Float']
-  itemSold: Auction
+  itemSold: AuctionTopBid
 }
 
 export type ResolverTypeWrapper<T> = Promise<T> | T
@@ -283,6 +289,7 @@ export type ResolversTypes = {
   ProdType: ProdType
   ItemStatus: ItemStatus
   Auction: ResolverTypeWrapper<Auction>
+  AuctionTopBid: ResolverTypeWrapper<AuctionTopBid>
   ActiveBid: ResolverTypeWrapper<ActiveBid>
   Purchase: ResolverTypeWrapper<Purchase>
 }
@@ -302,6 +309,7 @@ export type ResolversParentTypes = {
   SurveyInput: SurveyInput
   User: User
   Auction: Auction
+  AuctionTopBid: AuctionTopBid
   ActiveBid: ActiveBid
   Purchase: Purchase
 }
@@ -319,9 +327,9 @@ export type QueryResolvers<
     RequireFields<QuerySurveyArgs, 'surveyId'>
   >
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>
-  auctions?: Resolver<Array<ResolversTypes['Auction']>, ParentType, ContextType>
+  auctions?: Resolver<Array<ResolversTypes['AuctionTopBid']>, ParentType, ContextType>
   myListings?: Resolver<
-    Array<ResolversTypes['Auction']>,
+    Array<ResolversTypes['AuctionTopBid']>,
     ParentType,
     ContextType,
     RequireFields<QueryMyListingsArgs, 'sellerId'>
@@ -340,7 +348,7 @@ export type QueryResolvers<
   >
   justPurchased?: Resolver<ResolversTypes['Purchase'], ParentType, ContextType>
   auctionListing?: Resolver<
-    ResolversTypes['Auction'],
+    ResolversTypes['AuctionTopBid'],
     ParentType,
     ContextType,
     RequireFields<QueryAuctionListingArgs, 'auctionId'>
@@ -377,7 +385,7 @@ export type MutationResolvers<
     ResolversTypes['Boolean'],
     ParentType,
     ContextType,
-    RequireFields<MutationCreateNewPurchaseArgs, 'total' | 'auctionId'>
+    RequireFields<MutationCreateNewPurchaseArgs, 'total' | 'auctionTopBidId'>
   >
   answerSurvey?: Resolver<
     ResolversTypes['Boolean'],
@@ -468,7 +476,16 @@ export type AuctionResolvers<
   currentHighestId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   auctionTime?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   status?: Resolver<ResolversTypes['ItemStatus'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type AuctionTopBidResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['AuctionTopBid'] = ResolversParentTypes['AuctionTopBid']
+> = {
+  topBid?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
   auctionStartTime?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  auction?: Resolver<ResolversTypes['Auction'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
@@ -478,7 +495,7 @@ export type ActiveBidResolvers<
 > = {
   bid?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
   bidderId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  auction?: Resolver<ResolversTypes['Auction'], ParentType, ContextType>
+  auctionTopBid?: Resolver<ResolversTypes['AuctionTopBid'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
@@ -488,7 +505,7 @@ export type PurchaseResolvers<
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   total?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
-  itemSold?: Resolver<ResolversTypes['Auction'], ParentType, ContextType>
+  itemSold?: Resolver<ResolversTypes['AuctionTopBid'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
@@ -501,6 +518,7 @@ export type Resolvers<ContextType = any> = {
   SurveyAnswer?: SurveyAnswerResolvers<ContextType>
   User?: UserResolvers<ContextType>
   Auction?: AuctionResolvers<ContextType>
+  AuctionTopBid?: AuctionTopBidResolvers<ContextType>
   ActiveBid?: ActiveBidResolvers<ContextType>
   Purchase?: PurchaseResolvers<ContextType>
 }

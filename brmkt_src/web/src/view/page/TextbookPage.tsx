@@ -59,30 +59,30 @@ export function AuctionList() {
         {/* does search filter */}
         <Spacer $h4 />
         {data.auctions
-          .filter(auction => auction.status === ItemStatus.NOTSOLD)
-          .filter(auction => auction.prodType === 'TEXTBOOKS')
-          .filter(auction => auction.title.toLowerCase().includes(auctionQuery.toLowerCase()))
+          .filter(auction => auction.auction.status === ItemStatus.NOTSOLD)
+          .filter(auction => auction.auction.prodType === 'TEXTBOOKS')
+          .filter(auction => auction.auction.title.toLowerCase().includes(auctionQuery.toLowerCase()))
 
           .map((auction, i) => (
             <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
                 <Product>
                   <Image>
-                    <img src={'/app/assets/auction/' + auction.title + '.png'} />
+                    <img src={'/app/assets/auction/' + auction.auction.title + '.png'} />
                   </Image>
                   <Description>
                     <Item>
-                      <H3>{auction.title}</H3>
+                      <H3>{auction.auction.title}</H3>
                     </Item>
                     <PriceTag>
-                      <H3>Item ID: {auction.id}</H3>
+                      <H3>Item ID: {auction.auction.id}</H3>
                     </PriceTag>
                     <PriceTag>
-                      <H3>Current Bid: {auction.price}</H3>
+                      <H3>Current Bid: {auction.topBid}</H3>
                     </PriceTag>
                     <HeaderLink
                       className="link dim pointer"
                       $color="sky"
-                      to={user ? getAuctionListingPath(auction.id) : 'app/login'}
+                      to={user ? getAuctionListingPath(auction.auction.id) : 'app/login'}
                     >
                     <Btn>Place a bid !</Btn>
                     </HeaderLink>
@@ -179,9 +179,9 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
     return (
       <div className="flex flex-column mw6">
         <div className="flex items-center">
-          <H1>{data.auctionListing.title}</H1>
+          <H1>{data.auctionListing.auction.title}</H1>
           <Spacer $w4 />
-          <H1>{data.auctionListing.price}</H1>
+          <H1>{data.auctionListing.topBid}</H1>
           <Spacer $w4 />
           <Input $onSubmit={doPlaceBid} />
         </div>

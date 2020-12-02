@@ -54,9 +54,4 @@ export class Auction extends BaseEntity implements GraphqlAuction {
     default: ItemStatus.Notsold,
   })
   status: ItemStatus
-
-  @Column({
-    default: '',
-  })
-  auctionStartTime: string
 }
