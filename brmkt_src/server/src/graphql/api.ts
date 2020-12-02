@@ -127,11 +127,24 @@ export const graphqlRoot: Resolvers<Context> = {
       await currentAuction.save()
       await currentBid.save()
 
-      const activeBid = new ActiveBid()
-      activeBid.bid = bid
-      activeBid.bidderId = bidderId
-      activeBid.auctionTopBid = currentBid
-      await activeBid.save()
+      const activeBid = await getRepository(ActiveBid)
+        .createQueryBuilder('activeBid')
+        .leftJoinAndSelect('activeBid.auctionTopBid', 'auctionTopBid')
+        .leftJoinAndSelect('auctionTopBid.auction', 'auction')
+        .where('auction.id = :id', { id })
+        .andWhere('activeBid.bidderId = :bidderId', { bidderId })
+        .getOne()
+      if (!activeBid) {
+        const newActiveBid = new ActiveBid()
+        newActiveBid.bid = bid
+        newActiveBid.bidderId = bidderId
+        newActiveBid.auctionTopBid = currentBid
+        await newActiveBid.save()
+      }
+      else {
+        activeBid.bid = bid
+        await activeBid.save()
+      }
 
       return true
     },
