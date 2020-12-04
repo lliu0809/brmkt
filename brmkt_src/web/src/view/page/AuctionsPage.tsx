@@ -1,4 +1,3 @@
-
 import { useQuery } from '@apollo/client'
 import { RouteComponentProps, useLocation } from '@reach/router'
 import * as React from 'react'
@@ -49,12 +48,15 @@ export function AuctionList() {
     return <div>no auctions</div>
   } else {
     return (
-      <div style={{marginLeft:'135px' }} className="mw6">
-
+      <div style={{ marginLeft: '135px' }} className="mw6">
         <SearchBar>
-          <H4>Search for an item: &nbsp;&nbsp; <Input style={{display:"inline", width:"300px"}} $onChange={setAuctionQuery} /> </H4>
+          <H4>
+            Search for an item: &nbsp;&nbsp;{' '}
+            <Input style={{ display: 'inline', width: '300px' }} $onChange={setAuctionQuery} />{' '}
+          </H4>
         </SearchBar>
-        <br/><br/>
+        <br />
+        <br />
 
         {/* does search filter */}
         {/* does search filter */}
@@ -108,7 +110,6 @@ const SearchBar = style('td', '  ', {
   marginBottom: '50px',
   display: 'inline',
 })
-
 
 const Image = style('td', '  ', {
   height: '12rem',
@@ -243,8 +244,7 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
       calculateCountDown(end)
     }, 10)
 
-    const bidder_id =
-      data.auctionListing.currentHighestId == null ? -1 : data.auctionListing.currentHighestId
+    const bidder_id = data.auctionListing.currentHighestId == null ? -1 : data.auctionListing.currentHighestId
 
     const cur_user_id = fetchUserId()
 
@@ -279,9 +279,12 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
         <br />
         <H3 className="center">{showConfirmButton(bidder_id, cur_user_id)}</H3>
         <Spacer $h3 />
-        <br/><br/><br/><br/><br/>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     )
   }
 }
-

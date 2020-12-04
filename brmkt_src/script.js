@@ -20,17 +20,31 @@ import { Counter, Rate } from 'k6/metrics'
      },
    },
  }*/
-var count = 95
-var idCount = 1
+export const options = {
+  scenarios: {
+    example_scenario: { executor: 'constant-vus', vus: 1000, duration: '10s' },
+  },
+}
+// export const options = {
+//   scenarios: {
+//     example_scenario: {
+//       executor: 'ramping-vus',
+//       startVUs: 0,
+//       stages: [
+//         { duration: '30s', target: 1000 },
+//         { duration: '30s', target: 0 },
+//       ],
+//       gracefulRampDown: '0s',
+//     },
+//   },
+// }
+
 export default function () {
   //load test homepage
   http.get('http://localhost:3000')
 
-  //load test get auctions
-  http.get('http://localhost:3000/app/auction')
-
   //load test createUser
-  const resp = http.post(
+  /*const resp = http.post(
     'http://localhost:3000/auth/createUser',
     '{"email": "email1@gmail.com","name": "my friend","userType": "USER","address": "address","cardNumber": "1234","password": "password","id": 19,"timeCreated": {},"timeUpdated": {},"userType":"USER"}',
     {
@@ -38,45 +52,42 @@ export default function () {
         'Content-Type': 'application/json',
       },
     }
-  )
+  )*/
 
-  //load test fetchAuctions
-  const resp1 = http.post(
-    'http://localhost:3000/graphql',
-    '{"operationName":"FetchAuctionListing","variables":{"auctionId":1},"query":"query FetchAuctionListing($auctionId: Int!) {\\n  auctionListing(auctionId: $auctionId) {\\n    ...AuctionTopBid\\n    __typename\\n  }\\n}\\n\\nfragment Auction on Auction {\\n  id\\n  title\\n  price\\n  description\\n  prodType\\n  sellerId\\n  currentHighestId\\n  auctionTime\\n  status\\n  __typename\\n}\\n\\nfragment AuctionTopBid on AuctionTopBid {\\n  topBid\\n  auctionStartTime\\n  auction {\\n    ...Auction\\n    __typename\\n  }\\n  __typename\\n}\\n"}',
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  )
 
   //load test login
-  const resp2 = http.post(
-    'http://localhost:3000/auth/login',
-    '{"email": "email1@gmail.com","password": "password"}',
+  /*const resp2 = http.post('http://localhost:3000/auth/login', '{"email": "email1@gmail.com","password": "password"}', {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })*/
+  //load test fetchAuctions
+  /*const resp1 = http.post(
+    'http://localhost:3000/graphql',
+    '{"operationName":"FetchAuctionListing","variables":{"auctionId":3339},"query":"query FetchAuctionListing($auctionId: Int!) {\\n  auctionListing(auctionId: $auctionId) {\\n    ...AuctionTopBid\\n    __typename\\n  }\\n}\\n\\nfragment Auction on Auction {\\n  id\\n  title\\n  price\\n  description\\n  prodType\\n  sellerId\\n  currentHighestId\\n  auctionTime\\n  status\\n  __typename\\n}\\n\\nfragment AuctionTopBid on AuctionTopBid {\\n  topBid\\n  auctionStartTime\\n  auction {\\n    ...Auction\\n    __typename\\n  }\\n  __typename\\n}\\n"}',
     {
       headers: {
         'Content-Type': 'application/json',
       },
     }
-  )
+  )*/
+  //load test logout
+  //const resp3 = http.post('http://localhost:3000/auth/logout')
 
   //count++
   //load test place bids
-  count+=1
-  const resp4 = http.post(
+  /*const resp4 = http.post(
     'http://localhost:3000/graphql',
-    `{"operationName":"PlaceBid","variables":{"id":2,"bidderId":4,"bid":${count}},"query":"mutation PlaceBid($id: Int!, $bidderId: Int!, $bid: Float!) {\\n  placeBid(id: $id, bidderId: $bidderId, bid: $bid)\\n}\\n"}`,
+    `{"operationName":"PlaceBid","variables":{"id":3339,"bidderId":4,"bid":${__VU+__ITER}},"query":"mutation PlaceBid($id: Int!, $bidderId: Int!, $bid: Float!) {\\n  placeBid(id: $id, bidderId: $bidderId, bid: $bid)\\n}\\n"}`,
     {
       headers: {
         'Content-Type': 'application/json',
       },
     }
-  )
+  )*/
 
   //load test createListing
-  const resp5 = http.post(
+  /*const resp5 = http.post(
     'http://localhost:3000/graphql',
     '{"operationName":"CreateNewListing","variables":{"title":"USED car","price":10000000,"description":"USED Maserati","prodType":"OTHER","sellerId":2,"auctionTime":36000},"query":"mutation CreateNewListing($title: String!, $price: Float!, $description: String!, $prodType: ProdType!, $sellerId: Int!, $auctionTime: Int!) {\\n  createNewListing(title: $title, price: $price, description: $description, prodType: $prodType, sellerId: $sellerId, auctionTime: $auctionTime)\\n}\\n"}',
     {
@@ -84,23 +95,20 @@ export default function () {
         'Content-Type': 'application/json',
       },
     }
-  )
-  const resp6 = http.post(
+  )*/
+  /*const resp6 = http.post(
     'http://localhost:3000/graphql',
-    `{"operationName":"DeleteListing","variables":{"id":${idCount}},"query":"mutation DeleteListing($id: Int!) {\\n  deleteListing(id: $id)\\n}\\n"}`,
+    `{"operationName":"DeleteListing","variables":{"id":${__VU+__ITER}},"query":"mutation DeleteListing($id: Int!) {\\n  deleteListing(id: $id)\\n}\\n"}`,
     {
       headers: {
         'Content-Type': 'application/json',
       },
     }
   )
-  idCount+=1
+  idCount += 1*/
 
-  //load test logout
-  const resp3 = http.post(
-    'http://localhost:3000/auth/logout',
 
-  )
+  sleep(Math.random() * 3)
 }
 
 const count200 = new Counter('status_code_2xx')
