@@ -52,7 +52,7 @@ function MyActiveBids({ bidderId }: { bidderId: number }) {
             <div key={i} className="pa3 br2 bg-black-10 flex items-center">
               <Product>
                 <Image>
-                  <img src={'/app/assets/auction/NEW TV.png'} />
+                  <img src={'/app/assets/auction/' + myActiveBid.auction.title + '.png'} />
                 </Image>
                 <Description>
                   <Item>

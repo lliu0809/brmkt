@@ -56,7 +56,7 @@ function MyPurchases({ buyerId }: { buyerId: number }) {
                 <H4>Order #: {myPurchase.id}</H4>
                 <H4>Total: $</H4>
                 <Image>
-                  <img src={'/app/assets/auction/NEW TV.png'} />
+                  <img src={'/app/assets/auction/' + myPurchase.itemSold.title + '.png'} />
                 </Image>
                 <Description>
                   <Item>

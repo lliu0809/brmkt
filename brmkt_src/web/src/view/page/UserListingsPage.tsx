@@ -67,7 +67,7 @@ function MyListings({ sellerId }: { sellerId: number }) {
               <br />
               <br />
               <Image>
-                <img src={'/app/assets/auction/NEW TV.png'} />
+                <img src={'/app/assets/auction/' + myListing.title + '.png'} />
               </Image>
               <Description>
                 <Item>
