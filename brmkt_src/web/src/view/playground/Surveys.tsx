@@ -5,13 +5,13 @@ import { Fragment, useContext, useEffect, useState } from 'react'
 import { strutil } from '../../../../common/src/util'
 import { getApolloClient } from '../../graphql/apolloClient'
 import {
-  FetchSurvey,
-  FetchSurveys,
-  FetchSurveyVariables,
-  FetchSurvey_survey_currentQuestion,
-  FetchSurvey_survey_currentQuestion_answers,
-  SurveySubscription,
-  SurveySubscriptionVariables,
+    FetchSurvey,
+    FetchSurveys,
+    FetchSurveyVariables,
+    FetchSurvey_survey_currentQuestion,
+    FetchSurvey_survey_currentQuestion_answers,
+    SurveySubscription,
+    SurveySubscriptionVariables
 } from '../../graphql/query.gen'
 import { Button } from '../../style/button'
 import { H1, H2 } from '../../style/header'
@@ -43,7 +43,7 @@ function SurveyList() {
   return (
     <div className="mw6">
       {data.surveys.map((s, i) => (
-        <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
+        <div key={i} className="pa3 br2 mb2   flex items-center">
           <HeaderLink className="link dim pointer" $color="sky" to={getSurveyPath(s.id)}>
             {s.name}
           </HeaderLink>

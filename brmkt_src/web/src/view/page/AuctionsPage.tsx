@@ -66,15 +66,15 @@ export function AuctionList() {
           .filter(auction => auction.title.toLowerCase().includes(auctionQuery.toLowerCase()))
 
           .map((auction, i) => (
-            <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
+            <div key={i} className="pa3 br2 mb2 flex items-center">
               <HeaderLink
                 className="link dim pointer"
                 $color="sky"
                 to={user ? getAuctionListingPath(auction.id) : 'app/login'}
               >
-                <Product>
+                <Product style={{backgroundColor:"white"}}>
                   <Image>
-                    <img src={'/app/assets/auction/' + auction.title + '.png'} />
+                    <img src={'/app/assets/auction/' + auction.prodType + '.png'} />
                   </Image>
                   <Description>
                     <Item>
@@ -112,8 +112,8 @@ const SearchBar = style('td', '  ', {
 })
 
 const Image = style('td', '  ', {
-  height: '12rem',
-  width: '12rem',
+  height: '10rem',
+  width: '10rem',
   float: 'left',
 })
 

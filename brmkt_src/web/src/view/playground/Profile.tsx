@@ -27,7 +27,7 @@ export function Profile(props: ProfilePageProps) {
       <div className="mw6">
         <Spacer $h4 />
         {data.auctions.map((auction, i) => (
-          <div key={i} className="pa3 br2 mb2 bg-black-10 flex items-center">
+          <div key={i} className="pa3 br2 mb2   flex items-center">
             <Spacer $w4 />
             {auction.auctionStartTime} · {auction.title} · {auction.auctionTime}
           </div>

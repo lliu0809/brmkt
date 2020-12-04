@@ -111,7 +111,7 @@ function NavItem(props: { name: string; path: string; title?: boolean }) {
 
 const NavAnchor = style(
   'a',
-  'link near-white hover-bg-black-10 pa2 br2',
+  'link near-white hover-  pa2 br2',
   (p: { $bold?: boolean; $title?: boolean }) => ({
     fontWeight: p.$bold ? 600 : 200,
     fontSize: p.$title ? '1.5em' : undefined,

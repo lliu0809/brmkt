@@ -62,12 +62,12 @@ function MyListings({ sellerId }: { sellerId: number }) {
         <Spacer $h4 />
         <H3>My Listings</H3>
         {data.myListings.map((myListing, i) => (
-          <div key={i} className="pa3 br2 bg-black-10 flex items-center">
+          <div key={i} className="pa3 br2   flex items-center">
             <Product>
               <br />
               <br />
               <Image>
-                <img src={'/app/assets/auction/' + myListing.title + '.png'} />
+                <img src={'/app/assets/auction/' + myListing.prodType + '.png'} />
               </Image>
               <Description>
                 <Item>

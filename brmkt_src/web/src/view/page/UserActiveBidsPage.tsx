@@ -49,10 +49,10 @@ function MyActiveBids({ bidderId }: { bidderId: number }) {
         <H3>My Active Bids</H3>
         {data.myActiveBids
           .map((myActiveBid, i) => (
-            <div key={i} className="pa3 br2 bg-black-10 flex items-center">
+            <div key={i} className="pa3 br2   flex items-center">
               <Product>
                 <Image>
-                  <img src={'/app/assets/auction/' + myActiveBid.auction.title + '.png'} />
+                  <img src={'/app/assets/auction/' + myActiveBid.auction.prodType + '.png'} />
                 </Image>
                 <Description>
                   <Item>

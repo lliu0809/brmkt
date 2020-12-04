@@ -50,13 +50,13 @@ function MyPurchases({ buyerId }: { buyerId: number }) {
         <H3>My Purchases</H3>
         {data.myPurchases
           .map((myPurchase, i) => (
-            <div key={i} className="pa3 br2 bg-black-10 flex items-center">
+            <div key={i} className="pa3 br2   flex items-center">
               <br/>
               <Product>
                 <H4>Order #: {myPurchase.id}</H4>
                 <H4>Total: $</H4>
                 <Image>
-                  <img src={'/app/assets/auction/' + myPurchase.itemSold.title + '.png'} />
+                  <img src={'/app/assets/auction/' + myPurchase.itemSold.prodType + '.png'} />
                 </Image>
                 <Description>
                   <Item>
