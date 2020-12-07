@@ -65,7 +65,7 @@ function RealNav() {
         <NavItem name="Make A Listing" path={user ? getPath(Route.USER_CREATE_LISTING) : getPath(Route.LOGIN)} />
         {user && <NavItem name={'Hi, ' + user.name} path={getPath(Route.LOGIN)} />}
         {!user && <NavItem name="Log In" path={getPath(Route.LOGIN)} />}
-        {user && <NavItem name="Edit Profile" path={getPath(Route.PROFILE)} />}
+        {/* {user && <NavItem name="Edit Profile" path={getPath(Route.PROFILE)} />} */}
         {!user && <NavItem name="Sign Up" path={getPath(Route.SIGNUP)} />}
       </Nav>
     </div>

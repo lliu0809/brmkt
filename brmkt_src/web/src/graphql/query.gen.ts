@@ -191,6 +191,54 @@ export interface FetchMyPurchasesVariables {
 // @generated
 // This file was automatically generated and should not be edited.
 
+
+// ====================================================
+// GraphQL mutation operation: newEmail
+// ====================================================
+export interface newEmail {
+  newEmail: boolean;
+}
+
+export interface newEmailVariables {
+  id: number;
+  email:String;
+}
+
+// ====================================================
+// GraphQL mutation operation: newName
+// ====================================================
+export interface newName {
+  newName: boolean;
+}
+
+export interface newNameVariables {
+  id: number;
+  name:String;
+}
+
+// ====================================================
+// GraphQL mutation operation: newPassword
+// ====================================================
+export interface newPassword {
+  newPassword: boolean;
+}
+
+export interface newPasswordVariables {
+  id: number;
+  password:String;
+}
+
+// ====================================================
+// GraphQL mutation operation: newcardNumber
+// ====================================================
+export interface newcardNumber {
+  newcardNumber: boolean;
+}
+
+export interface newcardNumberVariables {
+  id: number;
+  cardNumber:String;
+}
 // ====================================================
 // GraphQL mutation operation: PlaceBid
 // ====================================================

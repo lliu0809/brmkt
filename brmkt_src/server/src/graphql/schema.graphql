@@ -37,6 +37,10 @@ type Mutation {
   createNewListing (title: String!, price: Float!, description: String!, prodType: ProdType!, sellerId: Int!, auctionTime: Int!): Boolean!
   deleteListing (id: Int!): Boolean!
   createNewPurchase (total: Float!, auctionId: Int! ): Boolean!
+  newEmail(id: Int!,email: String!): Boolean!
+  newName(id: Int!,email: String!): Boolean!
+  newPassword(id: Int!,email: String!): Boolean!
+  newcardNumber(id: Int!,email: String!): Boolean!
 
   # Records an answer to a survey question presented in class.
   answerSurvey (input: SurveyInput!): Boolean!

@@ -86,6 +86,51 @@ export const graphqlRoot: Resolvers<Context> = {
       ctx.pubsub.publish('SURVEY_UPDATE_' + surveyId, survey)
       return survey
     },
+
+    newEmail: async (_, { id, email }, ctx) => {
+      const user  = await User.findOne({ where: { id: id } })
+      if(!user)
+      {
+       return false
+      }
+      user.email = email
+      await user.save()
+      return true
+    },
+
+    newName: async (_, { id, name }, ctx) => {
+      const user  = await User.findOne({ where: { id: id } })
+      if(!user)
+      {
+       return false
+      }
+      user.name = name
+      await user.save()
+      return true
+    },
+
+    newPassword: async (_, { id, password }, ctx) => {
+      const user  = await User.findOne({ where: { id: id } })
+      if(!user)
+      {
+       return false
+      }
+      user.password = password
+      await user.save()
+      return true
+    },
+
+    newcardNumber: async (_, { id, cardNumber }, ctx) => {
+      const user  = await User.findOne({ where: { id: id } })
+      if(!user)
+      {
+       return false
+      }
+      user.cardNumber = cardNumber
+      await user.save()
+      return true
+    },
+
     placeBid: async (_, { id, bidderId, bid }, ctx) => {
       const currentAuction = await Auction.findOne({ where: { id: id } })
       if (!currentAuction) {

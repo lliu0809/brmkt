@@ -13,9 +13,7 @@ import { AppRouteParams, getPath, Route } from '../nav/route'
 import { handleError } from '../toast/error'
 import { toastErr } from '../toast/toast'
 import { Page } from './Page'
-
-
-
+import { newcardNumber, newEmail, newName, newPassword } from './queries/mutateProfile'
 
 interface LogInPageProps extends RouteComponentProps, AppRouteParams {}
 
@@ -24,6 +22,7 @@ export function LogInPage(props: LogInPageProps) {
   const [password, setPassword] = useState('')
   const [err, setError] = useState({ email: false, password: false })
   const { user } = useContext(UserContext)
+
 
   // reset error when email/password change
   useEffect(() => setError({ ...err, email: !validateEmail(email) }), [email])
@@ -82,6 +81,7 @@ const HeaderLink = link(H2)
 
 function Logout() {
   // const { user } = useContext(UserContext)
+
   function logout() {
     return fetch('../auth/logout', {
       method: 'POST',
@@ -94,26 +94,58 @@ function Logout() {
       .catch(handleError)
   }
 
-
   return (
     <>
+    {/* var aname = {useContext(UserContext).user?.name} */}
+
     <Page>
       <H1>My Profile</H1>
       <br/>
 
 
       <div style={{float:"inline-start"}}>
+        {/* <Input type="text" name="number" id = "myText" /> */}
+
+        {/* <H3>Name: { document.getElementById("myText") && useContext(UserContext).user?.name}</H3> */}
+        {/* <html>
+        <script>
+             document.getElementById("demo").innerHTML = document.getElementById("myInput").value;
+        </script>
+        </html> */}
+
+
+          {/* <p id="demo"></p> */}
+          {/* <button onClick={myFunction}>Click me</button>
+
+        <script>
+        function myFunction() {
+          document.getElementById("demo").innerHTML = "Hello World";
+        }
+        </script> */}
+
         <H3>Name: {useContext(UserContext).user?.name}</H3>
+        <Input placeholder="Email" $onSubmit={editName}/>
+        <Spacer $h5 />
+
+
         <H3>Email: {useContext(UserContext).user?.email}</H3>
+        <Input placeholder="Email" $onSubmit={editEmail}/>
+        <Spacer $h5 />
+
         <H3>Password: {useContext(UserContext).user?.password}</H3>
+        <Input placeholder="Password" $onSubmit={editPassword}/>
+        <Spacer $h5 />
+
         <H3>Card Number: {useContext(UserContext).user?.cardNumber}</H3>
+        <Input placeholder="ID" $onSubmit={editCard}/>
         {/* <h3>ID: {useContext(UserContext).user?.id}</h3>
         <h3>User Type: {useContext(UserContext).user?.userType}</h3> */}
 
         <Spacer $h5 />
-        {/* <Button onClick={goProfile}>Edit profile</Button> */}
+        <Btn style={{backgroundColor:"#FFD100", color:"black"}} onClick={refresh}>Edit profile</Btn>
         <Spacer $h5 />
-      </div>
+
+       </div>
       <span>
       <HeaderLink
           className="link dim pointer"
@@ -180,4 +212,46 @@ function validate(
   setError({ email: !validEmail, password: !validPassword })
   return validEmail && validPassword
 }
+
+function refresh() {
+  window.location.reload()
+}
+
+
+function editName(name: string) {
+  const user = useContext(UserContext)
+  if (user.user)
+  {
+    newName(user.user?.id,name)
+    window.location.reload()
+  }
+}
+
+function editEmail(email: string) {
+  const user = useContext(UserContext)
+  if (user.user)
+  {
+    newEmail(user.user?.id,email)
+    window.location.reload()
+  }
+}
+
+function editPassword(password: string) {
+  const user = useContext(UserContext)
+  if (user.user)
+  {
+    newPassword(user.user?.id,password)
+    window.location.reload()
+  }
+}
+
+function editCard(cardNumber: string) {
+  const user = useContext(UserContext)
+  if (user.user)
+  {
+    newcardNumber(user.user?.id,cardNumber)
+    window.location.reload()
+  }
+}
+
 
