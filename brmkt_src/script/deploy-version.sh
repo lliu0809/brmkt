@@ -22,7 +22,7 @@ echo "DEPLOYING VERSION: $1"
 echo "updating lambda brmkt"
 aws lambda update-function-code \
   --region us-west-2 \
-  --function-name brmkt \
+  --function-name brmkt_src \
   --s3-bucket cloudcity-build-artifacts \
   --s3-key server/$1.jar
 

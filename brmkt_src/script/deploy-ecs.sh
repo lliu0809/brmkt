@@ -49,7 +49,7 @@ new_task_def_arn=$(echo $new_task_def | jq -r .taskDefinition.taskDefinitionArn)
 echo "created new task definition: $new_task_def_arn"
 echo "deploying new task definition to $1-service..."
 
-aws ecs update-service --cluster brmkt \
+aws ecs update-service --cluster brmkt_src \
   --no-cli-pager \
   --region "$ecs_region" \
   --force-new-deployment \

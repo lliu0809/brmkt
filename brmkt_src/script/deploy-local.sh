@@ -16,19 +16,19 @@ echo "================================="
 aws ecr get-login-password | docker login --username AWS --password-stdin 101624687637.dkr.ecr.us-west-2.amazonaws.com
 
 echo "Building local docker image"
-docker build --tag 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:local .
+docker build --tag 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt_src:local .
 
 echo "Pushing local docker image"
-docker push 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:local
+docker push 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt_src:local
 
 echo "Updating previous and latest"
-docker pull 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:latest
-docker tag 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:latest 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:previous
-docker tag 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:local 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:latest
+docker pull 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt_src:latest
+docker tag 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt_src:latest 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt_src:previous
+docker tag 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt_src:local 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt_src:latest
 
 echo "Pushing latest and previous"
-docker push 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:latest
-docker push 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt:previous
+docker push 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt_src:latest
+docker push 101624687637.dkr.ecr.us-west-2.amazonaws.com/brmkt_src:previous
 
 echo "Updating app-web"
 ./script/deploy-ecs.sh brmkt-app-web "local"
