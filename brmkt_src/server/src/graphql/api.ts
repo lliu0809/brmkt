@@ -130,7 +130,7 @@ export const graphqlRoot: Resolvers<Context> = {
       return true
     },
     deleteListing: async (_, { id }, ctx) => {
-      const currentAuction = await Auction.findOne({ where: { id } })
+      const currentAuction = await Auction.findOne({ where: { id: id } })
       if (!currentAuction) {
         return false
       }
@@ -151,7 +151,7 @@ export const graphqlRoot: Resolvers<Context> = {
       const newPurchase = new Purchase()
       newPurchase.total = total
       const id = auctionId
-      const curAuction = await Auction.findOne({ where: { id } })
+      const curAuction = await Auction.findOne({ where: { id: auctionId } })
       if (curAuction) {
         newPurchase.itemSold = curAuction
         curAuction.status = ItemStatus.Sold
