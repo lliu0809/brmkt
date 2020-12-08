@@ -1,7 +1,8 @@
+// import { readFileSync } from 'fs'
 import { readFileSync } from 'fs'
 import { PubSub } from 'graphql-yoga'
 import path from 'path'
-import { getRepository } from 'typeorm'
+import { getRepository, MoreThan } from 'typeorm'
 import { check } from '../../../common/src/util'
 import { ActiveBid } from '../entities/ActiveBid'
 import { Auction } from '../entities/Auction'
@@ -31,15 +32,31 @@ export const graphqlRoot: Resolvers<Context> = {
     self: (_, args, ctx) => ctx.user,
     survey: async (_, { surveyId }) => (await Survey.findOne({ where: { id: surveyId } })) || null,
     surveys: () => Survey.find(),
-    auctions: async () => {
-      const auctions = await Auction.find()
-      for(const auction of auctions) {
+    auctions: async (_, { cursor = 0 }) => {
+      const limit = 15
+
+      const auctions = await Auction.findAndCount({
+        order: { id: 'ASC' },
+        skip: 1,
+        take: limit + 1,
+        where: { timeCreated: MoreThan(cursor) },
+      })
+
+      const auctionReturn = auctions[0].slice(0, -1)
+      const endCursor = auctions[0][limit - 1].id
+      const moreData = auctions[0].length > limit
+
+      for (const auction of auctionReturn) {
         const auctionEndDate = new Date(auction.timeCreated.getTime() + auction.auctionTime * 1000)
         auction.auctionStartTime = auctionEndDate.toString()
         await auction.save()
       }
 
-      return auctions
+      return {
+        auctions: auctionReturn,
+        cursor: endCursor,
+        hasMore: moreData,
+      }
     },
     auctionListing: async (_, { auctionId }) => {
       const auction = await Auction.findOneOrFail({ where: { id: auctionId } })
@@ -86,51 +103,6 @@ export const graphqlRoot: Resolvers<Context> = {
       ctx.pubsub.publish('SURVEY_UPDATE_' + surveyId, survey)
       return survey
     },
-
-    // newEmail: async (_, { id, email }, ctx) => {
-    //   const user  = await User.findOne({ where: { id: id } })
-    //   if(!user)
-    //   {
-    //    return false
-    //   }
-    //   user.email = email
-    //   await user.save()
-    //   return true
-    // },
-
-    // newName: async (_, { id, name }, ctx) => {
-    //   const user  = await User.findOne({ where: { id: id } })
-    //   if(!user)
-    //   {
-    //    return false
-    //   }
-    //   user.name = name
-    //   await user.save()
-    //   return true
-    // },
-
-    // newPassword: async (_, { id, password }, ctx) => {
-    //   const user  = await User.findOne({ where: { id: id } })
-    //   if(!user)
-    //   {
-    //    return false
-    //   }
-    //   user.password = password
-    //   await user.save()
-    //   return true
-    // },
-
-    // newcardNumber: async (_, { id, cardNumber }, ctx) => {
-    //   const user  = await User.findOne({ where: { id: id } })
-    //   if(!user)
-    //   {
-    //    return false
-    //   }
-    //   user.cardNumber = cardNumber
-    //   await user.save()
-    //   return true
-    // },
-
     placeBid: async (_, { id, bidderId, bid }, ctx) => {
       const currentAuction = await Auction.findOne({ where: { id: id } })
       if (!currentAuction) {
@@ -144,15 +116,14 @@ export const graphqlRoot: Resolvers<Context> = {
       currentAuction.price = bid
       await currentAuction.save()
 
-      const activeBid = await ActiveBid.findOne({ where: { bidderId: bidderId }})
+      const activeBid = await ActiveBid.findOne({ where: { bidderId: bidderId } })
       if (!activeBid) {
         const newActiveBid = new ActiveBid()
         newActiveBid.bid = bid
         newActiveBid.bidderId = bidderId
         newActiveBid.auction = currentAuction
         await newActiveBid.save()
-      }
-      else {
+      } else {
         activeBid.bid = bid
         await activeBid.save()
       }
@@ -185,18 +156,17 @@ export const graphqlRoot: Resolvers<Context> = {
         .where('auction.id = :id', { id })
         .getMany()
 
-      for(const bidder of allActiveBidders) {
+      for (const bidder of allActiveBidders) {
         await bidder.remove()
       }
       await currentAuction.remove()
 
-      return true;
+      return true
     },
-
     createNewPurchase: async (_, { total, auctionId }, ctx) => {
       const newPurchase = new Purchase()
       newPurchase.total = total
-      //const id = auctionId
+
       const curAuction = await Auction.findOne({ where: { id: auctionId } })
       if (curAuction) {
         newPurchase.itemSold = curAuction

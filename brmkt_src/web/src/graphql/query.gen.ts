@@ -30,7 +30,7 @@ export interface FetchUserContext {
 // GraphQL query operation: FetchAuctions
 // ====================================================
 
-export interface FetchAuctions_auctions {
+export interface FetchAuctions_auctions_auctions {
   __typename: "Auction";
   id: number;
   title: string;
@@ -44,8 +44,19 @@ export interface FetchAuctions_auctions {
   auctionStartTime: string;
 }
 
+export interface FetchAuctions_auctions {
+  __typename: "PaginatedAuction";
+  auctions: FetchAuctions_auctions_auctions[];
+  cursor: number;
+  hasMore: boolean;
+}
+
 export interface FetchAuctions {
-  auctions: FetchAuctions_auctions[];
+  auctions: FetchAuctions_auctions;
+}
+
+export interface FetchAuctionsVariables {
+  cursor?: number | null;
 }
 
 /* tslint:disable */
@@ -499,6 +510,36 @@ export interface ActiveBid {
   bid: number;
   bidderId: number;
   auction: ActiveBid_auction;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: PaginatedAuction
+// ====================================================
+
+export interface PaginatedAuction_auctions {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+  auctionStartTime: string;
+}
+
+export interface PaginatedAuction {
+  __typename: "PaginatedAuction";
+  auctions: PaginatedAuction_auctions[];
+  cursor: number;
+  hasMore: boolean;
 }
 
 /* tslint:disable */

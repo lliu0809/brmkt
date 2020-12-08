@@ -1,32 +1,30 @@
 import { useQuery } from '@apollo/client'
-import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
-import { FetchAuctions } from '../../graphql/query.gen'
+import { FetchAuctions, FetchAuctionsVariables } from '../../graphql/query.gen'
 import { Spacer } from '../../style/spacer'
-import { AppRouteParams } from '../nav/route'
 import { fetchAuctions } from '../page/queries/fetchAuctions'
 //const [listings, setListings] = React.useState([])
-
-interface ProfilePageProps extends RouteComponentProps, AppRouteParams {}
 
 /*function list() {
   toastErr('invalid email/password')
   return
 }*/
 
-export function Profile(props: ProfilePageProps) {
+export function Profile({ cursor }: { cursor: number }) {
   //const [userQuery, setUserQuery] = useState('')
-  const { loading, data } = useQuery<FetchAuctions>(fetchAuctions)
+  const { loading, data } = useQuery<FetchAuctions, FetchAuctionsVariables>(fetchAuctions, {
+    variables: { cursor },
+  })
 
   if (loading) {
     return <div>loading...</div>
-  } else if (!data || data.auctions.length === 0) {
+  } else if (!data || data.auctions.auctions.length === 0) {
     return <div>no auctions</div>
   } else {
     return (
       <div className="mw6">
         <Spacer $h4 />
-        {data.auctions.map((auction, i) => (
+        {data.auctions.auctions.map((auction, i) => (
           <div key={i} className="pa3 br2 mb2   flex items-center">
             <Spacer $w4 />
             {auction.auctionStartTime} · {auction.title} · {auction.auctionTime}
