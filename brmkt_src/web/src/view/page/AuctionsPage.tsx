@@ -72,7 +72,7 @@ export function AuctionList() {
                 $color="sky"
                 to={user ? getAuctionListingPath(auction.id) : 'app/login'}
               >
-                <Product style={{backgroundColor:"white"}}>
+                <Product style={{ backgroundColor: 'white' }}>
                   <Image>
                     <img src={'/app/assets/auction/' + auction.prodType + '.png'} />
                   </Image>
@@ -146,7 +146,7 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
   const user = useContext(UserContext)
   const { loading, data, refetch } = useQuery<FetchAuctionListing, FetchAuctionListingVariables>(fetchAuctionListing, {
     variables: { auctionId },
-    fetchPolicy: "network-only",
+    fetchPolicy: 'network-only',
   })
 
   function doPlaceBid(val: string) {
@@ -194,7 +194,7 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
 
   function calculateCountDown(endTime: Date) {
     const curTime = new Date()
-    var seconds = (endTime.getTime() - curTime.getTime()) / 1000
+    let seconds = (endTime.getTime() - curTime.getTime()) / 1000
     if (seconds <= 0) {
       setAucState('Ended')
       setConfirmAuc(true)
@@ -257,11 +257,10 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
       )
     }
     return (
-      <div style={{marginLeft:'135px' }} className="flex flex-column mw6">
-        <Image style={{marginLeft: "155px"}}>
-          <img src={'/app/assets/auction/' + data.auctionListing.title + '.png'} />
+      <div style={{ marginLeft: '135px' }} className="flex flex-column mw6">
+        <Image style={{ marginLeft: '155px' }}>
+          <img src={'/app/assets/auction/' + data.auctionListing.prodType + '.png'} />
         </Image>
-
         <Hero>
           <H1>{data.auctionListing.title}</H1>
           <br />
