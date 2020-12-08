@@ -34,12 +34,12 @@ export const graphqlRoot: Resolvers<Context> = {
     surveys: () => Survey.find(),
     auctions: async (_, { cursor = 0 }) => {
       const limit = 15
-
+      console.log(cursor)
       const auctions = await Auction.findAndCount({
         order: { id: 'ASC' },
-        skip: 1,
+
         take: limit + 1,
-        where: { timeCreated: MoreThan(cursor) },
+        where: { id: MoreThan(cursor) },
       })
 
       const auctionReturn = auctions[0].slice(0, -1)
