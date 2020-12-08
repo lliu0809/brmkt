@@ -87,49 +87,49 @@ export const graphqlRoot: Resolvers<Context> = {
       return survey
     },
 
-    newEmail: async (_, { id, email }, ctx) => {
-      const user  = await User.findOne({ where: { id: id } })
-      if(!user)
-      {
-       return false
-      }
-      user.email = email
-      await user.save()
-      return true
-    },
+    // newEmail: async (_, { id, email }, ctx) => {
+    //   const user  = await User.findOne({ where: { id: id } })
+    //   if(!user)
+    //   {
+    //    return false
+    //   }
+    //   user.email = email
+    //   await user.save()
+    //   return true
+    // },
 
-    newName: async (_, { id, name }, ctx) => {
-      const user  = await User.findOne({ where: { id: id } })
-      if(!user)
-      {
-       return false
-      }
-      user.name = name
-      await user.save()
-      return true
-    },
+    // newName: async (_, { id, name }, ctx) => {
+    //   const user  = await User.findOne({ where: { id: id } })
+    //   if(!user)
+    //   {
+    //    return false
+    //   }
+    //   user.name = name
+    //   await user.save()
+    //   return true
+    // },
 
-    newPassword: async (_, { id, password }, ctx) => {
-      const user  = await User.findOne({ where: { id: id } })
-      if(!user)
-      {
-       return false
-      }
-      user.password = password
-      await user.save()
-      return true
-    },
+    // newPassword: async (_, { id, password }, ctx) => {
+    //   const user  = await User.findOne({ where: { id: id } })
+    //   if(!user)
+    //   {
+    //    return false
+    //   }
+    //   user.password = password
+    //   await user.save()
+    //   return true
+    // },
 
-    newcardNumber: async (_, { id, cardNumber }, ctx) => {
-      const user  = await User.findOne({ where: { id: id } })
-      if(!user)
-      {
-       return false
-      }
-      user.cardNumber = cardNumber
-      await user.save()
-      return true
-    },
+    // newcardNumber: async (_, { id, cardNumber }, ctx) => {
+    //   const user  = await User.findOne({ where: { id: id } })
+    //   if(!user)
+    //   {
+    //    return false
+    //   }
+    //   user.cardNumber = cardNumber
+    //   await user.save()
+    //   return true
+    // },
 
     placeBid: async (_, { id, bidderId, bid }, ctx) => {
       const currentAuction = await Auction.findOne({ where: { id: id } })
@@ -192,10 +192,11 @@ export const graphqlRoot: Resolvers<Context> = {
 
       return true;
     },
+
     createNewPurchase: async (_, { total, auctionId }, ctx) => {
       const newPurchase = new Purchase()
       newPurchase.total = total
-      const id = auctionId
+      //const id = auctionId
       const curAuction = await Auction.findOne({ where: { id: auctionId } })
       if (curAuction) {
         newPurchase.itemSold = curAuction

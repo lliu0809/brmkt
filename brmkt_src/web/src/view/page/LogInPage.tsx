@@ -13,7 +13,7 @@ import { AppRouteParams, getPath, Route } from '../nav/route'
 import { handleError } from '../toast/error'
 import { toastErr } from '../toast/toast'
 import { Page } from './Page'
-import { newcardNumber, newEmail, newName, newPassword } from './queries/mutateProfile'
+// import { newcardNumber, newEmail, newName, newPassword } from './queries/mutateProfile'
 
 interface LogInPageProps extends RouteComponentProps, AppRouteParams {}
 
@@ -124,25 +124,25 @@ function Logout() {
         </script> */}
 
         <H3>Name: {useContext(UserContext).user?.name}</H3>
-        <Input placeholder="Email" $onSubmit={editName}/>
+        {/* <Input placeholder="Email" $onSubmit={editName}/> */}
         <Spacer $h5 />
 
 
         <H3>Email: {useContext(UserContext).user?.email}</H3>
-        <Input placeholder="Email" $onSubmit={editEmail}/>
+        {/* <Input placeholder="Email" $onSubmit={editEmail}/> */}
         <Spacer $h5 />
 
         <H3>Password: {useContext(UserContext).user?.password}</H3>
-        <Input placeholder="Password" $onSubmit={editPassword}/>
+        {/* <Input placeholder="Password" $onSubmit={editPassword}/> */}
         <Spacer $h5 />
 
         <H3>Card Number: {useContext(UserContext).user?.cardNumber}</H3>
-        <Input placeholder="ID" $onSubmit={editCard}/>
+        {/* <Input placeholder="ID" $onSubmit={editCard}/> */}
         {/* <h3>ID: {useContext(UserContext).user?.id}</h3>
         <h3>User Type: {useContext(UserContext).user?.userType}</h3> */}
 
         <Spacer $h5 />
-        <Btn style={{backgroundColor:"#FFD100", color:"black"}} onClick={refresh}>Edit profile</Btn>
+        {/* <Btn style={{backgroundColor:"#FFD100", color:"black"}} onClick={refresh}>Edit profile</Btn> */}
         <Spacer $h5 />
 
        </div>
@@ -213,45 +213,45 @@ function validate(
   return validEmail && validPassword
 }
 
-function refresh() {
-  window.location.reload()
-}
+// function refresh() {
+//   window.location.reload()
+// }
 
 
-function editName(name: string) {
-  const user = useContext(UserContext)
-  if (user.user)
-  {
-    newName(user.user?.id,name)
-    window.location.reload()
-  }
-}
+// function editName(name: string) {
+//   const user = useContext(UserContext)
+//   if (user.user)
+//   {
+//     newName(user.user?.id,name)
+//     window.location.reload()
+//   }
+// }
 
-function editEmail(email: string) {
-  const user = useContext(UserContext)
-  if (user.user)
-  {
-    newEmail(user.user?.id,email)
-    window.location.reload()
-  }
-}
+// function editEmail(email: string) {
+//   const user = useContext(UserContext)
+//   if (user.user)
+//   {
+//     newEmail(user.user?.id,email)
+//     window.location.reload()
+//   }
+// }
 
-function editPassword(password: string) {
-  const user = useContext(UserContext)
-  if (user.user)
-  {
-    newPassword(user.user?.id,password)
-    window.location.reload()
-  }
-}
+// function editPassword(password: string) {
+//   const user = useContext(UserContext)
+//   if (user.user)
+//   {
+//     newPassword(user.user?.id,password)
+//     window.location.reload()
+//   }
+// }
 
-function editCard(cardNumber: string) {
-  const user = useContext(UserContext)
-  if (user.user)
-  {
-    newcardNumber(user.user?.id,cardNumber)
-    window.location.reload()
-  }
-}
+// function editCard(cardNumber: string) {
+//   const user = useContext(UserContext)
+//   if (user.user)
+//   {
+//     newcardNumber(user.user?.id,cardNumber)
+//     window.location.reload()
+//   }
+// }
 
 

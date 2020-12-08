@@ -55,30 +55,6 @@ export interface Mutation {
   createNewPurchase: Scalars['Boolean']
   answerSurvey: Scalars['Boolean']
   nextSurveyQuestion?: Maybe<Survey>
-  newEmail: Scalars['Boolean']
-  newName: Scalars['Boolean']
-  newPassword: Scalars['Boolean']
-  newcardNumber: Scalars['Boolean']
-}
-
-export interface MutationNewEmailArgs {
-  id: Scalars['Int']
-  email: Scalars['String']
-}
-
-export interface MutationNewNameArgs {
-  id: Scalars['Int']
-  name: Scalars['String']
-}
-
-export interface MutationNewPasswordArgs {
-  id: Scalars['Int']
-  password: Scalars['String']
-}
-
-export interface MutationNewCardNumberArgs {
-  id: Scalars['Int']
-  cardNumber: Scalars['String']
 }
 
 export interface MutationPlaceBidArgs {
@@ -379,15 +355,9 @@ export type MutationResolvers<
     ResolversTypes['Boolean'],
     ParentType,
     ContextType,
-    RequireFields<MutationPlaceBidArgs, 'id' | 'bidderId' | 'bid'>>
-
-  newEmail?: Resolver< ResolversTypes['Boolean'],ParentType,ContextType,RequireFields<MutationNewEmailArgs, 'id'|'email'>>
-  newName?: Resolver< ResolversTypes['Boolean'],ParentType,ContextType,RequireFields<MutationNewNameArgs, 'id'|'name'>>
-  newPassword?: Resolver< ResolversTypes['Boolean'],ParentType,ContextType,RequireFields<MutationNewPasswordArgs, 'id'|'password'>>
-  newcardNumber?: Resolver< ResolversTypes['Boolean'],ParentType,ContextType,RequireFields<MutationNewCardNumberArgs, 'id'|'cardNumber'>>
-
-  purchase?: Resolver< ResolversTypes['Boolean'],ParentType,ContextType,RequireFields<MutationPurchaseArgs, 'id'>>
-
+    RequireFields<MutationPlaceBidArgs, 'id' | 'bidderId' | 'bid'>
+  >
+  purchase?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationPurchaseArgs, 'id'>>
   createNewListing?: Resolver<
     ResolversTypes['Boolean'],
     ParentType,
