@@ -33,7 +33,7 @@ export const graphqlRoot: Resolvers<Context> = {
     surveys: () => Survey.find(),
     auctions: async () => {
       const auctions = await Auction.find()
-      for(const auction of auctions) {
+      for (const auction of auctions) {
         const auctionEndDate = new Date(auction.timeCreated.getTime() + auction.auctionTime * 1000)
         auction.auctionStartTime = auctionEndDate.toString()
         await auction.save()
@@ -88,10 +88,9 @@ export const graphqlRoot: Resolvers<Context> = {
     },
 
     newEmail: async (_, { id, email }, ctx) => {
-      const user  = await User.findOne({ where: { id: id } })
-      if(!user)
-      {
-       return false
+      const user = await User.findOne({ where: { id: id } })
+      if (!user) {
+        return false
       }
       user.email = email
       await user.save()
@@ -99,10 +98,9 @@ export const graphqlRoot: Resolvers<Context> = {
     },
 
     newName: async (_, { id, name }, ctx) => {
-      const user  = await User.findOne({ where: { id: id } })
-      if(!user)
-      {
-       return false
+      const user = await User.findOne({ where: { id: id } })
+      if (!user) {
+        return false
       }
       user.name = name
       await user.save()
@@ -110,10 +108,9 @@ export const graphqlRoot: Resolvers<Context> = {
     },
 
     newPassword: async (_, { id, password }, ctx) => {
-      const user  = await User.findOne({ where: { id: id } })
-      if(!user)
-      {
-       return false
+      const user = await User.findOne({ where: { id: id } })
+      if (!user) {
+        return false
       }
       user.password = password
       await user.save()
@@ -121,10 +118,9 @@ export const graphqlRoot: Resolvers<Context> = {
     },
 
     newcardNumber: async (_, { id, cardNumber }, ctx) => {
-      const user  = await User.findOne({ where: { id: id } })
-      if(!user)
-      {
-       return false
+      const user = await User.findOne({ where: { id: id } })
+      if (!user) {
+        return false
       }
       user.cardNumber = cardNumber
       await user.save()
@@ -144,15 +140,14 @@ export const graphqlRoot: Resolvers<Context> = {
       currentAuction.price = bid
       await currentAuction.save()
 
-      const activeBid = await ActiveBid.findOne({ where: { bidderId: bidderId }})
+      const activeBid = await ActiveBid.findOne({ where: { bidderId: bidderId } })
       if (!activeBid) {
         const newActiveBid = new ActiveBid()
         newActiveBid.bid = bid
         newActiveBid.bidderId = bidderId
         newActiveBid.auction = currentAuction
         await newActiveBid.save()
-      }
-      else {
+      } else {
         activeBid.bid = bid
         await activeBid.save()
       }
@@ -185,17 +180,17 @@ export const graphqlRoot: Resolvers<Context> = {
         .where('auction.id = :id', { id })
         .getMany()
 
-      for(const bidder of allActiveBidders) {
+      for (const bidder of allActiveBidders) {
         await bidder.remove()
       }
       await currentAuction.remove()
 
-      return true;
+      return true
     },
     createNewPurchase: async (_, { total, auctionId }, ctx) => {
       const newPurchase = new Purchase()
       newPurchase.total = total
-      const id = auctionId
+      //cconst id = auctionId
       const curAuction = await Auction.findOne({ where: { id: auctionId } })
       if (curAuction) {
         newPurchase.itemSold = curAuction

@@ -27,6 +27,7 @@ import { getSchema, graphqlRoot, pubsub } from './graphql/api'
 import { ConnectionManager } from './graphql/ConnectionManager'
 import { UserType } from './graphql/schema.types'
 import { expressLambdaProxy } from './lambda/handler'
+import { LoadingCache } from './loadingCache'
 import { renderApp } from './render'
 
 const server = new GraphQLServer({
@@ -259,17 +260,22 @@ server.express.post('/graphqlsubscription/disconnect', (req, res) => {
   res.status(200).send('')
 })
 
+// cache for user sessions
+const userSessionCache = new LoadingCache((authToken: string) => {
+  return Session.findOne({ where: { authToken }, relations: ['user'] }).then(session => session?.user)
+})
+
 server.express.post(
   '/graphql',
   asyncRoute(async (req, res, next) => {
     const authToken = req.cookies.authToken || req.header('x-authtoken')
-    if (authToken) {
-      const session = await Session.findOne({ where: { authToken }, relations: ['user'] })
-      if (session) {
-        const reqAny = req as any
-        reqAny.user = session.user
-      }
+    // get cache
+    const userRes = await userSessionCache.get(authToken)
+    if (userRes) {
+      const reqAny = req as any
+      reqAny.user = userRes
     }
+
     next()
   })
 )
