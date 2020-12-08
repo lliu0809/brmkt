@@ -31,6 +31,7 @@ export function UserActiveBidsPage(props: UserActiveBidsPageProps) {
 function MyActiveBids({ bidderId }: { bidderId: number }) {
   const { loading, data } = useQuery<FetchMyActiveBids, FetchMyActiveBidsVariables>(fetchMyActiveBids, {
     variables: { bidderId },
+    fetchPolicy: "cache-and-network"
   })
 
   if (loading) {

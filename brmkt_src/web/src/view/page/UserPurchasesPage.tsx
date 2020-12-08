@@ -32,6 +32,7 @@ export function UserPurchasesPage(props: UserPurchasesPageProps) {
 function MyPurchases({ buyerId }: { buyerId: number }) {
   const { loading, data } = useQuery<FetchMyPurchases, FetchMyPurchasesVariables>(fetchMyPurchases, {
     variables: { buyerId },
+    fetchPolicy: "cache-first",
   })
 
   if (loading) {

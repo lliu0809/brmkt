@@ -16,7 +16,7 @@ interface ProfilePageProps extends RouteComponentProps, AppRouteParams {}
 
 export function Profile(props: ProfilePageProps) {
   //const [userQuery, setUserQuery] = useState('')
-  const { loading, data } = useQuery<FetchAuctions>(fetchAuctions)
+  const { loading, data } = useQuery<FetchAuctions>(fetchAuctions, {fetchPolicy: "cache-only"})
 
   if (loading) {
     return <div>loading...</div>

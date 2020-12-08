@@ -34,6 +34,7 @@ export function UserListingsPage(props: UserListingsPageProps) {
 function MyListings({ sellerId }: { sellerId: number }) {
   const { loading, data, refetch } = useQuery<FetchMyListings, FetchMyListingsVariables>(fetchMyListings, {
     variables: { sellerId },
+    fetchPolicy: "cache-and-network",
   })
 
   function refreshPage() {

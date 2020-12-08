@@ -151,6 +151,7 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
   const user = useContext(UserContext)
   const { loading, data } = useQuery<FetchAuctionListing, FetchAuctionListingVariables>(fetchAuctionListing, {
     variables: { auctionId },
+    fetchPolicy: "network-only",
   })
 
   function doPlaceBid(val: string) {
