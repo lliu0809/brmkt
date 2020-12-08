@@ -12,6 +12,7 @@ import cors from 'cors'
 import { json, raw, RequestHandler, static as expressStatic } from 'express'
 import { getOperationAST, parse as parseGraphql, specifiedRules, subscribe as gqlSubscribe, validate } from 'graphql'
 import { GraphQLServer } from 'graphql-yoga'
+import Redis from 'ioredis'
 import { forAwaitEach, isAsyncIterable } from 'iterall'
 import path from 'path'
 import 'reflect-metadata'
@@ -27,7 +28,6 @@ import { getSchema, graphqlRoot, pubsub } from './graphql/api'
 import { ConnectionManager } from './graphql/ConnectionManager'
 import { UserType } from './graphql/schema.types'
 import { expressLambdaProxy } from './lambda/handler'
-import { LoadingCache } from './loadingCache'
 import { renderApp } from './render'
 
 const server = new GraphQLServer({
@@ -260,21 +260,42 @@ server.express.post('/graphqlsubscription/disconnect', (req, res) => {
   res.status(200).send('')
 })
 
-// cache for user sessions
+// in-memory cache for user sessions
+/*
 const userSessionCache = new LoadingCache((authToken: string) => {
   return Session.findOne({ where: { authToken }, relations: ['user'] }).then(session => session?.user)
 })
+*/
+
+const redis = new Redis()
 
 server.express.post(
   '/graphql',
   asyncRoute(async (req, res, next) => {
     const authToken = req.cookies.authToken || req.header('x-authtoken')
-    // get cache
+
+    // server-side cache with redis
+    const redisRes = await redis.get(authToken)
+    if (redisRes) {
+      const reqAny = req as any
+      reqAny.user = redisRes
+    } else {
+      const session = await Session.findOne({ where: { authToken }, relations: ['user'] })
+      if (session) {
+        await redis.set(authToken, JSON.stringify(session.user))
+        const reqAny = req as any
+        reqAny.user = session.user
+      }
+    }
+
+    // get in-momory cache
+    /*
     const userRes = await userSessionCache.get(authToken)
     if (userRes) {
       const reqAny = req as any
       reqAny.user = userRes
     }
+     */
 
     next()
   })
