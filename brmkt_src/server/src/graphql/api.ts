@@ -34,7 +34,7 @@ export const graphqlRoot: Resolvers<Context> = {
     surveys: () => Survey.find(),
     auctions: async (_, { cursor = 0 }) => {
       const limit = 15
-      console.log(cursor)
+      //console.log(cursor)
       const auctions = await Auction.findAndCount({
         order: { id: 'ASC' },
 
