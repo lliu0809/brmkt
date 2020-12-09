@@ -41,10 +41,10 @@ export const options = {
 
 export default function () {
   //load test homepage
-  http.get('http://localhost:3000')
+  //http.get('http://localhost:3000')
 
   //load test createUser
-  /*const resp = http.post(
+  const resp = http.post(
     'http://localhost:3000/auth/createUser',
     '{"email": "email1@gmail.com","name": "my friend","userType": "USER","address": "address","cardNumber": "1234","password": "password","id": 19,"timeCreated": {},"timeUpdated": {},"userType":"USER"}',
     {
@@ -52,8 +52,9 @@ export default function () {
         'Content-Type': 'application/json',
       },
     }
-  )*/
+  )
 
+  http.get('http://localhost:3000/app/login')
 
   //load test login
   /*const resp2 = http.post('http://localhost:3000/auth/login', '{"email": "email1@gmail.com","password": "password"}', {
