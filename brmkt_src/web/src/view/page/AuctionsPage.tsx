@@ -348,16 +348,6 @@ export function AuctionList() {
               variables: {
                 cursor: startCursor,
               },
-              updateQuery: (prev, { fetchMoreResult }) => {
-                if (!fetchMoreResult) return prev
-                // return Object.assign({}, prev, {
-                //   auctions: [...prev.auctions.auctions, ...fetchMoreResult.auctions.auctions],
-                // })
-                return {
-                  ...prev,
-                  messages: [...prev.auctions.auctions, ...fetchMoreResult.auctions.auctions],
-                }
-              },
             })
           }}
         >
