@@ -18,7 +18,7 @@ export interface Query {
   surveys: Array<Survey>
   survey?: Maybe<Survey>
   user: User
-  auctions: PaginatedAuction
+  auctions: Array<Auction>
   myListings: Array<Auction>
   myPurchases: Array<Purchase>
   myActiveBids: Array<ActiveBid>
@@ -28,10 +28,6 @@ export interface Query {
 
 export interface QuerySurveyArgs {
   surveyId: Scalars['Int']
-}
-
-export interface QueryAuctionsArgs {
-  cursor?: Maybe<Scalars['Int']>
 }
 
 export interface QueryMyListingsArgs {
@@ -166,13 +162,6 @@ export enum ItemStatus {
   Sold = 'SOLD',
 }
 
-export interface PaginatedAuction {
-  __typename?: 'PaginatedAuction'
-  auctions: Array<Auction>
-  cursor: Scalars['Int']
-  hasMore: Scalars['Boolean']
-}
-
 export interface Auction {
   __typename?: 'Auction'
   id: Scalars['Int']
@@ -293,7 +282,6 @@ export type ResolversTypes = {
   User: ResolverTypeWrapper<User>
   ProdType: ProdType
   ItemStatus: ItemStatus
-  PaginatedAuction: ResolverTypeWrapper<PaginatedAuction>
   Auction: ResolverTypeWrapper<Auction>
   ActiveBid: ResolverTypeWrapper<ActiveBid>
   Purchase: ResolverTypeWrapper<Purchase>
@@ -313,7 +301,6 @@ export type ResolversParentTypes = {
   SurveyAnswer: SurveyAnswer
   SurveyInput: SurveyInput
   User: User
-  PaginatedAuction: PaginatedAuction
   Auction: Auction
   ActiveBid: ActiveBid
   Purchase: Purchase
@@ -332,12 +319,7 @@ export type QueryResolvers<
     RequireFields<QuerySurveyArgs, 'surveyId'>
   >
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>
-  auctions?: Resolver<
-    ResolversTypes['PaginatedAuction'],
-    ParentType,
-    ContextType,
-    RequireFields<QueryAuctionsArgs, never>
-  >
+  auctions?: Resolver<Array<ResolversTypes['Auction']>, ParentType, ContextType>
   myListings?: Resolver<
     Array<ResolversTypes['Auction']>,
     ParentType,
@@ -473,16 +455,6 @@ export type UserResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
-export type PaginatedAuctionResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['PaginatedAuction'] = ResolversParentTypes['PaginatedAuction']
-> = {
-  auctions?: Resolver<Array<ResolversTypes['Auction']>, ParentType, ContextType>
-  cursor?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  hasMore?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>
-}
-
 export type AuctionResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Auction'] = ResolversParentTypes['Auction']
@@ -528,7 +500,6 @@ export type Resolvers<ContextType = any> = {
   SurveyQuestion?: SurveyQuestionResolvers<ContextType>
   SurveyAnswer?: SurveyAnswerResolvers<ContextType>
   User?: UserResolvers<ContextType>
-  PaginatedAuction?: PaginatedAuctionResolvers<ContextType>
   Auction?: AuctionResolvers<ContextType>
   ActiveBid?: ActiveBidResolvers<ContextType>
   Purchase?: PurchaseResolvers<ContextType>
