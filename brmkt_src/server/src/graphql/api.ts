@@ -1,3 +1,4 @@
+import DataLoader from 'dataloader'
 import { readFileSync } from 'fs'
 import { PubSub } from 'graphql-yoga'
 import path from 'path'
@@ -11,8 +12,9 @@ import { SurveyAnswer } from '../entities/SurveyAnswer'
 import { SurveyQuestion } from '../entities/SurveyQuestion'
 import { User } from '../entities/User'
 import { ItemStatus, Resolvers } from './schema.types'
-
 export const pubsub = new PubSub()
+
+//const DataLoader = require("dataloader")
 
 export function getSchema() {
   const schema = readFileSync(path.join(__dirname, 'schema.graphql'))
@@ -23,6 +25,7 @@ interface Context {
   user: User | null
   request: Request
   response: Response
+  BatchAuction: DataLoader<number, Auction>
   pubsub: PubSub
 }
 
@@ -41,10 +44,15 @@ export const graphqlRoot: Resolvers<Context> = {
 
       return auctions
     },
-    auctionListing: async (_, { auctionId }) => {
-      const auction = await Auction.findOneOrFail({ where: { id: auctionId } })
-      return auction
-    },
+
+    auctionListing: async (_, { auctionId },{BatchAuction}) => check(await BatchAuction.load(auctionId)),
+
+    // auctionListing: async (_, { auctionId }) => {
+    //   const auction = await Auction.findOneOrFail({ where: { id: auctionId } })
+    //   return auction
+    // },
+
+
     myListings: async (_, { sellerId }) => {
       const allMyListings = await Auction.find({ where: { sellerId: sellerId } })
       return allMyListings
@@ -216,4 +224,5 @@ export const graphqlRoot: Resolvers<Context> = {
       resolve: (payload: any) => payload,
     },
   },
+
 }
