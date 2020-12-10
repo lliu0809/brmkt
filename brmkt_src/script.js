@@ -54,7 +54,6 @@ export default function () {
     }
   )
 
-  http.get('http://localhost:3000/app/login')
 
   //load test login
   /*const resp2 = http.post('http://localhost:3000/auth/login', '{"email": "email1@gmail.com","password": "password"}', {
@@ -63,32 +62,32 @@ export default function () {
     },
   })*/
   //load test fetchAuctions
-  /*const resp1 = http.post(
-    'http://localhost:3000/graphql',
-    '{"operationName":"FetchAuctionListing","variables":{"auctionId":3339},"query":"query FetchAuctionListing($auctionId: Int!) {\\n  auctionListing(auctionId: $auctionId) {\\n    ...AuctionTopBid\\n    __typename\\n  }\\n}\\n\\nfragment Auction on Auction {\\n  id\\n  title\\n  price\\n  description\\n  prodType\\n  sellerId\\n  currentHighestId\\n  auctionTime\\n  status\\n  __typename\\n}\\n\\nfragment AuctionTopBid on AuctionTopBid {\\n  topBid\\n  auctionStartTime\\n  auction {\\n    ...Auction\\n    __typename\\n  }\\n  __typename\\n}\\n"}',
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  )*/
+  // const resp1 = http.post(
+  //   'http://localhost:3000/graphql',
+  //   '{"operationName":"FetchAuctionListing","variables":{"auctionId":10},"query":"query FetchAuctionListing($auctionId: Int!) {\\n  auctionListing(auctionId: $auctionId) {\\n    ...AuctionTopBid\\n    __typename\\n  }\\n}\\n\\nfragment Auction on Auction {\\n  id\\n  title\\n  price\\n  description\\n  prodType\\n  sellerId\\n  currentHighestId\\n  auctionTime\\n  status\\n  __typename\\n}\\n\\nfragment AuctionTopBid on AuctionTopBid {\\n  topBid\\n  auctionStartTime\\n  auction {\\n    ...Auction\\n    __typename\\n  }\\n  __typename\\n}\\n"}',
+  //   {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   }
+  // )
   //load test logout
   //const resp3 = http.post('http://localhost:3000/auth/logout')
 
   //count++
   //load test place bids
-  /*const resp4 = http.post(
-    'http://localhost:3000/graphql',
-    `{"operationName":"PlaceBid","variables":{"id":3339,"bidderId":4,"bid":${__VU+__ITER}},"query":"mutation PlaceBid($id: Int!, $bidderId: Int!, $bid: Float!) {\\n  placeBid(id: $id, bidderId: $bidderId, bid: $bid)\\n}\\n"}`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  )*/
+  // const resp4 = http.post(
+  //   'http://localhost:3000/graphql',
+  //   `{"operationName":"PlaceBid","variables":{"id":1,"bidderId":4,"bid":${__VU+__ITER}},"query":"mutation PlaceBid($id: Int!, $bidderId: Int!, $bid: Float!) {\\n  placeBid(id: $id, bidderId: $bidderId, bid: $bid)\\n}\\n"}`,
+  //   {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   }
+  // )
 
   //load test createListing
-  /*const resp5 = http.post(
+  const resp5 = http.post(
     'http://localhost:3000/graphql',
     '{"operationName":"CreateNewListing","variables":{"title":"USED car","price":10000000,"description":"USED Maserati","prodType":"OTHER","sellerId":2,"auctionTime":36000},"query":"mutation CreateNewListing($title: String!, $price: Float!, $description: String!, $prodType: ProdType!, $sellerId: Int!, $auctionTime: Int!) {\\n  createNewListing(title: $title, price: $price, description: $description, prodType: $prodType, sellerId: $sellerId, auctionTime: $auctionTime)\\n}\\n"}',
     {
@@ -96,7 +95,7 @@ export default function () {
         'Content-Type': 'application/json',
       },
     }
-  )*/
+  )
   /*const resp6 = http.post(
     'http://localhost:3000/graphql',
     `{"operationName":"DeleteListing","variables":{"id":${__VU+__ITER}},"query":"mutation DeleteListing($id: Int!) {\\n  deleteListing(id: $id)\\n}\\n"}`,
