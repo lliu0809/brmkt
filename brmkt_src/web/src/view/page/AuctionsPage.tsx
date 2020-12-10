@@ -336,14 +336,7 @@ export function Auctions() {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function AuctionList() {
   const [auctionQuery, setAuctionQuery] = useState(' ')
-  const [cursorId, setCursorId] = useState(0)
-  const { loading, data, fetchMore } = useQuery<FetchAuctions, FetchAuctionsVariables>(fetchAuctions, {
-    variables: {
-      cursor: cursorId,
-    },
-    fetchPolicy: 'cache-and-network',
-    //notifyOnNetworkStatusChange: true,
-  })
+  const { loading, data, fetchMore } = useQuery<FetchAuctions, FetchAuctionsVariables>(fetchAuctions, {})
   const { user } = useContext(UserContext)
 
   function loadMoreButton(loadMore: boolean, startCursor: number) {
@@ -355,17 +348,11 @@ export function AuctionList() {
               variables: {
                 cursor: startCursor,
               },
-
               updateQuery: (prev, { fetchMoreResult }) => {
-                if (!fetchMoreResult) {
-                  console.log('fetchMoreResult is false')
-                  return prev
-                }
+                if (!fetchMoreResult) return prev
                 // return Object.assign({}, prev, {
                 //   auctions: [...prev.auctions.auctions, ...fetchMoreResult.auctions.auctions],
                 // })
-                console.log([...prev.auctions.auctions])
-                setCursorId(startCursor)
                 return {
                   ...prev,
                   messages: [...prev.auctions.auctions, ...fetchMoreResult.auctions.auctions],
