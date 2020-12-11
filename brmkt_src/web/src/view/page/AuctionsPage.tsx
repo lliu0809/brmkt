@@ -309,7 +309,8 @@ export function AuctionListing({ auctionId }: { auctionId: number }) {
     return (
       <div style={{ marginLeft: '135px' }} className="flex flex-column mw6">
         <Image style={{ marginLeft: '155px' }}>
-          <img src={'/app/assets/auction/' + data.auctionListing.title + '.png'} />
+          {/*<img src={'/app/assets/auction/' + data.auctionListing.title + '.png'} />*/}
+          <img src={'/app/assets/auction/' + data.auctionListing.prodType + '.png'} />
         </Image>
         <Hero>
           <H1>{data.auctionListing.title}</H1>

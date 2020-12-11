@@ -41,7 +41,7 @@ export const options = {
 
 export default function () {
   //load test homepage
-  http.get('https://brmkt.cloudcity.computer')
+  http.get('http://localhost:3000')
 
   //load test createUser
   /*const resp = http.post(
