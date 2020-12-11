@@ -10,18 +10,44 @@ export enum Route {
   PROJECTS = 'app/projects',
   PLAYGROUND = 'app/playground',
   PLAYGROUND_APP = 'app/playground/:app',
-}
+  SIGNUP = 'app/signup',
 
+  AUCTIONS = 'app/auction',
+  AUCTION_LISTING = 'app/auction/listing',
+  SELL = "app/SellProduct",
+  LOGIN = 'app/login',
+  ELECTRONICS = 'app/electronics',
+  BEARWEAR = 'app/bearwear',
+  TEXTBOOK = 'app/textbook',
+  DORMSUPPLY = 'app/dormsupply',
+  OTHER = 'app/other',
+
+  USER_LISTINGS = 'app/user/mylistings',
+  USER_PURCHASES = 'app/user/mypurchases',
+  USER_ACTIVE_BIDS = 'app/user/myactivebids',
+  USER_CREATE_LISTING = 'app/user/createlisting',
+  PROFILE = "app/login/profile",
+}
 
 export enum PlaygroundApp {
   SURVEYS = 'surveys',
   LOGIN = 'login',
-  PROFILE = "profile"
+  PROFILE = 'profile',
+  SIGNUP = 'signup',
+}
+
+export function getAuctionListingPath(auctionId?: number) {
+  const path = getPath(Route.AUCTION_LISTING)
+  return path + (auctionId ? `?auctionId=${auctionId}` : '')
 }
 
 export function getSurveyPath(surveyId?: number) {
   const path = getPath(Route.PLAYGROUND_APP, { app: PlaygroundApp.SURVEYS })
   return path + (surveyId ? `?surveyId=${surveyId}` : '')
+}
+
+export function getSignupPath() {
+  return getPath(Route.PLAYGROUND_APP, { app: PlaygroundApp.SIGNUP })
 }
 
 export function getLoginPath() {

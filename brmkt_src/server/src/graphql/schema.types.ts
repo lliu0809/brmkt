@@ -12,10 +12,81 @@ export interface Scalars {
   Float: number
 }
 
+export interface Query {
+  __typename?: 'Query'
+  self?: Maybe<User>
+  surveys: Array<Survey>
+  survey?: Maybe<Survey>
+  user: User
+  auctions: PaginatedAuction
+  myListings: Array<Auction>
+  myPurchases: Array<Purchase>
+  myActiveBids: Array<ActiveBid>
+  justPurchased: Purchase
+  auctionListing: Auction
+}
+
+export interface QuerySurveyArgs {
+  surveyId: Scalars['Int']
+}
+
+export interface QueryAuctionsArgs {
+  cursor?: Maybe<Scalars['Int']>
+}
+
+export interface QueryMyListingsArgs {
+  sellerId: Scalars['Int']
+}
+
+export interface QueryMyPurchasesArgs {
+  buyerId: Scalars['Int']
+}
+
+export interface QueryMyActiveBidsArgs {
+  bidderId: Scalars['Int']
+}
+
+export interface QueryAuctionListingArgs {
+  auctionId: Scalars['Int']
+}
+
 export interface Mutation {
   __typename?: 'Mutation'
+  placeBid: Scalars['Boolean']
+  purchase: Scalars['Boolean']
+  createNewListing: Scalars['Boolean']
+  deleteListing: Scalars['Boolean']
+  createNewPurchase: Scalars['Boolean']
   answerSurvey: Scalars['Boolean']
   nextSurveyQuestion?: Maybe<Survey>
+}
+
+export interface MutationPlaceBidArgs {
+  id: Scalars['Int']
+  bidderId: Scalars['Int']
+  bid: Scalars['Float']
+}
+
+export interface MutationPurchaseArgs {
+  id: Scalars['Int']
+}
+
+export interface MutationCreateNewListingArgs {
+  title: Scalars['String']
+  price: Scalars['Float']
+  description: Scalars['String']
+  prodType: ProdType
+  sellerId: Scalars['Int']
+  auctionTime: Scalars['Int']
+}
+
+export interface MutationDeleteListingArgs {
+  id: Scalars['Int']
+}
+
+export interface MutationCreateNewPurchaseArgs {
+  total: Scalars['Float']
+  auctionId: Scalars['Int']
 }
 
 export interface MutationAnswerSurveyArgs {
@@ -23,17 +94,6 @@ export interface MutationAnswerSurveyArgs {
 }
 
 export interface MutationNextSurveyQuestionArgs {
-  surveyId: Scalars['Int']
-}
-
-export interface Query {
-  __typename?: 'Query'
-  self?: Maybe<User>
-  surveys: Array<Survey>
-  survey?: Maybe<Survey>
-}
-
-export interface QuerySurveyArgs {
   surveyId: Scalars['Int']
 }
 
@@ -46,6 +106,11 @@ export interface SubscriptionSurveyUpdatesArgs {
   surveyId: Scalars['Int']
 }
 
+export enum UserType {
+  Admin = 'ADMIN',
+  User = 'USER',
+}
+
 export interface Survey {
   __typename?: 'Survey'
   id: Scalars['Int']
@@ -54,6 +119,15 @@ export interface Survey {
   isCompleted: Scalars['Boolean']
   currentQuestion?: Maybe<SurveyQuestion>
   questions: Array<Maybe<SurveyQuestion>>
+}
+
+export interface SurveyQuestion {
+  __typename?: 'SurveyQuestion'
+  id: Scalars['Int']
+  prompt: Scalars['String']
+  choices?: Maybe<Array<Scalars['String']>>
+  answers: Array<SurveyAnswer>
+  survey: Survey
 }
 
 export interface SurveyAnswer {
@@ -68,26 +142,63 @@ export interface SurveyInput {
   answer: Scalars['String']
 }
 
-export interface SurveyQuestion {
-  __typename?: 'SurveyQuestion'
-  id: Scalars['Int']
-  prompt: Scalars['String']
-  choices?: Maybe<Array<Scalars['String']>>
-  answers: Array<SurveyAnswer>
-  survey: Survey
-}
-
 export interface User {
   __typename?: 'User'
   id: Scalars['Int']
   userType: UserType
-  email: Scalars['String']
   name: Scalars['String']
+  address: Scalars['String']
+  email: Scalars['String']
+  password: Scalars['String']
+  cardNumber: Scalars['String']
 }
 
-export enum UserType {
-  Admin = 'ADMIN',
-  User = 'USER',
+export enum ProdType {
+  Bearwear = 'BEARWEAR',
+  Textbooks = 'TEXTBOOKS',
+  Dormsupply = 'DORMSUPPLY',
+  Electronics = 'ELECTRONICS',
+  Other = 'OTHER',
+}
+
+export enum ItemStatus {
+  Notsold = 'NOTSOLD',
+  Sold = 'SOLD',
+}
+
+export interface PaginatedAuction {
+  __typename?: 'PaginatedAuction'
+  auctions: Array<Auction>
+  cursor: Scalars['Int']
+  hasMore: Scalars['Boolean']
+}
+
+export interface Auction {
+  __typename?: 'Auction'
+  id: Scalars['Int']
+  title: Scalars['String']
+  price: Scalars['Float']
+  description: Scalars['String']
+  prodType: ProdType
+  sellerId: Scalars['Int']
+  currentHighestId?: Maybe<Scalars['Int']>
+  auctionTime: Scalars['Int']
+  status: ItemStatus
+  auctionStartTime: Scalars['String']
+}
+
+export interface ActiveBid {
+  __typename?: 'ActiveBid'
+  bid: Scalars['Float']
+  bidderId: Scalars['Int']
+  auction: Auction
+}
+
+export interface Purchase {
+  __typename?: 'Purchase'
+  id: Scalars['Int']
+  total: Scalars['Float']
+  itemSold: Auction
 }
 
 export type ResolverTypeWrapper<T> = Promise<T> | T
@@ -168,50 +279,44 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>
-  User: ResolverTypeWrapper<User>
   Int: ResolverTypeWrapper<Scalars['Int']>
-  UserType: UserType
-  String: ResolverTypeWrapper<Scalars['String']>
-  Survey: ResolverTypeWrapper<Survey>
+  Mutation: ResolverTypeWrapper<{}>
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
+  Float: ResolverTypeWrapper<Scalars['Float']>
+  String: ResolverTypeWrapper<Scalars['String']>
+  Subscription: ResolverTypeWrapper<{}>
+  UserType: UserType
+  Survey: ResolverTypeWrapper<Survey>
   SurveyQuestion: ResolverTypeWrapper<SurveyQuestion>
   SurveyAnswer: ResolverTypeWrapper<SurveyAnswer>
-  Mutation: ResolverTypeWrapper<{}>
   SurveyInput: SurveyInput
-  Subscription: ResolverTypeWrapper<{}>
+  User: ResolverTypeWrapper<User>
+  ProdType: ProdType
+  ItemStatus: ItemStatus
+  PaginatedAuction: ResolverTypeWrapper<PaginatedAuction>
+  Auction: ResolverTypeWrapper<Auction>
+  ActiveBid: ResolverTypeWrapper<ActiveBid>
+  Purchase: ResolverTypeWrapper<Purchase>
 }
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {}
-  User: User
   Int: Scalars['Int']
-  String: Scalars['String']
-  Survey: Survey
+  Mutation: {}
   Boolean: Scalars['Boolean']
+  Float: Scalars['Float']
+  String: Scalars['String']
+  Subscription: {}
+  Survey: Survey
   SurveyQuestion: SurveyQuestion
   SurveyAnswer: SurveyAnswer
-  Mutation: {}
   SurveyInput: SurveyInput
-  Subscription: {}
-}
-
-export type MutationResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
-> = {
-  answerSurvey?: Resolver<
-    ResolversTypes['Boolean'],
-    ParentType,
-    ContextType,
-    RequireFields<MutationAnswerSurveyArgs, 'input'>
-  >
-  nextSurveyQuestion?: Resolver<
-    Maybe<ResolversTypes['Survey']>,
-    ParentType,
-    ContextType,
-    RequireFields<MutationNextSurveyQuestionArgs, 'surveyId'>
-  >
+  User: User
+  PaginatedAuction: PaginatedAuction
+  Auction: Auction
+  ActiveBid: ActiveBid
+  Purchase: Purchase
 }
 
 export type QueryResolvers<
@@ -225,6 +330,84 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QuerySurveyArgs, 'surveyId'>
+  >
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>
+  auctions?: Resolver<
+    ResolversTypes['PaginatedAuction'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryAuctionsArgs, never>
+  >
+  myListings?: Resolver<
+    Array<ResolversTypes['Auction']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryMyListingsArgs, 'sellerId'>
+  >
+  myPurchases?: Resolver<
+    Array<ResolversTypes['Purchase']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryMyPurchasesArgs, 'buyerId'>
+  >
+  myActiveBids?: Resolver<
+    Array<ResolversTypes['ActiveBid']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryMyActiveBidsArgs, 'bidderId'>
+  >
+  justPurchased?: Resolver<ResolversTypes['Purchase'], ParentType, ContextType>
+  auctionListing?: Resolver<
+    ResolversTypes['Auction'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryAuctionListingArgs, 'auctionId'>
+  >
+}
+
+export type MutationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
+> = {
+  placeBid?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationPlaceBidArgs, 'id' | 'bidderId' | 'bid'>
+  >
+  purchase?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationPurchaseArgs, 'id'>>
+  createNewListing?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationCreateNewListingArgs,
+      'title' | 'price' | 'description' | 'prodType' | 'sellerId' | 'auctionTime'
+    >
+  >
+  deleteListing?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteListingArgs, 'id'>
+  >
+  createNewPurchase?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateNewPurchaseArgs, 'total' | 'auctionId'>
+  >
+  answerSurvey?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationAnswerSurveyArgs, 'input'>
+  >
+  nextSurveyQuestion?: Resolver<
+    Maybe<ResolversTypes['Survey']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationNextSurveyQuestionArgs, 'surveyId'>
   >
 }
 
@@ -254,16 +437,6 @@ export type SurveyResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
-export type SurveyAnswerResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['SurveyAnswer'] = ResolversParentTypes['SurveyAnswer']
-> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  answer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  question?: Resolver<ResolversTypes['SurveyQuestion'], ParentType, ContextType>
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>
-}
-
 export type SurveyQuestionResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['SurveyQuestion'] = ResolversParentTypes['SurveyQuestion']
@@ -276,25 +449,89 @@ export type SurveyQuestionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
+export type SurveyAnswerResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['SurveyAnswer'] = ResolversParentTypes['SurveyAnswer']
+> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  answer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  question?: Resolver<ResolversTypes['SurveyQuestion'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
 export type UserResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   userType?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  address?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  cardNumber?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type PaginatedAuctionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PaginatedAuction'] = ResolversParentTypes['PaginatedAuction']
+> = {
+  auctions?: Resolver<Array<ResolversTypes['Auction']>, ParentType, ContextType>
+  cursor?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  hasMore?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type AuctionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Auction'] = ResolversParentTypes['Auction']
+> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  price?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  prodType?: Resolver<ResolversTypes['ProdType'], ParentType, ContextType>
+  sellerId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  currentHighestId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
+  auctionTime?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  status?: Resolver<ResolversTypes['ItemStatus'], ParentType, ContextType>
+  auctionStartTime?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type ActiveBidResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ActiveBid'] = ResolversParentTypes['ActiveBid']
+> = {
+  bid?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
+  bidderId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  auction?: Resolver<ResolversTypes['Auction'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type PurchaseResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Purchase'] = ResolversParentTypes['Purchase']
+> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  total?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
+  itemSold?: Resolver<ResolversTypes['Auction'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
 export type Resolvers<ContextType = any> = {
-  Mutation?: MutationResolvers<ContextType>
   Query?: QueryResolvers<ContextType>
+  Mutation?: MutationResolvers<ContextType>
   Subscription?: SubscriptionResolvers<ContextType>
   Survey?: SurveyResolvers<ContextType>
-  SurveyAnswer?: SurveyAnswerResolvers<ContextType>
   SurveyQuestion?: SurveyQuestionResolvers<ContextType>
+  SurveyAnswer?: SurveyAnswerResolvers<ContextType>
   User?: UserResolvers<ContextType>
+  PaginatedAuction?: PaginatedAuctionResolvers<ContextType>
+  Auction?: AuctionResolvers<ContextType>
+  ActiveBid?: ActiveBidResolvers<ContextType>
+  Purchase?: PurchaseResolvers<ContextType>
 }
 
 /**

@@ -6,12 +6,12 @@ module "mysql" {
 #   source = "./modules/redis"
 # }
 
-resource "aws_ecs_cluster" "bespin" {
-  name = "bespin"
+resource "aws_ecs_cluster" "brmkt" {
+  name = "brmkt"
 }
 
-resource "aws_ecr_repository" "bespin" {
-  name                 = "bespin"
+resource "aws_ecr_repository" "brmkt" {
+  name                 = "brmkt"
   image_tag_mutability = "MUTABLE"
 }
 
@@ -19,14 +19,14 @@ module "webserver" {
   source = "./modules/appserver"
 
   appserver_tag  = "app-web"
-  ecr_repository = aws_ecr_repository.bespin.repository_url
-  ecs_cluster    = aws_ecs_cluster.bespin.id
+  ecr_repository = aws_ecr_repository.brmkt.repository_url
+  ecs_cluster    = aws_ecs_cluster.brmkt.id
 
   mysql_host = module.mysql.host
   # redis_host = module.redis.host
 
   services      = "BACKGROUND"
-  honeycomb_key = <insert key here>
+  honeycomb_key = "b93712f14497199bc5a3918b312c59b5"
 
   # ws_url = module.websocket_api.url
 }
@@ -44,7 +44,7 @@ module "rest_api" {
 # module "lambda" {
 #   source = "./modules/lambda"
 
-#   honeycomb_key = <insert key here>
+#   honeycomb_key = "b93712f14497199bc5a3918b312c59b5"
 
 #   mysql_host = module.mysql.host
 #   redis_host = module.redis.host

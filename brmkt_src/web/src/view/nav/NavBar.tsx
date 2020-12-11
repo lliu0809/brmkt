@@ -1,41 +1,23 @@
 import { useLocation } from '@reach/router'
 import * as React from 'react'
 import { useContext, useEffect } from 'react'
-import ReactDOM from 'react-dom'
-import { useMediaQuery } from 'react-responsive'
-import { breakpoints } from '../../style/breakpoints'
-import { MenuIcon } from '../../style/icons'
 import { style } from '../../style/styled'
 import { UserContext } from '../auth/user'
 import { addToastListener, removeToastListener, Toast, ToastType } from '../toast/toast'
 import { link } from './Link'
-import { getLoginPath, getPath, getProfilePath, getSurveyPath, Route } from './route'
+import { getLoginPath, getPath, getProfilePath, getSignupPath, Route } from './route'
 
 const title = {
-  name: 'CS188',
-  path: getPath(Route.HOME),
+  name: 'BRMKT',
+  path: getPath(Route.AUCTIONS),
   title: true,
 }
 
-const otherTabs = [
-  {
-    name: 'lectures',
-    path: getPath(Route.LECTURES),
-  },
-  {
-    name: 'projects',
-    path: getPath(Route.PROJECTS),
-  },
-  {
-    name: 'playground',
-    path: getPath(Route.PLAYGROUND),
-  },
-]
 
 export function NavBar() {
-  const location = useLocation()
-  const isSmall = useMediaQuery(breakpoints.small)
-  const [showMenu, setShowMenu] = React.useState(false)
+  {
+    /* const location = useLocation() */
+  }
   const [toast, setToast] = React.useState<Toast | null>(null)
 
   function onToast(feedback: Toast) {
@@ -56,26 +38,14 @@ export function NavBar() {
     return void 0
   }, [toast])
 
-  const tabs = isSmall ? [otherTabs.find(t => location.pathname.startsWith(t.path)) || otherTabs[0]] : otherTabs
 
   return (
     <>
       <div className="fixed top-0 left-0 w-100 avenir">
         {/* mount point for NavMenu */}
         <div id="nav-modal" />
-        <Nav>
-          <NavItem {...title} />
 
-          {/* push tab to the right on small screens */}
-          {isSmall && <div style={{ flex: 1 }} />}
-
-          {/* layout additional tabs (possibly hidden for small screens) */}
-          {tabs.map((tab, i) => (
-            <NavItem key={i} {...tab} />
-          ))}
-
-          {isSmall && <NavMenu show={showMenu} onClick={() => setShowMenu(!showMenu)} />}
-        </Nav>
+        <RealNav />
         <SubNav />
       </div>
       {toast && <ToastContainer $isError={toast.type === ToastType.ERROR}>{toast.message}</ToastContainer>}
@@ -83,20 +53,22 @@ export function NavBar() {
   )
 }
 
-function NavMenu(props: { show: boolean; onClick: () => void }) {
+function RealNav() {
+  const { user } = useContext(UserContext)
+
   return (
-    <NavMenuButton onClick={props.onClick}>
-      <MenuIcon />
-      {props.show && (
-        <Modal>
-          <NavMenuModal>
-            {otherTabs.map((tab, i) => (
-              <NavItem key={i} {...tab} />
-            ))}
-          </NavMenuModal>
-        </Modal>
-      )}
-    </NavMenuButton>
+    <div className="fixed top-0 left-0 w-100 avenir">
+      <div id="nav-modal" />
+      <Nav>
+        <NavItem {...title} />
+
+        <NavItem name="Make A Listing" path={user ? getPath(Route.USER_CREATE_LISTING) : getPath(Route.LOGIN)} />
+        {user && <NavItem name={'Hi, ' + user.name} path={getPath(Route.LOGIN)} />}
+        {!user && <NavItem name="Log In" path={getPath(Route.LOGIN)} />}
+        {/* {user && <NavItem name="Edit Profile" path={getPath(Route.PROFILE)} />} */}
+        {!user && <NavItem name="Sign Up" path={getPath(Route.SIGNUP)} />}
+      </Nav>
+    </div>
   )
 }
 
@@ -109,9 +81,9 @@ function SubNav() {
   }
   return (
     <Nav $isSubNav>
-      <NavItem name="surveys" path={getSurveyPath()} />
       <NavItem name={user ? 'logout' : 'login'} path={getLoginPath()} />
-      <NavItem name={user ? 'profile' : ''} path={getProfilePath()} />
+      <NavItem name="profile" path={getProfilePath()} />
+      {!user && <NavItem name="signup" path={getSignupPath()} />}
     </Nav>
   )
 }
@@ -139,21 +111,13 @@ function NavItem(props: { name: string; path: string; title?: boolean }) {
 
 const NavAnchor = style(
   'a',
-  'link near-white hover-bg-black-10 pa2 br2',
+  'link near-white hover-  pa2 br2',
   (p: { $bold?: boolean; $title?: boolean }) => ({
     fontWeight: p.$bold ? 600 : 200,
     fontSize: p.$title ? '1.5em' : undefined,
   })
 )
 const NavLink = link(NavAnchor)
-
-const NavMenuButton = style('div', 'ml3 pa2 hover-bg-black-10 pointer')
-
-const NavMenuModal = style(
-  'div',
-  'avenir f4 fixed flex flex-column items-center top-0 br3 pa3 right-0 bg-black-90 mt5 mr4 mr5-ns',
-  { zIndex: 100 }
-)
 
 const ToastContainer = style<'div', { $isError?: boolean }>(
   'div',
@@ -163,7 +127,3 @@ const ToastContainer = style<'div', { $isError?: boolean }>(
     zIndex: 100,
   })
 )
-
-function Modal(props: { children: React.ReactNode }) {
-  return ReactDOM.createPortal(props.children, document.querySelector('#nav-modal')!)
-}

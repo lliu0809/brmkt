@@ -12,10 +12,282 @@ export interface FetchUserContext_self {
   id: number;
   name: string;
   userType: UserType;
+  email: string;
+  password: string;
+  cardNumber: string;
 }
 
 export interface FetchUserContext {
   self: FetchUserContext_self | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: FetchAuctions
+// ====================================================
+
+export interface FetchAuctions_auctions_auctions {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+  auctionStartTime: string;
+}
+
+export interface FetchAuctions_auctions {
+  __typename: "PaginatedAuction";
+  auctions: FetchAuctions_auctions_auctions[];
+  cursor: number;
+  hasMore: boolean;
+}
+
+export interface FetchAuctions {
+  auctions: FetchAuctions_auctions;
+}
+
+export interface FetchAuctionsVariables {
+  cursor?: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: FetchAuctionListing
+// ====================================================
+
+export interface FetchAuctionListing_auctionListing {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+  auctionStartTime: string;
+}
+
+export interface FetchAuctionListing {
+  auctionListing: FetchAuctionListing_auctionListing;
+}
+
+export interface FetchAuctionListingVariables {
+  auctionId: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: FetchMyListings
+// ====================================================
+
+export interface FetchMyListings_myListings {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+  auctionStartTime: string;
+}
+
+export interface FetchMyListings {
+  myListings: FetchMyListings_myListings[];
+}
+
+export interface FetchMyListingsVariables {
+  sellerId: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: FetchMyActiveBids
+// ====================================================
+
+export interface FetchMyActiveBids_myActiveBids_auction {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+  auctionStartTime: string;
+}
+
+export interface FetchMyActiveBids_myActiveBids {
+  __typename: "ActiveBid";
+  bid: number;
+  bidderId: number;
+  auction: FetchMyActiveBids_myActiveBids_auction;
+}
+
+export interface FetchMyActiveBids {
+  myActiveBids: FetchMyActiveBids_myActiveBids[];
+}
+
+export interface FetchMyActiveBidsVariables {
+  bidderId: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: FetchMyPurchases
+// ====================================================
+
+export interface FetchMyPurchases_myPurchases_itemSold {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+  auctionStartTime: string;
+}
+
+export interface FetchMyPurchases_myPurchases {
+  __typename: "Purchase";
+  id: number;
+  total: number;
+  itemSold: FetchMyPurchases_myPurchases_itemSold;
+}
+
+export interface FetchMyPurchases {
+  myPurchases: FetchMyPurchases_myPurchases[];
+}
+
+export interface FetchMyPurchasesVariables {
+  buyerId: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: PlaceBid
+// ====================================================
+
+export interface PlaceBid {
+  placeBid: boolean;
+}
+
+export interface PlaceBidVariables {
+  id: number;
+  bidderId: number;
+  bid: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: CreateNewListing
+// ====================================================
+
+export interface CreateNewListing {
+  createNewListing: boolean;
+}
+
+export interface CreateNewListingVariables {
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  auctionTime: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: DeleteListing
+// ====================================================
+
+export interface DeleteListing {
+  deleteListing: boolean;
+}
+
+export interface DeleteListingVariables {
+  id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: Purchase
+// ====================================================
+
+export interface Purchase {
+  purchase: boolean;
+}
+
+export interface PurchaseVariables {
+  id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: CreateNewPurchase
+// ====================================================
+
+export interface CreateNewPurchase {
+  createNewPurchase: boolean;
+}
+
+export interface CreateNewPurchaseVariables {
+  total: number;
+  auctionId: number;
 }
 
 /* tslint:disable */
@@ -193,6 +465,119 @@ export interface NextSurveyQuestionVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: Auction
+// ====================================================
+
+export interface Auction {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+  auctionStartTime: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: ActiveBid
+// ====================================================
+
+export interface ActiveBid_auction {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+  auctionStartTime: string;
+}
+
+export interface ActiveBid {
+  __typename: "ActiveBid";
+  bid: number;
+  bidderId: number;
+  auction: ActiveBid_auction;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: PaginatedAuction
+// ====================================================
+
+export interface PaginatedAuction_auctions {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+  auctionStartTime: string;
+}
+
+export interface PaginatedAuction {
+  __typename: "PaginatedAuction";
+  auctions: PaginatedAuction_auctions[];
+  cursor: number;
+  hasMore: boolean;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Purchase
+// ====================================================
+
+export interface Purchase_itemSold {
+  __typename: "Auction";
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  prodType: ProdType;
+  sellerId: number;
+  currentHighestId: number | null;
+  auctionTime: number;
+  status: ItemStatus;
+  auctionStartTime: string;
+}
+
+export interface Purchase {
+  __typename: "Purchase";
+  id: number;
+  total: number;
+  itemSold: Purchase_itemSold;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: Survey
 // ====================================================
 
@@ -248,6 +633,19 @@ export interface SurveyQuestion {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export enum ItemStatus {
+  NOTSOLD = "NOTSOLD",
+  SOLD = "SOLD",
+}
+
+export enum ProdType {
+  BEARWEAR = "BEARWEAR",
+  DORMSUPPLY = "DORMSUPPLY",
+  ELECTRONICS = "ELECTRONICS",
+  OTHER = "OTHER",
+  TEXTBOOKS = "TEXTBOOKS",
+}
 
 export enum UserType {
   ADMIN = "ADMIN",

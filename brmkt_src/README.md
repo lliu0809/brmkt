@@ -19,13 +19,13 @@
 - lliu0809@ucla.edu
 <img src="https://user-images.githubusercontent.com/44155608/97261869-fd9b7600-17dc-11eb-93a5-e13388f05459.jpeg" width="250" height=auto>
 
-# bespin
+# brmkt
 
 Welcome to Cloud City!
 
 ## Dependencies
 
-For the [Quickstart](https://github.com/rothfels/bespin#Quickstart), you will need:
+For the [Quickstart](https://github.com/rothfels/brmkt#Quickstart), you will need:
 
 - [Node.js 12.x](https://nodejs.org/en/download/)
 - [Docker](https://docs.docker.com/get-docker/)
@@ -49,7 +49,7 @@ nvm alias default 12
 
 ## Quickstart
 
-First, install [the Quickstart dependencies](https://github.com/rothfels/bespin#Dependencies).
+First, install [the Quickstart dependencies](https://github.com/rothfels/brmkt#Dependencies).
 
 ### Choose your team slug
 
@@ -57,7 +57,7 @@ Choose a short, alphanumeric [*slug*](https://en.wikipedia.org/wiki/Clean_URL#Sl
 
 ### Get the starter project
 
-Clone and initialize the starter project. You'll need to have `node` and `npm` installed first. See [dependencies](https://github.com/rothfels/bespin#dependencies).
+Clone and initialize the starter project. You'll need to have `node` and `npm` installed first. See [dependencies](https://github.com/rothfels/brmkt#dependencies).
 
 ```
 source <(curl -s https://cs188.cloudcity.computer/app/script/init-project.sh)
@@ -68,10 +68,10 @@ This will create a directory with the name of your project slug and install the 
 If you run into an error sourcing the init script above, you may run the steps manually:
 
 ```
-git clone https://github.com/rothfels/bespin.git <your project slug>
+git clone https://github.com/rothfels/brmkt.git <your project slug>
 cd <your project slug>
 rm -rf .git
-<find/replace "bespin" with your project slug>
+<find/replace "brmkt" with your project slug>
 git init
 npm install
 ```

@@ -1,32 +1,49 @@
-import { RouteComponentProps } from '@reach/router'
+import { useQuery } from '@apollo/client'
 import * as React from 'react'
-import { ColorName, Colors } from '../../../../common/src/colors'
-import { Button } from '../../style/button'
-import { H2 } from '../../style/header'
+import { FetchAuctions, FetchAuctionsVariables } from '../../graphql/query.gen'
 import { Spacer } from '../../style/spacer'
-import { style } from '../../style/styled'
-import { BodyText, IntroText } from '../../style/text'
-import { Link } from '../nav/Link'
-import { AppRouteParams } from '../nav/route'
-import { Page } from '../page/Page'
-import { toastErr } from '../toast/toast'
+import { fetchAuctions } from '../page/queries/fetchAuctions'
 //const [listings, setListings] = React.useState([])
 
-interface ProfilePageProps extends RouteComponentProps, AppRouteParams {}
-
-function list() {
+/*function list() {
   toastErr('invalid email/password')
   return
-}
-export function Profile(props: ProfilePageProps){
-  fetch('/listing')
+}*/
+
+export function Profile({ cursor }: { cursor: number }) {
+  //const [userQuery, setUserQuery] = useState('')
+  const { loading, data } = useQuery<FetchAuctions, FetchAuctionsVariables>(fetchAuctions, {
+    variables: { cursor },
+  })
+
+  if (loading) {
+    return <div>loading...</div>
+  } else if (!data || data.auctions.auctions.length === 0) {
+    return <div>no auctions</div>
+  } else {
+    return (
+      <div className="mw6">
+        <Spacer $h4 />
+        {data.auctions.auctions.map((auction, i) => (
+          <div key={i} className="pa3 br2 mb2   flex items-center">
+            <Spacer $w4 />
+            {auction.auctionStartTime} · {auction.title} · {auction.auctionTime}
+          </div>
+        ))}
+      </div>
+    )
+  }
+  /*fetch('/listing')
     .then(response =>
       response.json())
     .then(json => console.log(json))
     .catch(err => {
       console.error(err)
     })
-  return (
+
+
+  return
+  (
     <>
   <Page>
       <Section>
@@ -117,10 +134,10 @@ export function Profile(props: ProfilePageProps){
       </Section>
   </Page>
   </>
-  )
+  )*/
 }
 
-interface Lists {
+/*interface Lists {
   title: string
   href: string
 }
@@ -169,4 +186,4 @@ const Section = style('div', 'mb4 mid-gray ba b--mid-gray br2 pa3 w-100', (p: { 
 
 const TR = style('tr', 'ba b--black')
 
-const TD = style('td', 'mid-gray pa3 v-mid', { minWidth: '7em' })
+const TD = style('td', 'mid-gray pa3 v-mid', { minWidth: '7em' })*/

@@ -1,51 +1,51 @@
-module "mysql" {
-  source = "./modules/mysql"
-}
-
-# module "redis" {
-#   source = "./modules/redis"
+# module "mysql" {
+#   source = "./modules/mysql"
 # }
 
-resource "aws_ecs_cluster" "brmkt_src" {
-  name = "brmkt_src"
-}
+# # module "redis" {
+# #   source = "./modules/redis"
+# # }
 
-resource "aws_ecr_repository" "brmkt_src" {
-  name                 = "brmkt_src"
-  image_tag_mutability = "MUTABLE"
-}
+# resource "aws_ecs_cluster" "brmkt_src" {
+#   name = "brmkt_src"
+# }
 
-module "webserver" {
-  source = "./modules/appserver"
+# resource "aws_ecr_repository" "brmkt_src" {
+#   name                 = "brmkt_src"
+#   image_tag_mutability = "MUTABLE"
+# }
 
-  appserver_tag  = "app-web"
-  ecr_repository = aws_ecr_repository.brmkt_src.repository_url
-  ecs_cluster    = aws_ecs_cluster.brmkt_src.id
+# module "webserver" {
+#   source = "./modules/appserver"
 
-  mysql_host = module.mysql.host
-  # redis_host = module.redis.host
+#   appserver_tag  = "app-web"
+#   ecr_repository = aws_ecr_repository.brmkt_src.repository_url
+#   ecs_cluster    = aws_ecs_cluster.brmkt_src.id
 
-  services      = "BACKGROUND"
-  honeycomb_key = <insert key here>
+#   mysql_host = module.mysql.host
+#   # redis_host = module.redis.host
 
-  # ws_url = module.websocket_api.url
-}
+#   services      = "BACKGROUND"
+#   honeycomb_key = "b93712f14497199bc5a3918b312c59b5"
 
-module "rest_api" {
-  source         = "./modules/rest_api"
-  appserver_host = module.webserver.host
-}
+#   # ws_url = module.websocket_api.url
+# }
 
-# module "websocket_api" {
-#   source         = "./modules/websocket_api"
+# module "rest_api" {
+#   source         = "./modules/rest_api"
 #   appserver_host = module.webserver.host
 # }
 
-# module "lambda" {
-#   source = "./modules/lambda"
+# # module "websocket_api" {
+# #   source         = "./modules/websocket_api"
+# #   appserver_host = module.webserver.host
+# # }
 
-#   honeycomb_key = <insert key here>
+# # module "lambda" {
+# #   source = "./modules/lambda"
 
-#   mysql_host = module.mysql.host
-#   redis_host = module.redis.host
-# }
+# #   honeycomb_key = b93712f14497199bc5a3918b312c59b5
+
+# #   mysql_host = module.mysql.host
+# #   redis_host = module.redis.host
+# # }
