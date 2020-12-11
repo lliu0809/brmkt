@@ -212,7 +212,7 @@ type Subscription {
 #   name: String!
 # }
 
-# enum UserType { ADMIN, USER }
+enum UserType { ADMIN, USER }
 
 type Survey {
   id: Int!
